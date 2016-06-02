@@ -36,62 +36,68 @@ $this->params['breadcrumbs'][] = $this->title;
                     'collapseTitle' => 'Collapse all',
                     'expandIcon' => '<span class="glyphicon glyphicon-expand"></span>',
                     'value' => function ($model) {
-                        if ($model->type == '1') {
+                        $types = Type::find()->where(['options' => '1', 'id' => $model->type])->one();
+                        if ($types['options'] == '1') {
                             return GridView::ROW_COLLAPSED;
                         } else {
                             return "-";
                         }
                     },
-                    'detail' => function ($model) {
+                            'detail' => function ($model) {
                         $data['options'] = Type::find()->where(['upper' => $model->type])->all();
                         return Yii::$app->controller->renderPartial('//type/options', $data);
                     },
-                    'detailOptions' => [
-                        'class' => 'kv-state-enable',
-                    ],
-                ],
-                [
-                    'attribute' => 'menu',
-                    'header' => 'เมนู',
-                ],
-                [
-                    'attribute' => 'type',
-                    'header' => 'ประเภท',
-                    'value' => function($model) {
-                        $type = Type::find()->where(['id' => $model->type])->one();
-                        return $type->typename;
-                    },
-                            'filterType' => GridView::FILTER_SELECT2,
-                            'filter' => ArrayHelper::map(Type::find()->orderBy('id')->asArray()->all(), 'id', 'typename'),
-                            'filterWidgetOptions' => [
-                                'pluginOptions' => ['allowClear' => true],
+                            'detailOptions' => [
+                                'class' => 'kv-state-enable',
                             ],
-                            'filterInputOptions' => ['placeholder' => 'ประเภท'],
-                            'format' => 'raw',
                         ],
                         [
-                            'attribute' => 'create_date',
-                            'header' => 'วันที่นำเข้า',
-                            'hAlign' => 'center',
+                            'attribute' => 'menu',
+                            'header' => 'เมนู',
                         ],
                         [
-                            //'attribute' => 'create_date',
-                            'header' => 'ส่วนประกอบ',
-                            'hAlign' => 'center',
+                            'attribute' => 'type',
+                            'header' => 'ประเภท',
                             'value' => function($model) {
-                                $link = Url::to(['menu/view', 'id' => $model->id]);
-                                return "<a href='" . $link . "'><button type='button' class='btn btn-default btn-sm'>ส่วนผสม</button></a>";
+                                $type = Type::find()->where(['id' => $model->type])->one();
+                                return $type->typename;
                             },
-                                    'format' => 'raw'
+                                    'filterType' => GridView::FILTER_SELECT2,
+                                    'filter' => ArrayHelper::map(Type::find()->orderBy('id')->asArray()->all(), 'id', 'typename'),
+                                    'filterWidgetOptions' => [
+                                        'pluginOptions' => ['allowClear' => true],
+                                    ],
+                                    'filterInputOptions' => ['placeholder' => 'ประเภท'],
+                                    'format' => 'raw',
                                 ],
                                 [
-                                    'class' => 'yii\grid\ActionColumn',
-                                    'header' => 'Actions',
-                                    'headerOptions' => ['style' => 'text-align:center;'], // not max-width
-                                    'contentOptions' => ['style' => 'text-align:center;'], // not max-wisdth
+                                    'attribute' => 'create_date',
+                                    'header' => 'วันที่นำเข้า',
+                                    'hAlign' => 'center',
                                 ],
-                            ],
-                        ]);
-                        ?>
+                                [
+                                    //'attribute' => 'create_date',
+                                    'header' => 'ส่วนประกอบ',
+                                    'hAlign' => 'center',
+                                    'value' => function($model) {
+                                        $Type2 = Type::find()->where(['options' => '1','id' => $model->type])->one();
+                                        if ($Type2['options'] == '1') {
+                                            return "";
+                                        } else {
+                                            $link = Url::to(['menu/view', 'id' => $model->id]);
+                                            return "<a href='" . $link . "'><button type='button' class='btn btn-default btn-sm'>ส่วนผสม</button></a>";
+                                        }
+                                    },
+                                            'format' => 'raw'
+                                        ],
+                                        [
+                                            'class' => 'yii\grid\ActionColumn',
+                                            'header' => 'Actions',
+                                            'headerOptions' => ['style' => 'text-align:center;'], // not max-width
+                                            'contentOptions' => ['style' => 'text-align:center;'], // not max-wisdth
+                                        ],
+                                    ],
+                                ]);
+                                ?>
     </div>
 </div>

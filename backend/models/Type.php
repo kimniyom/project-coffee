@@ -27,7 +27,7 @@ class Type extends \yii\db\ActiveRecord
     {
         return [
             [['typename','options'],'required'],
-            [['submenu'], 'number', 'max' => 3],
+            [['options','upper'], 'number', 'max' => 3],
             [['typename'], 'string', 'max' => 255],
         ];
     }

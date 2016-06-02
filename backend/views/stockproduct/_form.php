@@ -7,6 +7,7 @@ use kartik\form\ActiveForm;
 use kartik\grid\GridView;
 use app\models\Category;
 use app\models\Unit;
+
 /* @var $this yii\web\View */
 /* @var $model app\models\Stockproduct */
 /* @var $form yii\widgets\ActiveForm */
@@ -85,18 +86,18 @@ use app\models\Unit;
                             'vAlign' => 'middle',
                             'format' => 'raw',
                         ],
-                            [
-                                'attribute' => 'unit',
-                                'format' => 'raw',
-                                'value' => function($model){
-                                    $unit = Unit::find()->where(['id' => $model->unit])->one();
-                                    return $unit->unit;
-                                }
+                        [
+                            'attribute' => 'unit',
+                            'format' => 'raw',
+                            'value' => function($model) {
+                                $unit = Unit::find()->where(['id' => $model->unit])->one();
+                                return $unit->unit;
+                            }
+                                ],
+                                // 'create_date',
+                                ['class' => 'yii\grid\ActionColumn'],
                             ],
-                        // 'create_date',
-                        ['class' => 'yii\grid\ActionColumn'],
-                    ],
-                ]);
-                ?>
+                        ]);
+                        ?>
     </div>
 </div>

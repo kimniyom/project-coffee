@@ -6,6 +6,8 @@ use app\models\Type;
 use yii\helpers\ArrayHelper;
 use kartik\grid\GridView;
 use yii\helpers\Url;
+use kartik\select2\Select2;
+
 /* @var $this yii\web\View */
 /* @var $model app\models\Menu */
 /* @var $form yii\widgets\ActiveForm */
@@ -14,19 +16,31 @@ use yii\helpers\Url;
 <hr/>
 <div class="menu-form">
 
-<?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin(); ?>
     <div class="row">
         <div class="col-md-3 col-lg-3">
             <?=
             $form->field($model, 'type')->dropdownList(
-                    ArrayHelper::map(Type::find()->all(), 'id', 'typename'), [
+                    ArrayHelper::map(Type::find()->where(['upper' => null])->all(), 'id', 'typename'), [
                 'id' => 'ddl-type',
                 'prompt' => 'เลือกประเภท'
             ]);
             ?>
         </div>
-        <div class="col-md-7 col-lg-7">
-<?= $form->field($model, 'menu')->textInput(['maxlength' => true]) ?>
+        <div class="col-md-9 col-lg-9">
+            <?= $form->field($model, 'menu')->textInput(['maxlength' => true]) ?>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-1 col-lg-1">
+            <center>
+                <label>Options</label><br/>
+                <input type="checkbox" name="options" id="options" value="0" class="check" onclick="Checked()"/>
+            </center>
+        </div>
+        <div class="col-md-2 col-lg-2">
+            <label>ราคา</label>
+            <input type="number" class="form-control" id="price"/> 
         </div>
         <div class="col-md-2 col-lg-2">
             <div class="form-group">
@@ -41,7 +55,7 @@ use yii\helpers\Url;
             </div>
         </div>
     </div>
-<?php ActiveForm::end(); ?>
+    <?php ActiveForm::end(); ?>
 
     <div class="panel panel-default">
         <div class="panel-heading"><?php echo $this->title; ?></div>
@@ -81,20 +95,30 @@ use yii\helpers\Url;
                             'header' => 'ส่วนประกอบ',
                             'hAlign' => 'center',
                             'value' => function($model) {
-                                $link = Url::to(['menu/view','id' => $model->id]);
-                                return "<a href='".$link."'><button type='button' class='btn btn-default btn-sm'>ส่วนผสม</button></a>";
+                                $link = Url::to(['menu/view', 'id' => $model->id]);
+                                return "<a href='" . $link . "'><button type='button' class='btn btn-default btn-sm'>ส่วนผสม</button></a>";
                             },
-                            'format' => 'raw'
-                        ],
-                        [
-                            'class' => 'yii\grid\ActionColumn',
-                            'header' => 'Actions',
-                            'headerOptions' => ['style' => 'text-align:center;'], // not max-width
-                            'contentOptions' => ['style' => 'text-align:center;'], // not max-width
-                        ],
-                    ],
-                ]);
-                ?>
+                                    'format' => 'raw'
+                                ],
+                                [
+                                    'class' => 'yii\grid\ActionColumn',
+                                    'header' => 'Actions',
+                                    'headerOptions' => ['style' => 'text-align:center;'], // not max-width
+                                    'contentOptions' => ['style' => 'text-align:center;'], // not max-width
+                                ],
+                            ],
+                        ]);
+                        ?>
     </div>
 
 </div>
+
+<script type="text/javascript">
+    function Checked() {
+        if ($('#options').is(':checked')) {
+            alert('checked');
+        } else {
+            alert('Unchecked');
+        }
+    }
+</script>
