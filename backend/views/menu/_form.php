@@ -116,9 +116,11 @@ use kartik\select2\Select2;
 <script type="text/javascript">
     function Checked() {
         if ($('#options').is(':checked')) {
-            alert('checked');
+            $("#price").val('');
+            $("#price").attr('disabled','disabled');
         } else {
-            alert('Unchecked');
+            $("#price").val('');
+            $("#price").removeAttr('disabled');
         }
     }
 </script>
