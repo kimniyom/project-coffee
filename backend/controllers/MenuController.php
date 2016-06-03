@@ -11,11 +11,14 @@ use yii\filters\VerbFilter;
 use app\models\Mix;
 use app\models\MixSearch;
 use yii\data\ActiveDataProvider;
+use yii\helpers\Json;
 
 /**
  * MenuController implements the CRUD actions for Menu model.
  */
 class MenuController extends Controller {
+
+    public $enableCsrfValidation = false;
 
     /**
      * @inheritdoc
@@ -60,7 +63,7 @@ class MenuController extends Controller {
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
-        
+
         //$dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('view', [
@@ -76,6 +79,64 @@ class MenuController extends Controller {
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
+    public function actionFormcreate() {
+        $type = \app\models\Type::find()->all();
+        $model = new Menu();
+        $searchModel = new MenuSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->render('_formcreate', [
+                    'type' => $type,
+                    'model' => $model,
+                    'searchModel' => $searchModel,
+                    'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    public function actionSave() {
+        $post = Yii::$app->request;
+        //$model = new Menu();
+        //$searchModel = new MenuSearch();
+        //$dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        $columns = array(
+            "menu" => $post->post('menu'),
+            "type" => $post->post('type'),
+            "options" => $post->post('options'),
+            "price" => $post->post('price'),
+            "create_date" => date('Y-m-d')
+        );
+
+        Yii::$app->db->createCommand()
+                ->insert("menu", $columns)
+                ->execute();
+
+        $query = new \yii\db\Query();
+        $lastmenu = $query->select('*')
+                ->from("menu")
+                ->orderBy('id DESC')
+                ->limit("1")
+                ->one();
+
+
+        if ($lastmenu['options'] == '1') {
+            $json = array("id" => $lastmenu['id'], "options" => $lastmenu['options']);
+            echo Json::encode($json);
+            //return $this->redirect(['options', 'id' => $lastmenu->id]);
+        } else {
+            $json = array('id' => '', 'options' => '');
+            echo json_encode($json);
+        }
+    }
+
+    public function actionOptions($id) {
+        return $this->render('options', [
+                    'model' => $this->findModel($id),
+        ]);
+        
+        
+    }
+
     public function actionCreate() {
         $model = new Menu();
         $searchModel = new MenuSearch();
