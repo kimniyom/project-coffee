@@ -1,7 +1,7 @@
 <?php
 
 use yii\helpers\Html;
-use yii\grid\GridView;
+use kartik\grid\GridView;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\UnitSearch */
@@ -11,23 +11,29 @@ $this->title = 'หน่วยนับ';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="unit-index">
-
-    <h1><?= Html::encode($this->title) ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
         <?= Html::a('เพิ่มหน่วยนับ', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
-    <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
-        'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
+    <div class="box">
+        <div class="box-header">
+            <h4><?= Html::encode($this->title) ?></h4>
+        </div>
+        <div class="box-body">
 
-            'id',
-            'unit',
-
-            ['class' => 'yii\grid\ActionColumn'],
-        ],
-    ]); ?>
+            <?=
+            GridView::widget([
+                'dataProvider' => $dataProvider,
+                'filterModel' => $searchModel,
+                'columns' => [
+                    ['class' => 'yii\grid\SerialColumn'],
+                    'id',
+                    'unit',
+                    ['class' => 'yii\grid\ActionColumn'],
+                ],
+            ]);
+            ?>
+        </div>
+    </div>
 </div>

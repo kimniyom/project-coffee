@@ -26,8 +26,9 @@ class Menu extends \yii\db\ActiveRecord {
      */
     public function rules() {
         return [
-            [['type', 'menu'], 'required'],
+            [['type', 'menu', 'price'], 'required'],
             [['type'], 'integer'],
+            [['price'], 'number', 'numberPattern' => '/^\s*[+]?[0-9]*[.,]?[0-9]+([eE][+]?[0-9]+)?\s*$/'],
             [['create_date'], 'safe'],
             [['menu'], 'string', 'max' => 255],
         ];

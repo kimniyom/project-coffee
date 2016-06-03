@@ -12,6 +12,7 @@ use app\models\Mix;
 use app\models\MixSearch;
 use yii\data\ActiveDataProvider;
 use yii\helpers\Json;
+use app\models\Options;
 
 /**
  * MenuController implements the CRUD actions for Menu model.
@@ -135,6 +136,11 @@ class MenuController extends Controller {
         ]);
         
         
+    }
+    
+    public function actionLoadoptions($id) {
+        $data['options'] = Options::find()->where(['menu' => $id])->all();
+        return $this->renderPartial('loadoptions',$data);
     }
 
     public function actionCreate() {

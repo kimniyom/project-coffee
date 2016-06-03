@@ -32,15 +32,13 @@ use kartik\select2\Select2;
         </div>
     </div>
     <div class="row">
-        <div class="col-md-1 col-lg-1">
-            <center>
-                <label>Options</label><br/>
-                <input type="checkbox" name="options" id="options" value="0" class="check" onclick="Checked()"/>
-            </center>
-        </div>
         <div class="col-md-2 col-lg-2">
-            <label>ราคา</label>
-            <input type="number" class="form-control" id="price"/> 
+            <?=
+            $form->field($model, 'price')->textInput([
+                'maxlength' => true,
+                'type' => 'number'
+            ])
+            ?>
         </div>
         <div class="col-md-2 col-lg-2">
             <div class="form-group">
@@ -55,7 +53,7 @@ use kartik\select2\Select2;
             </div>
         </div>
     </div>
-    <?php ActiveForm::end(); ?>
+<?php ActiveForm::end(); ?>
 
     <div class="panel panel-default">
         <div class="panel-heading"><?php echo $this->title; ?></div>

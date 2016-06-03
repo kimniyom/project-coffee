@@ -12,10 +12,17 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="category-update">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-
-    <?= $this->render('_form', [
-        'model' => $model,
-    ]) ?>
-
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4><?= Html::encode($this->title) ?></h4>
+            <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+        </div>
+        <div class="panel-body">
+            <?=
+            $this->render('_form', [
+                'model' => $model,
+            ])
+            ?>
+        </div>
+    </div>
 </div>

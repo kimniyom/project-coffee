@@ -11,11 +11,16 @@ $this->params['breadcrumbs'][] = ['label' => $model->unit, 'url' => ['view', 'id
 $this->params['breadcrumbs'][] = 'แก้ไข';
 ?>
 <div class="unit-update">
-
-    <h1><?= Html::encode($this->title) ?></h1>
-
-    <?= $this->render('_form', [
-        'model' => $model,
-    ]) ?>
-
+    <div class="box">
+        <div class="box-header">
+            <h4><?= Html::encode($this->title) ?></h4>
+        </div>
+        <div class="box-body">
+            <?=
+            $this->render('_form', [
+                'model' => $model,
+            ])
+            ?>
+        </div>
+    </div>
 </div>

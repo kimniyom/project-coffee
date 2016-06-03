@@ -20,11 +20,15 @@ class AdminLteAsset extends AssetBundle
     public $css = [
         'themes/AdminLTE/dist/css/AdminLTE.css',
         'themes/AdminLTE/dist/css/skins/_all-skins.css',
+        'themes/AdminLTE/plugins/datatables/dataTables.bootstrap.css',
         'lib/font-awesome/css/font-awesome.css'
     ];
     public $js = [
+        'themes/AdminLTE/bootstrap/js/bootstrap.js',
         'themes/AdminLTE/dist/js/app.js',
         'themes/AdminLTE/dist/js/demo.js',
+        'themes/AdminLTE/plugins/datatables/jquery.dataTables.js',
+        'themes/AdminLTE/plugins/datatables/dataTables.bootstrap.js',
     ];
     public $depends = [
         'yii\web\YiiAsset',

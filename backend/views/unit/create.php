@@ -2,7 +2,6 @@
 
 use yii\helpers\Html;
 
-
 /* @var $this yii\web\View */
 /* @var $model app\models\Unit */
 
@@ -11,11 +10,16 @@ $this->params['breadcrumbs'][] = ['label' => 'หน่วยนับ', 'url' =
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="unit-create">
-
-    <h1><?= Html::encode($this->title) ?></h1>
-
-    <?= $this->render('_form', [
-        'model' => $model,
-    ]) ?>
-
+    <div class="box">
+        <div class="box-header">
+            <h4><?= Html::encode($this->title) ?></h4>
+        </div>
+        <div class="box-body">
+            <?=
+            $this->render('_form', [
+                'model' => $model,
+            ])
+            ?>
+        </div>
+    </div>
 </div>
