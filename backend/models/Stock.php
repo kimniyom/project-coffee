@@ -33,6 +33,7 @@ class Stock extends \yii\db\ActiveRecord
     {
         return [
             [['product', 'category', 'number', 'total_cut', 'size', 'size_unit'],'required'],
+            [['number'], 'number', 'numberPattern' => '/^\s*[+]?[0-9]*[.,]?[0-9]+([eE][+]?[0-9]+)?\s*$/'],
             [['product', 'category', 'number', 'total_cut', 'size', 'size_unit'], 'integer'],
             [['create_date'], 'safe'],
         ];

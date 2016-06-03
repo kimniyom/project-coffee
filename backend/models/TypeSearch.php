@@ -41,7 +41,7 @@ class TypeSearch extends Type
      */
     public function search($params)
     {
-        $query = Type::find()->where(['upper' => null]);
+        $query = Type::find();
 
         // add conditions that should always apply here
 

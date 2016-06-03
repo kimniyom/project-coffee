@@ -26,6 +26,7 @@ class Unit extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            [['unit'],'required'],
             [['unit'], 'string', 'max' => 100],
         ];
     }

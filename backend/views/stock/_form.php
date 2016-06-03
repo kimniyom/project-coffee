@@ -10,6 +10,7 @@ use yii\helpers\Url;
 use app\models\Unit;
 use kartik\widgets\DatePicker;
 use kartik\grid\GridView;
+use common\models\System;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Stock */
@@ -157,6 +158,10 @@ use kartik\grid\GridView;
                                     [
                                         'attribute' => 'create_date',
                                         'hAlign' => 'center',
+                                        'value' => function($model){
+                                            $config = new System();
+                                            return $config->Thaidate($model->create_date);
+                                        }
                                     ],
                                     [
                                         'class' => 'yii\grid\ActionColumn',

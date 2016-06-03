@@ -26,8 +26,7 @@ class Type extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['typename','options'],'required'],
-            [['options','upper'], 'number', 'max' => 3],
+            [['typename'],'required'],
             [['typename'], 'string', 'max' => 255],
         ];
     }
@@ -40,7 +39,6 @@ class Type extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'typename' => 'ประเภทอาหาร / เครื่องดื่ม',
-            'options' => 'Options',
         ];
     }
 }

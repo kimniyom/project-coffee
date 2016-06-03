@@ -115,25 +115,4 @@ class TypeController extends Controller {
         }
     }
 
-    public function actionCreateoptions() {
-        $post = Yii::$app->request;
-        $columns = array(
-            "typename" => $post->post('typename'),
-            "upper" => $post->post('upper'),
-            "options" => '0'
-        );
-        
-        Yii::$app->db->createCommand()
-                ->insert("type", $columns)
-                ->execute();
-    }
-    
-    public function actionLoadoptions(){
-        $post = Yii::$app->request;
-        $upper = $post->post('upper');
-        $data['options'] = Type::find()->where(['upper' => $upper])->all();
-        
-        return $this->renderPartial('options',$data);
-    }
-
 }

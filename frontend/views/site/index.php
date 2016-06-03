@@ -3,26 +3,89 @@
 use yii\helpers\Url;
 use app\models\Category;
 use app\models\Type;
+use app\models\Menu;
 
+$menu = new Menu();
 $images = array("1.jpeg", "2.jpg", "3.jpg", "4.JPG");
 $names = array("ลาเต้", "คาปูชิโน่", "เอสเปรสโซ่", "มอคค่า");
 $price = array("35", "40", "40", "35");
 $count = count($names);
 ?>
+<style type="text/css">
+    .nav-tabs > li, .nav-pills > li {
+        float:none;
+        display:inline-block;
+        *display:inline; /* ie7 fix */
+        zoom:1; /* hasLayout ie7 trigger */
+    }
+
+    .nav-tabs, .nav-pills {
+        text-align:center;
+    }
+
+</style>
+<div class="row">
+    <div>
+        <!-- Nav tabs -->
+
+        <ul class="nav nav-tabs" role="tablist">
+            <?php
+            $i = 0;
+            $typeproduct = Type::find()->all();
+            foreach ($typeproduct as $t):
+                $i++;
+                if ($i == 1) {
+                    $hclass = "active";
+                } else {
+                    $hclass = "";
+                }
+                ?>
+                <li role="presentation" class="<?php echo $hclass ?>"><a href="#<?php echo $i; ?>" aria-controls="<?php echo $i; ?>" role="tab" data-toggle="tab"><?php echo $t['typename'] ?></a></li>
+            <?php endforeach; ?>
+        </ul>
+
+        <!-- Tab panes -->
+        <div class="tab-content well" style=" border-radius: 0px; border-top: none; background: none; box-shadow: none;">
+            <?php
+            $a = 0;
+            foreach ($typeproduct as $t2):
+                $a++;
+                if ($a == 1) {
+                    $class = "active";
+                } else {
+                    $class = "";
+                }
+                $product = $menu->Getmenu($t2['id']);
+                ?>
+                <div role="tabpanel" class="tab-pane <?php echo $class ?>" id="<?php echo $a ?>">
+                    <center>
+                        <?php foreach ($product as $p): ?>
+                        <button type="button" class="btn btn-default" style=" margin-bottom: 5px;">
+                                <img src="<?php echo Url::to('@web/web/images/coffee-type.png') ?>"><br/>
+                                <?php echo $p['menu'] ?>
+                            </button>
+                        <?php endforeach; ?>
+                    </center>
+                </div>
+            <?php endforeach; ?>
+        </div>
+    </div>
+</div>
 <div class="row">
     <div class="col-sm-12 col-md-3 col-lg-3">
         <div class="list-group">
             <a href="#" class="list-group-item active">
                 ประเภทอาหาร/เครื่องดื่ม
             </a>
-            <?php 
+            <?php
             $type = Type::find()->all();
-            foreach($type as $types): ?>
-            <a href="#" class="list-group-item" onclick="GetProduct()">
-                <img src="<?php echo Url::to('@web/web/images/coffee-type.png') ?>">
-                <?php echo $types['typename'] ?>
-            </a>
-            <?php endforeach;?>
+            foreach ($type as $types):
+                ?>
+                <a href="#" class="list-group-item" onclick="GetProduct()">
+                    <img src="<?php echo Url::to('@web/web/images/coffee-type.png') ?>">
+                    <?php echo $types['typename'] ?>
+                </a>
+            <?php endforeach; ?>
         </div>
         <div class="well" style=" text-align: center;">
             <h3 style="margin: 5px;">โต๊ะที่ <?php echo $tables; ?></h3>
@@ -109,11 +172,11 @@ $count = count($names);
                         </button></a>
                 </div>
                 <div class="col-sm-12 col-md-6 col-lg-6">
-                        <button type="button" class="btn btn-danger btn-lg btn-block"
-                                onclick="CancelOrder('')">
-                            <i class="fa fa-remove fa-2x"></i><br/>
-                            ยกเลิกการขาย
-                        </button>
+                    <button type="button" class="btn btn-danger btn-lg btn-block"
+                            onclick="CancelOrder('')">
+                        <i class="fa fa-remove fa-2x"></i><br/>
+                        ยกเลิกการขาย
+                    </button>
                 </div>
             </div>
         </div>
@@ -212,12 +275,12 @@ $count = count($names);
     function Closepopup() {
         $("#popup-product").modal("hide");
     }
-    
-    
-    function CancelOrder(){
+
+
+    function CancelOrder() {
         var r = confirm("คุณแน่ใจหรือไม่ ... ?");
-        if(r == true){
-            window.location="<?php echo Url::to(['site/index'])?>";
+        if (r == true) {
+            window.location = "<?php echo Url::to(['site/index']) ?>";
         }
     }
 </script>

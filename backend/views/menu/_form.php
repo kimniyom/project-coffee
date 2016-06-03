@@ -21,7 +21,7 @@ use kartik\select2\Select2;
         <div class="col-md-3 col-lg-3">
             <?=
             $form->field($model, 'type')->dropdownList(
-                    ArrayHelper::map(Type::find()->where(['upper' => null])->all(), 'id', 'typename'), [
+                    ArrayHelper::map(Type::find()->all(), 'id', 'typename'), [
                 'id' => 'ddl-type',
                 'prompt' => 'เลือกประเภท'
             ]);

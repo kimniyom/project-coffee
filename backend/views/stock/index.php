@@ -7,6 +7,7 @@ use app\models\Category;
 use app\models\Unit;
 use yii\helpers\ArrayHelper;
 use kartik\select2\Select2;
+use common\models\System;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\StockSearch */
@@ -90,10 +91,14 @@ $this->params['breadcrumbs'][] = $this->title;
                                             [
                                                 'attribute' => 'create_date',
                                                 'hAlign' => 'center',
+                                                'value' => function($model) {
+                                                    $config = new System();
+                                                    return $config->Thaidate($model->create_date);
+                                                }
                                             ],
                                             [
                                                 'class' => 'yii\grid\ActionColumn',
-                                                'template' => '{update} {delete}',
+                                                'template' => '{view} {update} {delete}',
                                                 'header' => 'Actions',
                                                 'headerOptions' => ['style' => 'text-align:center;'], // not max-width
                                                 'contentOptions' => ['style' => 'text-align:center;'], // not max-width

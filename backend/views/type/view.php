@@ -40,64 +40,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ])
             ?>
 
-            <hr/>
-            <h4>เพิ่ม Options</h4>
-            <div class="type-form">
-
-                <div class="row">
-                    <div class="col-md-10 col-lg-10">
-                        <input type="text" id="typename" class="form-control" placeholder="กรอกข้อมูล ..."/>
-                    </div>
-                    <div class="col-md-2 col-lg-2">
-                        <button type="button" class="btn btn-success btn-block" onclick="save()">เพิ่ม</button>
-                    </div>
-                </div>
-                
-                <hr/>
-                
-                <div id="resultoptions"></div>
-                
-            </div>
         </div>
     </div>
 </div>
 
-<?php
-    $this->registerJs('
-        loadoptions();
-            ');
-?>
-
-<script type="text/javascript">
-    
-    function save() {
-        var url = "<?php echo Url::to(['type/createoptions']) ?>";
-        var typename = $("#typename").val();
-        var upper = "<?php echo $model->id ?>";
-        var data = {
-            typename: typename,
-            upper: upper
-        };
-
-        if (typename == '') {
-            $("#typename").focus();
-            return false;
-        }
-
-        $.post(url, data, function (success) {
-            loadoptions();
-        });
-    }
-    
-    function loadoptions(){
-        var url = "<?php echo Url::to(['type/loadoptions']) ?>";
-        var upper = "<?php echo $model->id ?>";
-        var data = {
-            upper: upper
-        };
-
-        $.post(url, data, function (result) {
-            $("#resultoptions").html(result);
-        });
-    }
-</script>
