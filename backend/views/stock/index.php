@@ -89,6 +89,11 @@ $this->params['breadcrumbs'][] = $this->title;
                                                 'hAlign' => 'center',
                                             ],
                                             [
+                                                'attribute' => 'total',
+                                                'header' => 'คงเหลือ',
+                                                'hAlign' => 'center',
+                                            ],
+                                            [
                                                 'attribute' => 'create_date',
                                                 'hAlign' => 'center',
                                                 'value' => function($model) {

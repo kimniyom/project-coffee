@@ -14,6 +14,9 @@ use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use app\models\Tables;
+use app\models\Orders;
+use yii\db\Query;
+
 /**
  * Site controller
  */
@@ -69,10 +72,13 @@ class SiteController extends Controller {
      *
      * @return mixed
      */
-    public function actionTables($id = null,$tables = null) {
-        $data['id'] = $id;
+    
+    public function actionTables($tables = null,$order = null) {
+        
+        //$data['id'] = $id;
+        $data['order_id'] = $order;
         $data['tables'] = $tables;
-        return $this->render('index',$data);
+        return $this->render('index', $data);
     }
 
     /**
@@ -206,7 +212,7 @@ class SiteController extends Controller {
 
     public function actionIndex() {
         $data['tables'] = Tables::find()->all();
-        return $this->render("tables",$data);
+        return $this->render("tables", $data);
     }
 
 }

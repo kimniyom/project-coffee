@@ -134,13 +134,11 @@ class MenuController extends Controller {
         return $this->render('options', [
                     'model' => $this->findModel($id),
         ]);
-        
-        
     }
-    
+
     public function actionLoadoptions($id) {
         $data['options'] = Options::find()->where(['menu' => $id])->all();
-        return $this->renderPartial('loadoptions',$data);
+        return $this->renderPartial('loadoptions', $data);
     }
 
     public function actionCreate() {
@@ -148,6 +146,7 @@ class MenuController extends Controller {
         $searchModel = new MenuSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         if ($model->load(Yii::$app->request->post())) {
+            $model->images = $model->upload($model, 'images');
             $model->create_date = date("Y-m-d");
             $model->save();
             return $this->redirect(['view', 'id' => $model->id]);
@@ -170,7 +169,9 @@ class MenuController extends Controller {
         $model = $this->findModel($id);
         $searchModel = new MenuSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post())) {
+            $model->images = $model->upload($model, 'images');
+            $model->save();
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [
@@ -188,6 +189,10 @@ class MenuController extends Controller {
      * @return mixed
      */
     public function actionDelete($id) {
+        $rs = $this->findModel($id);
+        $Model = new Menu();
+        $Model->deleteimages($rs->images);
+        
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);

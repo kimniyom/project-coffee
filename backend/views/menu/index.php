@@ -93,6 +93,22 @@ $this->params['breadcrumbs'][] = $this->title;
                                     'format' => 'raw'
                                 ],
                                 [
+                                    'header' => 'รูปภาพ',
+                                    'options' => ['style' => 'width:150px;'],
+                                    'format' => 'raw',
+                                    'attribute' => 'images',
+                                    'value' => function($model) {
+                                return Html::tag('div', '', [
+                                            'style' => 'width:100px;height:45px;
+                          border-top: 10px solid rgba(255, 255, 255, .46);
+                          background-image:url(' . $model->photoViewer . ');
+                          background-size: cover;
+                          background-position:center center;
+                          background-repeat:no-repeat;
+                          ']);
+                            }
+                                ],
+                                [
                                     'attribute' => 'create_date',
                                     'header' => 'วันที่นำเข้า',
                                     'hAlign' => 'center',

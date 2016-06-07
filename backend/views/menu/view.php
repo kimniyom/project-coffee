@@ -37,14 +37,16 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
         <div class="panel-body">
             <div class="row">
-                <div class="col-md-3 col-lg-4">
-                    <input type="text" value="<?php echo "Menu : " . $model->menu; ?>" class="form-control" readonly="readonly" id="bold-text"/>
+                <div class="col-md-2 col-lg-2" style=" text-align: center;">
+                    
+                        <?= Html::img($model->getPhotoViewer(), ['style' => 'width:100px;', 'class' => 'img-rounded']); ?>
+                  
                 </div>
-                <div class="col-md-3 col-lg-4">
+                <div class="col-md-10 col-lg-10 text-left">
+                    <input type="text" value="<?php echo "Menu : " . $model->menu; ?>" class="form-control" readonly="readonly" id="bold-text"/>
                     <?php $type = Type::find()->where(['id' => $model->type])->one()['typename'] ?>
                     <input type="text" value="<?php echo "ประเภท : " . $type; ?>" class="form-control" readonly="readonly" id="bold-text"/>
-                </div>
-                <div class="col-md-3 col-lg-4">
+                    <input type="text" value="<?php echo "ราคา : " . $model->price." บาท"; ?>" class="form-control" readonly="readonly" id="bold-text"/>
                     <input type="text" value="<?php echo "วันที่บันทึก : " . $model->create_date; ?>" class="form-control" readonly="readonly" id="bold-text"/>
                 </div>
             </div>

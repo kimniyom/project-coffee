@@ -7,6 +7,7 @@ use yii\helpers\ArrayHelper;
 use kartik\grid\GridView;
 use yii\helpers\Url;
 use kartik\select2\Select2;
+use yii\web\UrlManager;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Menu */
@@ -15,8 +16,11 @@ use kartik\select2\Select2;
 
 <hr/>
 <div class="menu-form">
-
-    <?php $form = ActiveForm::begin(); ?>
+    <?php
+    $form = ActiveForm::begin([
+                'options' => ['enctype' => 'multipart/form-data']
+    ]);
+    ?>
     <div class="row">
         <div class="col-md-3 col-lg-3">
             <?=
@@ -40,6 +44,16 @@ use kartik\select2\Select2;
             ])
             ?>
         </div>
+    </div>
+    <div class="row">
+        <div class="col-md-2 col-lg-2">
+            <div class="well text-center">
+                <?= Html::img($model->getPhotoViewer(), ['style' => 'width:100px;', 'class' => 'img-rounded']); ?>
+            </div>
+            <?= $form->field($model, 'images')->fileInput() ?>
+        </div>
+    </div>
+    <div class="row">
         <div class="col-md-2 col-lg-2">
             <div class="form-group">
                 <?=
@@ -53,7 +67,7 @@ use kartik\select2\Select2;
             </div>
         </div>
     </div>
-<?php ActiveForm::end(); ?>
+    <?php ActiveForm::end(); ?>
 
     <div class="panel panel-default">
         <div class="panel-heading"><?php echo $this->title; ?></div>
@@ -97,6 +111,22 @@ use kartik\select2\Select2;
                                 return "<a href='" . $link . "'><button type='button' class='btn btn-default btn-sm'>ส่วนผสม</button></a>";
                             },
                                     'format' => 'raw'
+                                ],
+                                [
+                                    'header' => 'รูปภาพ',
+                                    'options' => ['style' => 'width:150px;'],
+                                    'format' => 'raw',
+                                    'attribute' => 'images',
+                                    'value' => function($model) {
+                                return Html::tag('div', '', [
+                                            'style' => 'width:100px;height:45px;
+                          border-top: 10px solid rgba(255, 255, 255, .46);
+                          background-image:url(' . $model->photoViewer . ');
+                          background-size: cover;
+                          background-position:center center;
+                          background-repeat:no-repeat;
+                          ']);
+                            }
                                 ],
                                 [
                                     'class' => 'yii\grid\ActionColumn',

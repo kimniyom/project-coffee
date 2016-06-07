@@ -20,7 +20,6 @@ use common\models\System;
 <hr/>
 <div class="stock-form">
 
-    <?php $form = ActiveForm::begin(); ?>
     <div class="row">
         <div class="col-md-4 col-lg-4">
             <?=
@@ -155,6 +154,11 @@ use common\models\System;
                                         'header' => 'จำนวนที่ตัดได้ / หน่วย',
                                         'hAlign' => 'center',
                                     ],
+                                      [
+                                                'attribute' => 'total',
+                                                'header' => 'คงเหลือ',
+                                                'hAlign' => 'center',
+                                            ],
                                     [
                                         'attribute' => 'create_date',
                                         'hAlign' => 'center',

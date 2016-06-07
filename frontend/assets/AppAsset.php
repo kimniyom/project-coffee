@@ -23,6 +23,7 @@ class AppAsset extends AssetBundle
         'web/css/bootstrap/css/bootstrap-theme.css'
     ];
     public $js = [
+        'web/js/orderlist.js'
     ];
     public $depends = [
         'yii\web\YiiAsset',

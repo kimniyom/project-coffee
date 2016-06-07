@@ -52,6 +52,7 @@ class Stock extends \yii\db\ActiveRecord
             'size' => 'ขนาด',
             'size_unit' => 'หน่วยนับ',
             'total_cut' => 'จำนวนที่ตัดได้ / หน่วย',
+            'total' => 'คงเหลือ',
             'create_date' => 'วันที่นำเข้า',
         ];
     }
