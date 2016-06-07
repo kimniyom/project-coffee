@@ -45,4 +45,10 @@ class Tables extends \yii\db\ActiveRecord
             'active' => 'Active',
         ];
     }
+    
+    public function Getlastorder($tables = null){
+        $sql = "SELECT order_id FROM orders WHERE tables = '$tables' AND confirm = '0'";
+        $result = \Yii::$app->db->createCommand($sql)->queryOne();
+        return $result['order_id'];
+    }
 }

@@ -1,6 +1,9 @@
 <?php
 
 use yii\helpers\Url;
+use common\models\System;
+
+$system = new System();
 ?>      
 <div class="panel panel-default">
     <div class="panel-heading">
@@ -28,7 +31,7 @@ use yii\helpers\Url;
                     ?>
                     <tr>
                         <td style="width: 10%;">
-                            <img src="<?php echo Url::to('@web/web/images/5.jpg') ?>" alt="..." class="img-responsive">
+                            <img src="<?php echo $system->GetimagesProduct($rs['images']) ?>" alt="..." class="img-responsive" style=" max-height: 50px;">
                         </td>
                         <td><?php echo $rs['menuname'] ?></td>
                         <td style=" text-align: center;">1</td>
@@ -39,7 +42,7 @@ use yii\helpers\Url;
                                 <i class="fa fa-trash-o"></i></button>
                         </td>
                     </tr>
-<?php endforeach; ?>
+                <?php endforeach; ?>
             </tbody>
             <tfoot>
                 <tr>

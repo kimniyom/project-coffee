@@ -1,7 +1,7 @@
 <?php
 
 namespace common\models;
-
+use yii\helpers\Url;
 class System {
 
     function Thaidate($dateformat = null) {
@@ -14,6 +14,19 @@ class System {
             return $thaidate = (int) $day . " " . $thai[(int) $month] . " " . ($year + 543);
         } else {
             return $thaidate = (int) $day . " " . $thai[(int) $month] . " " . ($year + 543) . " " . substr($dateformat, 10);
+        }
+    }
+
+    function GetimagesProduct($images = null) {
+
+        if (!empty($images)) {
+            $Urlimages = Url::to('@web/web/uploads/' . $images);
+            $imagesproduct = str_replace('frontend', 'backend', $Urlimages);
+            return $imagesproduct;
+        } else {
+            $Urlimages = Url::to('@web/web/img/none.png');
+            $imagesproduct = str_replace('frontend', 'backend', $Urlimages);
+            return $imagesproduct;
         }
     }
 

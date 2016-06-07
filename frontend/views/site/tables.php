@@ -12,10 +12,13 @@ use yii\helpers\Url;
                 <div class="caption" style=" text-align: center;">
                     <h3>โต๊ะที่ <?php echo $table['tables'] ?></h3>
                     <?php if ($table['active'] == '0') { ?>
+                    <h4 style="color: green;">ว่าง</h4>
                         <a href="javascript:Openorders('<?php echo $table['tables'] ?>')" 
                            class="btn btn-success btn-block btn-lg" role="button">เลือก</a>
                        <?php } else { ?>
-                        <button type="button" class="btn btn-default btn-block btn-lg disabled" role="button">โต๊ะไม่ว่าง</button>>
+                        <h4 style="color: red;">ไม่ว่าง</h4>
+                        <a href="javascript:Openorders('<?php echo $table['tables'] ?>')" 
+                           class="btn btn-warning btn-block btn-lg" role="button"><i class="fa fa-plus"></i> สั่งของเพิ่ม</a>
                     <?php } ?>
                 </div>
             </div>

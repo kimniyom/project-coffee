@@ -9,6 +9,9 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\helpers\Json;
+use app\models\Tables;
+use app\models\Orders as order;
+
 /**
  * OrdersController implements the CRUD actions for Orders model.
  */
@@ -118,18 +121,30 @@ class OrdersController extends Controller {
     public function actionOpenorders() {
         $input = \Yii::$app->request;
         $tables = $input->post('tables');
-        $max = Orders::find()->select('order_id')->max('order_id');
-        $orderID = ($max + 1);
-
-        //Create Order 
-        $columns = array(
-            "order_id" => $orderID,
-            "tables" => $tables,
-            "create_date" => date("Y-m-d H:i:s")
-        );
-        \Yii::$app->db->createCommand()
-                ->insert("orders", $columns)
-                ->execute();
+        $ModelTables = new Tables();
+        //Check Table Null
+        $active = Tables::find()->where(['tables' => $tables])->one()['active'];
+        if ($active == 1) {
+            //getlastorder In tables 
+            $orderID = $ModelTables->Getlastorder($tables);
+        } else {
+            $max = order::find()->select('order_id')->max('order_id');
+            $orderID = ($max + 1);
+            //Active Tables
+            $data = array("active" => '1');
+            \Yii::$app->db->createCommand()
+                    ->update("tables", $data, "tables = '$tables' ")
+                    ->execute();
+            //Create Order 
+            $columns = array(
+                "order_id" => $orderID,
+                "tables" => $tables,
+                "create_date" => date("Y-m-d H:i:s")
+            );
+            \Yii::$app->db->createCommand()
+                    ->insert("orders", $columns)
+                    ->execute();
+        }
         $json = array('orderID' => $orderID);
         echo json_encode($json);
     }

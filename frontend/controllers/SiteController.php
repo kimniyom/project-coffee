@@ -16,7 +16,8 @@ use yii\filters\AccessControl;
 use app\models\Tables;
 use app\models\Orders;
 use yii\db\Query;
-
+use app\models\Orderlist;
+use yii\helpers\Json;
 /**
  * Site controller
  */
@@ -214,5 +215,16 @@ class SiteController extends Controller {
         $data['tables'] = Tables::find()->all();
         return $this->render("tables", $data);
     }
+    
+    public function actionCalculator(){
+        $post = \Yii::$app->request;
+        $orderID = $post->post('orderID');
+        $Model = new Orderlist();
+        $total = $Model->Getsumorder($orderID);
+        
+        $json = array("total" => $total);
+        echo json_encode($json);
+    }
+    
 
 }

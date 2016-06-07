@@ -8,6 +8,7 @@ function Load() {
     var data = {orderID: orderID};
     $.post(url, data, function (success) {
         $("#orderlist").html(success);
+        Calculator(orderID);
     });
 }
 
@@ -35,4 +36,18 @@ function Deleteorderlist(id) {
         });
     }
 }
+
+function Calculator(orderID) {
+    var url = $("#calculator").val();
+    var data = {orderID: orderID};
+    $.post(url, data, function (response) {
+        var datas = jQuery.parseJSON(response);
+        $("#total").val(datas.total);
+    });
+}
+
+function LoadCal() {
+
+}
+
 

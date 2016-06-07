@@ -42,12 +42,21 @@ class Orderlist extends \yii\db\ActiveRecord {
     }
 
     public function Getdata($orderID = null) {
-        $sql = "SELECT o.*,m.menu AS menuname,m.price
+        $sql = "SELECT o.*,m.menu AS menuname,m.price,m.images
                 FROM orderlist o INNER JOIN menu m ON o.menu = m.id 
                 WHERE o.order = '$orderID' ";
         $result = \Yii::$app->db->createCommand($sql)
                 ->queryAll();
         return $result;
+    }
+
+    public function Getsumorder($orderID = null) {
+        $sql = "SELECT SUM(price) AS TOTAL
+                FROM orderlist o INNER JOIN menu m ON o.menu = m.id
+                WHERE o.order = '$orderID' ";
+        $result = \Yii::$app->db->createCommand($sql)
+                ->queryOne();
+        return $result['TOTAL'];
     }
 
 }
