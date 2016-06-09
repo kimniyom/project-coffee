@@ -46,14 +46,6 @@ $system = new System();
                     </tr>
                 <?php endforeach; ?>
             </tbody>
-            <tfoot>
-                <tr>
-                    <td colspan="2" style="text-align:center; background:#eeeeee;"><b>รวม</b></td>
-                    <td style=" background: #666666; text-align: center; font-weight: bold; color: #ffffff;"><?php echo $j; ?></td>
-                    <td style="text-align:right; background:#000000; color: #ffffff; font-weight: bold;"><?php echo $sum; ?></td>
-                    <td style=" background: #eeeeee;"></td>
-                </tr>
-            </tfoot>
         </table>
     </div>
 </div>

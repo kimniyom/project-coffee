@@ -11,6 +11,7 @@ use yii\filters\VerbFilter;
 use yii\helpers\Json;
 use app\models\Tables;
 use app\models\Orders as order;
+use app\models\Orderlist;
 
 /**
  * OrdersController implements the CRUD actions for Orders model.
@@ -155,6 +156,7 @@ class OrdersController extends Controller {
 
         $columns = array(
             "total" => $input->post('total'),
+            "distcount" => $input->post('distcount'),
             "confirm" => '1'
         );
 
@@ -172,6 +174,16 @@ class OrdersController extends Controller {
         Yii::$app->db->createCommand()
                 ->update("orders", $columns, "order_id = '$orderID' ")
                 ->execute();
+    }
+
+    public function actionBill() {
+        $orderlisModel = new Orderlist();
+        $input = Yii::$app->request;
+        $orderID = $input->post('orderID');
+        $data['order'] = order::find()->where(['order_id' => $orderID])->one();
+        $data['orderlist'] = $orderlisModel->Getdata($orderID);
+        
+        return $this->renderPartial('bill', $data);
     }
 
 }

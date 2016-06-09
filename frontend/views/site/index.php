@@ -32,6 +32,7 @@ $menu = new Menu();
 <input type="hidden" id="calculator" value="<?php echo Url::to(['site/calculator']) ?>"/>
 <input type="hidden" id="Urlcheckbill" value="<?php echo Url::to(['orders/checkbill']) ?>"/>
 <input type="hidden" id="Urltel" value="<?php echo Url::to(['orders/addtel']) ?>"/>
+<input type="hidden" id="Urlbill" value="<?php echo Url::to(['orders/bill']) ?>"/>
 
 <div class="row">
     <div class="col-md-8 col-lg-8">
@@ -112,17 +113,27 @@ $menu = new Menu();
                              onclick="AddTel()"><i class="fa fa-plus"></i> เพิ่ม</div>
                     </div>
                 </div>
+
                 <div class="form-group">
                     <div class="input-group">
-                        <div class="input-group-addon">ส่วนลด</div>
-                        <input type="text" class="form-control" id="discount" placeholder="ส่วนลด" value="0">
+                        <div class="input-group-addon">ราคารวม</div>
+                        <input type="text" class="form-control" id="total" placeholder="ราคารวม">
                         <div class="input-group-addon">บาท</div>
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="input-group">
-                        <div class="input-group-addon">ราคารวม</div>
-                        <input type="text" class="form-control" id="total" placeholder="ราคารวม">
+                        <div class="input-group-addon">ส่วนลด</div>
+                        <input type="text" class="form-control" id="discount" placeholder="ส่วนลด" value="0"
+                               onkeypress="return chkNumber(this.value)"
+                               onkeyup="Distcount(this.value)">
+                        <div class="input-group-addon">บาท</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="input-group">
+                        <div class="input-group-addon">รวมสุทธิ</div>
+                        <input type="text" class="form-control" id="_total" placeholder="ราคารวม">
                         <div class="input-group-addon">บาท</div>
                     </div>
                 </div>
@@ -138,12 +149,40 @@ $menu = new Menu();
                     <button type="button" class="btn btn-default disabled">ชำระเงินแล้ว</button>
                 <?php } ?>
 
-                <button type="button" class="btn btn-default">พิมพ์ใบเสร็จ</button>
+                <button type="button" class="btn btn-default"
+                        onclick="Bill()">พิมพ์ใบเสร็จ</button>
                 <button type="button" class="btn btn-default">ปิดการขาย</button>
             </div>
         </div>
     </div>
 </div>
+
+
+<!--
+    ##############
+    #### Bill ####
+    ##############
+-->
+<div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" id="popupbill">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <!--
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Modal title</h4>
+            </div>
+            -->
+            <div class="modal-body" id="bodybill">
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary"
+                        onclick="PrintElem('#bodybill')">Print</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 
 
 
