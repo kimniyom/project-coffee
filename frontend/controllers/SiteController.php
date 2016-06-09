@@ -18,6 +18,7 @@ use app\models\Orders;
 use yii\db\Query;
 use app\models\Orderlist;
 use yii\helpers\Json;
+
 /**
  * Site controller
  */
@@ -73,10 +74,10 @@ class SiteController extends Controller {
      *
      * @return mixed
      */
-    
-    public function actionTables($tables = null,$order = null) {
-        
+    public function actionTables($tables = null, $order = null) {
+
         //$data['id'] = $id;
+        $data['model'] = Orders::find()->where(['order_id' => $order])->one();
         $data['order_id'] = $order;
         $data['tables'] = $tables;
         return $this->render('index', $data);
@@ -215,16 +216,15 @@ class SiteController extends Controller {
         $data['tables'] = Tables::find()->all();
         return $this->render("tables", $data);
     }
-    
-    public function actionCalculator(){
+
+    public function actionCalculator() {
         $post = \Yii::$app->request;
         $orderID = $post->post('orderID');
         $Model = new Orderlist();
         $total = $Model->Getsumorder($orderID);
-        
+
         $json = array("total" => $total);
         echo json_encode($json);
     }
-    
 
 }

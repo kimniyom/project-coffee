@@ -42,8 +42,9 @@ class Orderlist extends \yii\db\ActiveRecord {
     }
 
     public function Getdata($orderID = null) {
-        $sql = "SELECT o.*,m.menu AS menuname,m.price,m.images
+        $sql = "SELECT o.*,m.menu AS menuname,m.price,m.images,r.confirm
                 FROM orderlist o INNER JOIN menu m ON o.menu = m.id 
+                INNER JOIN orders r ON o.order = r.order_id
                 WHERE o.order = '$orderID' ";
         $result = \Yii::$app->db->createCommand($sql)
                 ->queryAll();

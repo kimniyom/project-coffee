@@ -149,4 +149,29 @@ class OrdersController extends Controller {
         echo json_encode($json);
     }
 
+    public function actionCheckbill() {
+        $input = Yii::$app->request;
+        $orderID = $input->post('orderID');
+
+        $columns = array(
+            "total" => $input->post('total'),
+            "confirm" => '1'
+        );
+
+        Yii::$app->db->createCommand()
+                ->update("orders", $columns, "order_id = '$orderID' ")
+                ->execute();
+    }
+
+    public function actionAddtel() {
+        $input = Yii::$app->request;
+        $orderID = $input->post('orderID');
+        $columns = array(
+            "tel" => $input->post('tel')
+        );
+        Yii::$app->db->createCommand()
+                ->update("orders", $columns, "order_id = '$orderID' ")
+                ->execute();
+    }
+
 }

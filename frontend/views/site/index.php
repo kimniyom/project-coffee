@@ -30,6 +30,8 @@ $menu = new Menu();
 <input type="hidden" id="Deleteorderlist" value="<?php echo Url::to(['orderlist/deleteorderlist']) ?>"/>
 <input type="hidden" id="Loadorderlist" value="<?php echo Url::to(['orderlist/load']) ?>"/>
 <input type="hidden" id="calculator" value="<?php echo Url::to(['site/calculator']) ?>"/>
+<input type="hidden" id="Urlcheckbill" value="<?php echo Url::to(['orders/checkbill']) ?>"/>
+<input type="hidden" id="Urltel" value="<?php echo Url::to(['orders/addtel']) ?>"/>
 
 <div class="row">
     <div class="col-md-8 col-lg-8">
@@ -98,13 +100,16 @@ $menu = new Menu();
             <div class="panel-heading">Calculator</div>
             <div class="panel-body">
                 <div class="well well-sm">
-                    รหัสรายการ <?php echo $order_id ?>โต๊ะที่ <?php echo $tables ?> วันนที่ขาย
+                    รหัสรายการ <?php echo $order_id ?>
+                    โต๊ะที่ <?php echo $tables ?> 
+                    วันที่ขาย <?php echo $system->Thaidate(date("Y-m-d")) ?>
                 </div>
                 <div class="form-group">
                     <div class="input-group">
                         <div class="input-group-addon">Tel.</div>
                         <input type="text" class="form-control" id="tel" placeholder="เบอร์โทรศัพท์ ...">
-                        <div class="input-group-addon btn"><i class="fa fa-check"></i> ตรวจสอบ</div>
+                        <div class="input-group-addon btn btn-success"
+                             onclick="AddTel()"><i class="fa fa-plus"></i> เพิ่ม</div>
                     </div>
                 </div>
                 <div class="form-group">
@@ -124,8 +129,17 @@ $menu = new Menu();
             </div>
             <div class="panel-footer">
                 <button type="button" class="btn btn-default">สั่ง</button>
-                <button type="button" class="btn btn-default">เก็บเงิน</button>
+                <?php
+                if ($model->confirm == '0') {
+                    ?>
+                    <button type="button" class="btn btn-default"
+                            onclick="Check_bill()">ชำระเงิน</button>
+                        <?php } else { ?>
+                    <button type="button" class="btn btn-default disabled">ชำระเงินแล้ว</button>
+                <?php } ?>
+
                 <button type="button" class="btn btn-default">พิมพ์ใบเสร็จ</button>
+                <button type="button" class="btn btn-default">ปิดการขาย</button>
             </div>
         </div>
     </div>

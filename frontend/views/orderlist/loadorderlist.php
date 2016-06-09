@@ -37,9 +37,11 @@ $system = new System();
                         <td style=" text-align: center;">1</td>
                         <td style="text-align:right;"><?php echo $rs['price'] ?></td>
                         <td style="text-align: right;">
-                            <button type="button" class="btn btn-danger btn-xs"
-                                    onclick="Deleteorderlist('<?php echo $rs['id'] ?>')">
-                                <i class="fa fa-trash-o"></i></button>
+                            <?php if ($rs['confirm'] == '0') { ?>
+                                <button type="button" class="btn btn-danger btn-xs"
+                                        onclick="Deleteorderlist('<?php echo $rs['id'] ?>')">
+                                    <i class="fa fa-trash-o"></i></button>
+                            <?php } ?>
                         </td>
                     </tr>
                 <?php endforeach; ?>
