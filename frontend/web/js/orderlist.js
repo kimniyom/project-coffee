@@ -2,8 +2,20 @@ $(document).ready(function () {
     var orderID = $("#orderID").val();
     Calculator(orderID);
     Load();
+    ActiveMenu();
 
 });
+
+function ActiveMenu() {
+    var confirmorder = $("#confirmorder").val();
+    if (confirmorder == 1) {
+        $("#menuproduct").hide();
+        $("#btnhome").show();
+    } else {
+        $("#menuproduct").show();
+        $("#btnhome").hide();
+    }
+}
 
 function Load() {
     var url = $("#Loadorderlist").val();
@@ -15,7 +27,8 @@ function Load() {
     });
 }
 
-function Save(menu) {
+function Save() {
+    var menu = $("#menu_id").val();
     var url = $("#Saveorderlist").val();
     var orderID = $("#orderID").val();
     var data = {
@@ -24,6 +37,26 @@ function Save(menu) {
     };
     $.post(url, data, function (success) {
         Load();
+    });
+}
+
+function popupoptions(menu) {
+    $("#menu_id").val(menu);
+    $("#popupoptions").modal();
+}
+
+function AddOptions() {
+    var url = "index.php?r=orders/addoptions";
+    var orderID = $("#orderID").val();
+    var menu = ("#menu_id").val();
+    var data = {
+        orderID: orderID,
+        menu: menu
+    };
+
+    $.post(url, data, function (success) {
+        $("#options").val("");
+        //Load();
     });
 }
 
@@ -60,6 +93,10 @@ function Check_bill() {
     var orderID = $("#orderID").val();
     var total = $("#_total").val();
     var distcount = $("#distcount").val();
+    if (total <= 0) {
+        alert("ยังไม่มีรายการสินค้า ...");
+        return false;
+    }
     var data = {
         orderID: orderID,
         total: total,
@@ -126,7 +163,7 @@ function Bill() {
     });
 }
 
-function PrintElem(elem,data)
+function PrintElem(elem, data)
 {
     Popup($(elem).html());
 }
@@ -147,6 +184,19 @@ function Popup(data)
     mywindow.close();
 
     return true;
+}
+
+//จบการขายรายการนี้
+function EndOrder() {
+    var url = $("#Urlendorder").val();
+    var tables = $("#tables").val();
+    var data = {
+        tables: tables
+    };
+    $.post(url, data, function (response) {
+        window.location = "index.php?r=site/index";
+        //var datas = jQuery.parseJSON(response);
+    });
 }
 
 

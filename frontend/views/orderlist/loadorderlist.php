@@ -9,13 +9,12 @@ $system = new System();
     <div class="panel-heading">
         รายการขาย
     </div>
-    <div class="panel-body">
-        <table class="table">
+    <div class="panel-body" id="table">
+        <table class="table table-striped">
             <thead>
                 <tr>
                     <th></th>
-                    <th>รายการ1</th>
-                    <th style="text-align: center;">จำนวน</th>
+                    <th>รายการ</th>
                     <th style=" text-align: right;">ราคา</th>
                     <th></th>
                 </tr>
@@ -31,10 +30,9 @@ $system = new System();
                     ?>
                     <tr>
                         <td style="width: 10%;">
-                            <img src="<?php echo $system->GetimagesProduct($rs['images']) ?>" alt="..." class="img-responsive" style=" max-height: 50px;">
+                            <img src="<?php echo $system->GetimagesProduct($rs['images']) ?>" alt="..." class="img-responsive img-circle" style=" max-height: 50px;">
                         </td>
                         <td><?php echo $rs['menuname'] ?></td>
-                        <td style=" text-align: center;">1</td>
                         <td style="text-align:right;"><?php echo $rs['price'] ?></td>
                         <td style="text-align: right;">
                             <?php if ($rs['confirm'] == '0') { ?>
@@ -49,3 +47,4 @@ $system = new System();
         </table>
     </div>
 </div>
+

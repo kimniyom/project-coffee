@@ -182,8 +182,17 @@ class OrdersController extends Controller {
         $orderID = $input->post('orderID');
         $data['order'] = order::find()->where(['order_id' => $orderID])->one();
         $data['orderlist'] = $orderlisModel->Getdata($orderID);
-        
+
         return $this->renderPartial('bill', $data);
+    }
+
+    public function actionEndorder() {
+        $input = Yii::$app->request;
+        $tables = $input->post('tables');
+        $columns = array("active" => '0');
+        \Yii::$app->db->createCommand()
+                ->update("tables", $columns, "tables = '$tables'")
+                ->execute();
     }
 
 }

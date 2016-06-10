@@ -111,3 +111,23 @@ a.desc:after {
 .nav > li > form > button:hover {
     text-decoration: none;
 }
+
+#menudisabled{
+    /*position: absolute;*/
+    width: 100%;
+    height: 100%;
+    background: #999;
+}
+
+#htab{
+    color: #66cc00;
+    font-weight: bold;
+}
+
+#mmenu{
+    color: #ffff00;
+}
+
+#table table tbody td{
+    color: #ff9900;
+}

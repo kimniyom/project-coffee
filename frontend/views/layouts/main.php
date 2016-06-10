@@ -8,8 +8,9 @@ use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use frontend\assets\AppAsset;
 use common\widgets\Alert;
-
+use common\models\System;
 AppAsset::register($this);
+$config = new System();
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -28,18 +29,26 @@ AppAsset::register($this);
 
             <?php
             NavBar::begin([
-                'brandLabel' => 'My Company',
+                'brandLabel' => 'DemoCoffee',
                 'brandUrl' => Yii::$app->homeUrl,
                 'options' => [
                     'class' => 'navbar-default navbar-default navbar-fixed-top',
                 ],
                 'innerContainerOptions' => ['class' => 'container-fluid'],
             ]);
-            $date = date("Y-m-d H:i:s");
+            $date = $config->Thaidate(date("Y-m-d H:i:s"));
 
             $menuItems = [
-                ['label' => 'Home', 'url' => ['/site/index']],
-                ['label' => "Date : ".$date],
+                /*
+                [
+                    //'label' => 'Home',
+                    //'url' => ['/site/index'],
+                    //'id' => 'btnhome',
+                    //'options' => ['id' => 'btnhome'],
+                ],
+                 * 
+                 */
+                ['label' => "Date : " . $date],
                     //['label' => 'Contact', 'url' => ['/site/contact']],
             ];
             /*

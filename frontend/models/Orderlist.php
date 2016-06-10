@@ -52,7 +52,7 @@ class Orderlist extends \yii\db\ActiveRecord {
     }
 
     public function Getsumorder($orderID = null) {
-        $sql = "SELECT SUM(price) AS TOTAL
+        $sql = "SELECT IFNULL(SUM(price),0) AS TOTAL
                 FROM orderlist o INNER JOIN menu m ON o.menu = m.id
                 WHERE o.order = '$orderID' ";
         $result = \Yii::$app->db->createCommand($sql)

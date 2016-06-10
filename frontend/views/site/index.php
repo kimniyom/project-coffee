@@ -25,6 +25,8 @@ $menu = new Menu();
     ###### Link #####
 -->
 <input type="hidden" id="orderID" value="<?php echo $order_id ?>" />
+<input type="hidden" id="tables" value="<?php echo $tables ?>" />
+<input type="hidden" id="confirmorder" value="<?php echo $model['confirm'] ?>" />
 
 <input type="hidden" id="Saveorderlist" value="<?php echo Url::to(['orderlist/save']) ?>"/>
 <input type="hidden" id="Deleteorderlist" value="<?php echo Url::to(['orderlist/deleteorderlist']) ?>"/>
@@ -33,53 +35,63 @@ $menu = new Menu();
 <input type="hidden" id="Urlcheckbill" value="<?php echo Url::to(['orders/checkbill']) ?>"/>
 <input type="hidden" id="Urltel" value="<?php echo Url::to(['orders/addtel']) ?>"/>
 <input type="hidden" id="Urlbill" value="<?php echo Url::to(['orders/bill']) ?>"/>
+<input type="hidden" id="Urlendorder" value="<?php echo Url::to(['orders/endorder']) ?>"/>
 
 <div class="row">
     <div class="col-md-8 col-lg-8">
-        <div class="panel panel-default">
+        <div class="panel panel-primary" id="menuproduct">
             <div class="panel-heading">Menu</div>
-            <!-- Nav tabs -->
-            <ul class="nav nav-tabs" role="tablist">
-                <?php
-                $i = 0;
-                $typeproduct = Type::find()->all();
-                foreach ($typeproduct as $t):
-                    $i++;
-                    if ($i == 1) {
-                        $hclass = "active";
-                    } else {
-                        $hclass = "";
-                    }
-                    ?>
-                    <li role="presentation" class="<?php echo $hclass ?>"><a href="#<?php echo $i; ?>" aria-controls="<?php echo $i; ?>" role="tab" data-toggle="tab"><?php echo $t['typename'] ?></a></li>
-                <?php endforeach; ?>
-            </ul>
+            <div class="panel-body" style="background:#3e444c;">
+                <!-- Nav tabs -->
+                <ul class="nav nav-tabs" role="tablist">
+                    <?php
+                    $i = 0;
+                    $typeproduct = Type::find()->all();
+                    foreach ($typeproduct as $t):
+                        $i++;
+                        if ($i == 1) {
+                            $hclass = "active";
+                        } else {
+                            $hclass = "";
+                        }
+                        ?>
+                        <li role="presentation" class="<?php echo $hclass ?>">
+                            <a href="#<?php echo $i; ?>" aria-controls="<?php echo $i; ?>" role="tab" data-toggle="tab" id="htab"><?php echo $t['typename'] ?></a>
+                        </li>
+                    <?php endforeach; ?>
+                </ul>
 
-            <!-- Tab panes -->
-            <div class="tab-content well" style=" border-radius: 0px; border-top: none; border: none; background: none; box-shadow: none;">
-                <?php
-                $a = 0;
-                foreach ($typeproduct as $t2):
-                    $a++;
-                    if ($a == 1) {
-                        $class = "active";
-                    } else {
-                        $class = "";
-                    }
-                    $product = $menu->Getmenu($t2['id']);
-                    ?>
-                    <div role="tabpanel" class="tab-pane <?php echo $class ?>" id="<?php echo $a ?>">
-                        <center>
-                            <?php foreach ($product as $p): ?>
-                                <button type="button" class="btn btn-default" style=" margin-bottom: 5px;"
-                                        onclick="Save('<?php echo $p['id'] ?>')">
-                                    <img src="<?php echo $system->GetimagesProduct($p['images']) ?>" style=" max-height: 50px;"><br/>
-                                    <?php echo $p['menu'] ?>
-                                </button>
-                            <?php endforeach; ?>
-                        </center>
+                <!-- Tab panes -->
+                <div class="row">
+                    <div class="tab-content" 
+                         style="border-radius: 0px; border-top: none; border: none; box-shadow: none; padding-top: 10px;">
+                             <?php
+                             $a = 0;
+                             foreach ($typeproduct as $t2):
+                                 $a++;
+                                 if ($a == 1) {
+                                     $class = "active";
+                                 } else {
+                                     $class = "";
+                                 }
+                                 $product = $menu->Getmenu($t2['id']);
+                                 ?>
+                            <div role="tabpanel" class="tab-pane <?php echo $class ?>" id="<?php echo $a ?>">
+                                <center>
+                                    <?php foreach ($product as $p): ?>
+                                        <div class="col-sm-6 col-md-4 col-lg-4">
+                                            <button type="button" class="btn btn-default btn-block" style=" margin-bottom: 5px;"
+                                                    onclick="popupoptions('<?php echo $p['id'] ?>')">
+                                                <img src="<?php echo $system->GetimagesProduct($p['images']) ?>" style=" max-height: 50px;"><br/>
+                                                <p id="mmenu"><?php echo $p['menu'] ?></p>
+                                            </button>
+                                        </div>
+                                    <?php endforeach; ?>
+                                </center>
+                            </div>
+                        <?php endforeach; ?>
                     </div>
-                <?php endforeach; ?>
+                </div>
             </div>
         </div>
 
@@ -117,7 +129,7 @@ $menu = new Menu();
                 <div class="form-group">
                     <div class="input-group">
                         <div class="input-group-addon">ราคารวม</div>
-                        <input type="text" class="form-control" id="total" placeholder="ราคารวม">
+                        <input type="text" class="form-control" id="total" placeholder="ราคารวม" value="0">
                         <div class="input-group-addon">บาท</div>
                     </div>
                 </div>
@@ -143,15 +155,22 @@ $menu = new Menu();
                 <?php
                 if ($model->confirm == '0') {
                     ?>
-                    <button type="button" class="btn btn-default"
+                    <button type="button" class="btn btn-success"
                             onclick="Check_bill()">ชำระเงิน</button>
                         <?php } else { ?>
-                    <button type="button" class="btn btn-default disabled">ชำระเงินแล้ว</button>
+                    <button type="button" class="btn btn-success disabled">ชำระเงินแล้ว</button>
                 <?php } ?>
 
-                <button type="button" class="btn btn-default"
+                <button type="button" class="btn btn-warning"
                         onclick="Bill()">พิมพ์ใบเสร็จ</button>
-                <button type="button" class="btn btn-default">ปิดการขาย</button>
+                        <?php
+                        if ($model->confirm == '1') {
+                            ?>
+                    <button type="button" class="btn btn-danger"
+                            onclick="EndOrder()">สิ้นสุดการขาย</button>
+                        <?php } else { ?>
+                    <button type="button" class="btn btn-danger disabled">สิ้นสุดการขาย</button>
+                <?php } ?>
             </div>
         </div>
     </div>
@@ -184,6 +203,44 @@ $menu = new Menu();
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
+
+<!--
+    ##############
+    #### Options ####
+    ##############
+-->
+<div class="modal fade" tabindex="-1" role="dialog" id="popupoptions">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <!--
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Modal title</h4>
+            </div>
+            -->
+            <div class="modal-body" id="bodyoptions">
+                <label>รายการเพิ่มเติม</label>
+                <input type="hidden" id="menu_id" class="form-control"/>
+                <input type="text" class=" form-control" id="options"/>
+                <label>ราคา</label>
+                <input type="number" class="form-control" id="optionsprice"/>
+                <br/>
+                <center>
+                    <button type="button" class="btn btn-default" onclick="AddOptions()"><i class="fa fa-plus"></i> เพิ่ม</button>
+                </center>
+            </div>
+            <div class="modal-footer">
+                <div class=" col-md-6 col-lg-6">
+                    <button type="button" class="btn btn-danger btn-block" data-dismiss="modal">ปิด</button>
+                </div>
+                <div class=" col-md-6 col-lg-6">
+                    <button type="button" class="btn btn-success btn-block"
+                            onclick="Save()">ยืนยัน</button>
+                </div>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 
 
 
