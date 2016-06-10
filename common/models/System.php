@@ -1,7 +1,9 @@
 <?php
 
 namespace common\models;
+
 use yii\helpers\Url;
+
 class System {
 
     function Thaidate($dateformat = null) {
@@ -28,6 +30,10 @@ class System {
             $imagesproduct = str_replace('frontend', 'backend', $Urlimages);
             return $imagesproduct;
         }
+    }
+
+    function LinktoBackend($url = null) {
+        return str_replace('frontend', 'backend/web', $url);
     }
 
 }

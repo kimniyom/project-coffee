@@ -19,7 +19,15 @@ use common\models\System;
 
 <hr/>
 <div class="stock-form">
-
+    <?php
+    $form = ActiveForm::begin([
+                    /* 'id' => 'login-form-vertical',
+                      'type' => ActiveForm::TYPE_INLINE,
+                      'formConfig' => ['showErrors' => true]
+                     * 
+                     */
+    ]);
+    ?>
     <div class="row">
         <div class="col-md-4 col-lg-4">
             <?=
@@ -154,15 +162,15 @@ use common\models\System;
                                         'header' => 'จำนวนที่ตัดได้ / หน่วย',
                                         'hAlign' => 'center',
                                     ],
-                                      [
-                                                'attribute' => 'total',
-                                                'header' => 'คงเหลือ',
-                                                'hAlign' => 'center',
-                                            ],
+                                    [
+                                        'attribute' => 'total',
+                                        'header' => 'คงเหลือ',
+                                        'hAlign' => 'center',
+                                    ],
                                     [
                                         'attribute' => 'create_date',
                                         'hAlign' => 'center',
-                                        'value' => function($model){
+                                        'value' => function($model) {
                                             $config = new System();
                                             return $config->Thaidate($model->create_date);
                                         }

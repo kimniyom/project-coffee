@@ -3,16 +3,16 @@
 namespace backend\controllers;
 
 use Yii;
-use app\models\Options;
-use app\models\OptionsSearch;
+use app\models\Menuoptions;
+use app\models\MenuoptionsSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * OptionsController implements the CRUD actions for Options model.
+ * MenuoptionsController implements the CRUD actions for Menuoptions model.
  */
-class OptionsController extends Controller {
+class MenuoptionsController extends Controller {
 
     /**
      * @inheritdoc
@@ -29,11 +29,11 @@ class OptionsController extends Controller {
     }
 
     /**
-     * Lists all Options models.
+     * Lists all Menuoptions models.
      * @return mixed
      */
     public function actionIndex() {
-        $searchModel = new OptionsSearch();
+        $searchModel = new MenuoptionsSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -43,7 +43,7 @@ class OptionsController extends Controller {
     }
 
     /**
-     * Displays a single Options model.
+     * Displays a single Menuoptions model.
      * @param integer $id
      * @return mixed
      */
@@ -54,14 +54,16 @@ class OptionsController extends Controller {
     }
 
     /**
-     * Creates a new Options model.
+     * Creates a new Menuoptions model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate() {
-        $model = new Options();
+        $model = new Menuoptions();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post())) {
+            $model->create_date = date("Y-m-d");
+            $model->save();
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
@@ -71,7 +73,7 @@ class OptionsController extends Controller {
     }
 
     /**
-     * Updates an existing Options model.
+     * Updates an existing Menuoptions model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -89,7 +91,7 @@ class OptionsController extends Controller {
     }
 
     /**
-     * Deletes an existing Options model.
+     * Deletes an existing Menuoptions model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -101,62 +103,18 @@ class OptionsController extends Controller {
     }
 
     /**
-     * Finds the Options model based on its primary key value.
+     * Finds the Menuoptions model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Options the loaded model
+     * @return Menuoptions the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id) {
-        if (($model = Options::findOne($id)) !== null) {
+        if (($model = Menuoptions::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
-    }
-
-    public function actionSave() {
-        $input = Yii::$app->request;
-        $columns = array(
-            "order_id" => $input->post('order_id'),
-            "menu" => $input->post('menu'),
-            "options" => $input->post('options'),
-            "price" => $input->post('price'),
-            "create_date" => date('Y-m-d')
-        );
-
-        Yii::$app->db->createCommand()
-                ->insert("options", $columns)
-                ->execute();
-    }
-
-    public function actionEdit() {
-        $input = Yii::$app->request;
-        $id = $input->post('id');
-        $columns = array(
-            "options" => $input->post('options'),
-            "price" => $input->post('price')
-        );
-
-        Yii::$app->db->createCommand()
-                ->update("options", $columns, "id = $id")
-                ->execute();
-    }
-
-    public function actionLoaddata() {
-        $input = Yii::$app->request;
-        $menu = $input->post('menu');
-        $data['options'] = Options::find()->where(['menu' => $menu])->all();
-
-        return $this->renderPartial('loaddata', $data);
-    }
-
-    public function actionDeleteoptions() {
-        $input = Yii::$app->request;
-        $id = $input->post('id');
-        Yii::$app->db->createCommand()
-                ->delete("options", "id = $id")
-                ->execute();
     }
 
 }

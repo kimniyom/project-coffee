@@ -9,6 +9,9 @@ use yii\widgets\Breadcrumbs;
 use frontend\assets\AppAsset;
 use common\widgets\Alert;
 use common\models\System;
+use yii\helpers\Url;
+use yii\web\UrlManager;
+
 AppAsset::register($this);
 $config = new System();
 ?>
@@ -40,17 +43,20 @@ $config = new System();
 
             $menuItems = [
                 /*
-                [
-                    //'label' => 'Home',
-                    //'url' => ['/site/index'],
-                    //'id' => 'btnhome',
-                    //'options' => ['id' => 'btnhome'],
-                ],
+                  [
+                  //'label' => 'Home',
+                  //'url' => ['/site/index'],
+                  //'id' => 'btnhome',
+                  //'options' => ['id' => 'btnhome'],
+                  ],
                  * 
                  */
                 ['label' => "Date : " . $date],
                     //['label' => 'Contact', 'url' => ['/site/contact']],
             ];
+            //if (Yii::$app->session['admin'] == "TRUE") {
+            $menuItems[] = ['label' => 'BackOffice', 'url' => $config->LinktoBackend(Yii::$app->urlManager->createUrl('stock'))];
+            //}
             /*
               if (Yii::$app->user->isGuest) {
               $menuItems[] = ['label' => 'Signup', 'url' => ['/site/signup']];
