@@ -37,26 +37,43 @@ function Save() {
     };
     $.post(url, data, function (success) {
         Load();
+        $("#popupoptions").modal("hide");
     });
 }
 
 function popupoptions(menu) {
     $("#menu_id").val(menu);
     $("#popupoptions").modal();
+    var orderID = $("#orderID").val();
+    var url = "index.php?r=menuoptions/loadoptions";
+    var data = {};
+    $.post(url, data, function (result) {
+        $("#bodyoptions").html(result);
+        Loadoptions(orderID,menu);
+    });
 }
 
-function AddOptions() {
+function AddOptions(optionsID) {
     var url = "index.php?r=orders/addoptions";
     var orderID = $("#orderID").val();
-    var menu = ("#menu_id").val();
+    var menu = $("#menu_id").val();
     var data = {
         orderID: orderID,
-        menu: menu
+        menu: menu,
+        options_id: optionsID
     };
 
     $.post(url, data, function (success) {
-        $("#options").val("");
-        //Load();
+        Loadoptions(orderID, menu);
+    });
+}
+
+function Loadoptions(orderID, menu) {
+    var url = "index.php?r=options/loaddata";
+    var data = {orderID: orderID, menu: menu};
+
+    $.post(url, data, function (result) {
+        $("#showdataoptions").html(result);
     });
 }
 

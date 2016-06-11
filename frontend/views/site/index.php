@@ -210,24 +210,18 @@ $menu = new Menu();
     ##############
 -->
 <div class="modal fade" tabindex="-1" role="dialog" id="popupoptions">
-    <div class="modal-dialog modal-sm">
+    <div class="modal-dialog">
         <div class="modal-content">
-            <!--
+     
             <div class="modal-header">
+                <!--
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">Modal title</h4>
+                -->
+                <h4 class="modal-title">รายการเพิ่มเติม</h4>
             </div>
-            -->
+     
+            <input type="hidden" id="menu_id" class="form-control"/>
             <div class="modal-body" id="bodyoptions">
-                <label>รายการเพิ่มเติม</label>
-                <input type="hidden" id="menu_id" class="form-control"/>
-                <input type="text" class=" form-control" id="options"/>
-                <label>ราคา</label>
-                <input type="number" class="form-control" id="optionsprice"/>
-                <br/>
-                <center>
-                    <button type="button" class="btn btn-default" onclick="AddOptions()"><i class="fa fa-plus"></i> เพิ่ม</button>
-                </center>
             </div>
             <div class="modal-footer">
                 <div class=" col-md-6 col-lg-6">

@@ -195,4 +195,18 @@ class OrdersController extends Controller {
                 ->execute();
     }
 
+    public function actionAddoptions() {
+        $input = Yii::$app->request;
+        $columns = array(
+            'menu' => $input->post('menu'),
+            'order_id' => $input->post('orderID'),
+            'options_id' => $input->post('options_id'),
+            "create_date" => date('Y-m-d')
+        );
+
+        \Yii::$app->db->createCommand()
+                ->insert("options", $columns)
+                ->execute();
+    }
+
 }

@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use app\models\Options;
 
 /**
  * This is the model class for table "orderlist".
@@ -52,12 +53,28 @@ class Orderlist extends \yii\db\ActiveRecord {
     }
 
     public function Getsumorder($orderID = null) {
-        $sql = "SELECT IFNULL(SUM(price),0) AS TOTAL
-                FROM orderlist o INNER JOIN menu m ON o.menu = m.id
-                WHERE o.order = '$orderID' ";
-        $result = \Yii::$app->db->createCommand($sql)
-                ->queryOne();
-        return $result['TOTAL'];
+        /*
+          $sql = "SELECT IFNULL(SUM(price),0) AS TOTAL
+          FROM orderlist o INNER JOIN menu m ON o.menu = m.id
+          WHERE o.order = '$orderID' ";
+          $result = \Yii::$app->db->createCommand($sql)
+          ->queryOne();
+         */
+        $Modeloptions = new Options();
+        $result1 = $this->Getdata($orderID);
+        $Total = 0;
+        $TotalOptions = 0;
+        $TotalAll = 0;
+        foreach ($result1 as $rs):
+            $Total = $Total + $rs['price'];
+            $Options = $Modeloptions->Getdata($rs['order'], $rs['menu']);
+            foreach ($Options as $op):
+                $TotalOptions = $TotalOptions + $op['price'];
+            endforeach;
+            $TotalAll = $TotalOptions + $Total;
+        endforeach;
+
+        return $TotalAll;
     }
 
 }
