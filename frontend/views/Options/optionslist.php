@@ -33,9 +33,11 @@ use yii\helpers\Url;
         var url = "<?php echo Url::to(['options/deleteoptions']) ?>";
         var orderID = $("#orderID").val();
         var menu = $("#menu_id").val();
+        var orderlist_id = $("#orderlist_id").val();
         var data = {id: id};
         $.post(url, data, function (success) {
-            Loadoptions(orderID, menu);
+            Loadoptions(orderID, menu, orderlist_id);
+            Load();
         });
     }
 </script>

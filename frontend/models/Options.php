@@ -46,11 +46,13 @@ class Options extends \yii\db\ActiveRecord {
         ];
     }
 
-    public function Getdata($orderID = null, $menu = null) {
+    public function Getdata($orderID = null, $menu = null, $orderlist_id = null) {
         $sql = "SELECT o.*,m.`options` AS optionsname,m.price
                     FROM `options` o INNER JOIN  menuoptions m
                     ON o.options_id = m.id
-                    WHERE o.order_id = '$orderID' AND o.menu = '$menu' ";
+                    WHERE o.order_id = '$orderID'
+                    AND o.menu = '$menu'
+                    AND o.orderlist_id = '$orderlist_id' ";
         return Yii::$app->db->createCommand($sql)->queryAll();
     }
 

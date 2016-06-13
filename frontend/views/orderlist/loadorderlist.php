@@ -21,6 +21,7 @@ $system = new System();
                     <th>Options</th>
                     <th style=" text-align: center;">ราคา</th>
                     <th style="text-align: right;">รวม</th>
+                    <th>เพิ่ม Options</th>
                     <th></th>
                 </tr>
             </thead>
@@ -34,7 +35,7 @@ $system = new System();
                     $j++;
 
                     //Get Options 
-                    $dataOptions = $Options->Getdata($rs['order'], $rs['menu']);
+                    $dataOptions = $Options->Getdata($rs['order'], $rs['menu'], $rs['id']);
                     ?>
                     <tr>
                         <td style="width: 10%;">
@@ -53,6 +54,10 @@ $system = new System();
                         </td>
                         <td style="text-align:center;"><?php echo $OptionsPrice ?></td>
                         <td style="text-align:right;"><?php echo $rs['price'] + $OptionsPrice ?></td>
+                        <td>
+                            <button type="button" class="btn btn-success"
+                                    onclick="popupoptions('<?php echo $rs['menu'] ?>', '<?php echo $rs['id'] ?>')">Add</button>
+                        </td>
                         <td style="text-align: right;">
                             <?php if ($rs['confirm'] == '0') { ?>
                                 <button type="button" class="btn btn-danger btn-xs"

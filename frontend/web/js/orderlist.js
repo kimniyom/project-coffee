@@ -27,8 +27,7 @@ function Load() {
     });
 }
 
-function Save() {
-    var menu = $("#menu_id").val();
+function Save(menu) {
     var url = $("#Saveorderlist").val();
     var orderID = $("#orderID").val();
     var data = {
@@ -41,15 +40,16 @@ function Save() {
     });
 }
 
-function popupoptions(menu) {
+function popupoptions(menu, orderlist_id) {
     $("#menu_id").val(menu);
+    $("#orderlist_id").val(orderlist_id);
     $("#popupoptions").modal();
     var orderID = $("#orderID").val();
     var url = "index.php?r=menuoptions/loadoptions";
     var data = {};
     $.post(url, data, function (result) {
         $("#bodyoptions").html(result);
-        Loadoptions(orderID,menu);
+        Loadoptions(orderID, menu,orderlist_id);
     });
 }
 
@@ -57,20 +57,23 @@ function AddOptions(optionsID) {
     var url = "index.php?r=orders/addoptions";
     var orderID = $("#orderID").val();
     var menu = $("#menu_id").val();
+    var orderlist_id = $("#orderlist_id").val();
     var data = {
         orderID: orderID,
         menu: menu,
-        options_id: optionsID
+        options_id: optionsID,
+        orderlist_id: orderlist_id
     };
 
     $.post(url, data, function (success) {
-        Loadoptions(orderID, menu);
+        Loadoptions(orderID, menu,orderlist_id);
+        Load();
     });
 }
 
-function Loadoptions(orderID, menu) {
+function Loadoptions(orderID, menu,orderlist_id) {
     var url = "index.php?r=options/loaddata";
-    var data = {orderID: orderID, menu: menu};
+    var data = {orderID: orderID, menu: menu,orderlist_id: orderlist_id};
 
     $.post(url, data, function (result) {
         $("#showdataoptions").html(result);

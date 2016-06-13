@@ -120,7 +120,8 @@ class OptionsController extends Controller {
         $input = Yii::$app->request;
         $orderID = $input->post('orderID');
         $menu = $input->post('menu');
-        $data['options'] = $Model->Getdata($orderID, $menu);
+        $orderlist_id = $input->post('orderlist_id');
+        $data['options'] = $Model->Getdata($orderID, $menu, $orderlist_id);
 
         return $this->renderPartial('optionslist', $data);
     }

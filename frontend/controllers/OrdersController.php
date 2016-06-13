@@ -201,6 +201,7 @@ class OrdersController extends Controller {
             'menu' => $input->post('menu'),
             'order_id' => $input->post('orderID'),
             'options_id' => $input->post('options_id'),
+            'orderlist_id' => $input->post('orderlist_id'),
             "create_date" => date('Y-m-d')
         );
 

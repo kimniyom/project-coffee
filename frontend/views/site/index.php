@@ -81,7 +81,7 @@ $menu = new Menu();
                                     <?php foreach ($product as $p): ?>
                                         <div class="col-sm-6 col-md-4 col-lg-4">
                                             <button type="button" class="btn btn-default btn-block" style=" margin-bottom: 5px;"
-                                                    onclick="popupoptions('<?php echo $p['id'] ?>')">
+                                                    onclick="Save('<?php echo $p['id'] ?>')">
                                                 <img src="<?php echo $system->GetimagesProduct($p['images']) ?>" style=" max-height: 50px;"><br/>
                                                 <p id="mmenu"><?php echo $p['menu'] ?></p>
                                             </button>
@@ -212,15 +212,16 @@ $menu = new Menu();
 <div class="modal fade" tabindex="-1" role="dialog" id="popupoptions">
     <div class="modal-dialog">
         <div class="modal-content">
-     
+
             <div class="modal-header">
                 <!--
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 -->
                 <h4 class="modal-title">รายการเพิ่มเติม</h4>
             </div>
-     
+
             <input type="hidden" id="menu_id" class="form-control"/>
+            <input type="hidden" id="orderlist_id" />
             <div class="modal-body" id="bodyoptions">
             </div>
             <div class="modal-footer">
@@ -228,8 +229,7 @@ $menu = new Menu();
                     <button type="button" class="btn btn-danger btn-block" data-dismiss="modal">ปิด</button>
                 </div>
                 <div class=" col-md-6 col-lg-6">
-                    <button type="button" class="btn btn-success btn-block"
-                            onclick="Save()">ยืนยัน</button>
+                    <button type="button" class="btn btn-success btn-block">ยืนยัน</button>
                 </div>
             </div>
         </div><!-- /.modal-content -->
