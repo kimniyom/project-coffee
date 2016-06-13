@@ -210,4 +210,18 @@ class OrdersController extends Controller {
                 ->execute();
     }
 
+    public function actionDeleteorder() {
+        $input = Yii::$app->request;
+        $tables = $input->post('tables');
+        $orderID = $input->post('orderID');
+        \Yii::$app->db->createCommand()
+                ->delete("orders", "order_id = '$orderID' ")
+                ->execute();
+
+        $columns = array("active" => "0");
+        \Yii::$app->db->createCommand()
+                ->update("tables", $columns, "tables = '$tables' ")
+                ->execute();
+    }
+
 }

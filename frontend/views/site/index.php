@@ -157,16 +157,16 @@ $menu = new Menu();
                     ?>
                     <button type="button" class="btn btn-success"
                             onclick="Check_bill()">ชำระเงิน</button>
-                       <button type="button" class="btn btn-warning disabled">พิมพ์ใบเสร็จ</button>
-                        <?php } else { ?>
+                    <button type="button" class="btn btn-warning disabled">พิมพ์ใบเสร็จ</button>
+                <?php } else { ?>
                     <button type="button" class="btn btn-success disabled">ชำระเงินแล้ว</button>
                     <button type="button" class="btn btn-warning" onclick="Bill()">พิมพ์ใบเสร็จ</button>
                 <?php } ?>
 
-                
-                        <?php
-                        if ($model->confirm == '1') {
-                            ?>
+
+                <?php
+                if ($model->confirm == '1') {
+                    ?>
                     <button type="button" class="btn btn-danger"
                             onclick="EndOrder()">สิ้นสุดการขาย</button>
                         <?php } else { ?>
@@ -174,6 +174,10 @@ $menu = new Menu();
                 <?php } ?>
             </div>
         </div>
+
+        <button type="button" class="btn btn-danger btn-lg btn-block"
+                onclick="cancelorder('<?php echo $order_id ?>','<?php echo $tables ?>')"><i class="fa fa-remove"></i> ยกเลิกการขายทั้งหมด</button>
+
     </div>
 </div>
 

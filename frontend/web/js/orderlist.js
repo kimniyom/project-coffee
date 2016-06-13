@@ -48,7 +48,7 @@ function popupoptions(menu, orderlist_id) {
     var data = {};
     $.post(url, data, function (result) {
         $("#bodyoptions").html(result);
-        Loadoptions(orderID, menu,orderlist_id);
+        Loadoptions(orderID, menu, orderlist_id);
     });
 }
 
@@ -65,14 +65,14 @@ function AddOptions(optionsID) {
     };
 
     $.post(url, data, function (success) {
-        Loadoptions(orderID, menu,orderlist_id);
+        Loadoptions(orderID, menu, orderlist_id);
         Load();
     });
 }
 
-function Loadoptions(orderID, menu,orderlist_id) {
+function Loadoptions(orderID, menu, orderlist_id) {
     var url = "index.php?r=options/loaddata";
-    var data = {orderID: orderID, menu: menu,orderlist_id: orderlist_id};
+    var data = {orderID: orderID, menu: menu, orderlist_id: orderlist_id};
 
     $.post(url, data, function (result) {
         $("#showdataoptions").html(result);
@@ -216,6 +216,21 @@ function EndOrder() {
         window.location = "index.php?r=site/index";
         //var datas = jQuery.parseJSON(response);
     });
+}
+
+//ยกเลิกการขายรายการนั้น
+function cancelorder(orderID,tables) {
+    var r = confirm("คุณแน่ใจหรือไม่ที่จะยกเลิกรายการทั้งหมด ...?");
+    if (r == true) {
+        var url = "index.php?r=orders/deleteorder";
+        var data = {
+            orderID: orderID,
+            tables: tables
+        };
+        $.post(url, data, function (success) {
+            window.location = "index.php?r=site/index";
+        });
+    }
 }
 
 
