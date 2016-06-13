@@ -3,7 +3,6 @@ $(document).ready(function () {
     Calculator(orderID);
     Load();
     ActiveMenu();
-
 });
 
 function ActiveMenu() {
@@ -190,7 +189,7 @@ function PrintElem(elem, data)
 
 function Popup(data)
 {
-    var mywindow = window.open('', 'my div', 'height=400,width=300');
+    var mywindow = window.open('', 'my div', 'height=600,width=400');
     mywindow.document.write('<html><head><title>Bill</title>');
     /*optional stylesheet*/ //mywindow.document.write('<link rel="stylesheet" href="main.css" type="text/css" />');
     mywindow.document.write('</head><body >');

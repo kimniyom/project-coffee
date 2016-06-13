@@ -3,27 +3,25 @@
 use yii\helpers\Url;
 ?>
 <div class="row">
-    <?php
-    foreach ($tables as $table):
-        ?>
-        <div class="col-sm-3 col-md-2">
-            <div class="thumbnail">
-                <img src="<?php echo Url::to('@web/web/images/table-icon.png') ?>" alt="..." style=" max-width: 100px;">
-                <div class="caption" style=" text-align: center;">
-                    <h3>โต๊ะที่ <?php echo $table['tables'] ?></h3>
-                    <?php if ($table['active'] == '0') { ?>
-                    <h4 style="color: green;">ว่าง</h4>
-                        <a href="javascript:Openorders('<?php echo $table['tables'] ?>')" 
-                           class="btn btn-success btn-block btn-lg" role="button">เลือก</a>
-                       <?php } else { ?>
-                        <h4 style="color: red;">ไม่ว่าง</h4>
-                        <a href="javascript:Openorders('<?php echo $table['tables'] ?>')" 
-                           class="btn btn-warning btn-block btn-lg" role="button"><i class="fa fa-plus"></i> สั่งของเพิ่ม</a>
-                    <?php } ?>
+    <center>
+        <?php
+        foreach ($tables as $table):
+            ?>
+            <div class="col-sm-3 col-md-2">
+                <div class="thumbnail btn btn-default" onclick="Openorders('<?php echo $table['tables'] ?>')">
+                    <img src="<?php echo Url::to('@web/web/images/table-icon.png') ?>" alt="..." style=" max-width: 100px;">
+                    <div class="caption" style=" text-align: center;">
+                        <h3>โต๊ะที่ <?php echo $table['tables'] ?></h3>
+                        <?php if ($table['active'] == '0') { ?>
+                            <h4 style="color: green;">ว่าง</h4>
+                        <?php } else { ?>
+                            <h4 style="color: red;">ไม่ว่าง</h4>
+                        <?php } ?>
+                    </div>
                 </div>
             </div>
-        </div>
-    <?php endforeach; ?>
+        <?php endforeach; ?>
+    </center>
 </div>
 
 <script type="text/javascript">

@@ -14,10 +14,10 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="menuoptions-index">
 
-<?php // echo $this->render('_search', ['model' => $searchModel]);  ?>
+    <?php // echo $this->render('_search', ['model' => $searchModel]);  ?>
 
     <p>
-<?= Html::a('Create Menuoptions', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Create Menuoptions', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
     <div class="panel panel-default">
         <div class="panel-heading"><h4><?= Html::encode($this->title) ?></h4></div>

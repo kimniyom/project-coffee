@@ -35,12 +35,12 @@ $config = new System();
                 'brandLabel' => 'DemoCoffee',
                 'brandUrl' => Yii::$app->homeUrl,
                 'options' => [
-                    'class' => 'navbar-default navbar-default navbar-fixed-top',
+                    'class' => 'navbar-inverse navbar-default navbar-fixed-top',
                 ],
                 'innerContainerOptions' => ['class' => 'container-fluid'],
             ]);
             $date = $config->Thaidate(date("Y-m-d H:i:s"));
-
+            
             $menuItems = [
                 /*
                   [
@@ -51,11 +51,11 @@ $config = new System();
                   ],
                  * 
                  */
+                '<li><a href="javascript:window.location.reload();"><i class="fa fa-refresh"></i> Refresh</a></li>',
                 ['label' => "Date : " . $date],
-                    //['label' => 'Contact', 'url' => ['/site/contact']],
             ];
-            //if (Yii::$app->session['admin'] == "TRUE") {
             $menuItems[] = ['label' => 'BackOffice', 'url' => $config->LinktoBackend(Yii::$app->urlManager->createUrl('stock'))];
+            //if (Yii::$app->session['admin'] == "TRUE") {
             //}
             /*
               if (Yii::$app->user->isGuest) {
@@ -81,6 +81,7 @@ $config = new System();
             ?>
 
             <div class="container-fluid" style="padding-top:60px;">
+                <div id="padding"></div>
                 <?=
                 Breadcrumbs::widget([
                     'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],

@@ -41,7 +41,7 @@ $menu = new Menu();
     <div class="col-md-8 col-lg-8">
         <div class="panel panel-primary" id="menuproduct">
             <div class="panel-heading">Menu</div>
-            <div class="panel-body" style="background:#3e444c;">
+            <div class="panel-body" id="menubody">
                 <!-- Nav tabs -->
                 <ul class="nav nav-tabs" role="tablist">
                     <?php
@@ -79,8 +79,8 @@ $menu = new Menu();
                             <div role="tabpanel" class="tab-pane <?php echo $class ?>" id="<?php echo $a ?>">
                                 <center>
                                     <?php foreach ($product as $p): ?>
-                                        <div class="col-sm-6 col-md-4 col-lg-4">
-                                            <button type="button" class="btn btn-default btn-block" style=" margin-bottom: 5px;"
+                                        <div class="col-xs-6 col-sm-6 col-md-4 col-lg-4">
+                                            <button type="button" class="btn btn-primary btn-block" style=" margin-bottom: 5px;"
                                                     onclick="Save('<?php echo $p['id'] ?>')">
                                                 <img src="<?php echo $system->GetimagesProduct($p['images']) ?>" style=" max-height: 50px;"><br/>
                                                 <p id="mmenu"><?php echo $p['menu'] ?></p>
@@ -157,12 +157,13 @@ $menu = new Menu();
                     ?>
                     <button type="button" class="btn btn-success"
                             onclick="Check_bill()">ชำระเงิน</button>
+                       <button type="button" class="btn btn-warning disabled">พิมพ์ใบเสร็จ</button>
                         <?php } else { ?>
                     <button type="button" class="btn btn-success disabled">ชำระเงินแล้ว</button>
+                    <button type="button" class="btn btn-warning" onclick="Bill()">พิมพ์ใบเสร็จ</button>
                 <?php } ?>
 
-                <button type="button" class="btn btn-warning"
-                        onclick="Bill()">พิมพ์ใบเสร็จ</button>
+                
                         <?php
                         if ($model->confirm == '1') {
                             ?>
@@ -176,10 +177,9 @@ $menu = new Menu();
     </div>
 </div>
 
-
 <!--
     ##############
-    #### Bill ####
+    ###### Bill ######
     ##############
 -->
 <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" id="popupbill">
@@ -225,12 +225,7 @@ $menu = new Menu();
             <div class="modal-body" id="bodyoptions">
             </div>
             <div class="modal-footer">
-                <div class=" col-md-6 col-lg-6">
-                    <button type="button" class="btn btn-danger btn-block" data-dismiss="modal">ปิด</button>
-                </div>
-                <div class=" col-md-6 col-lg-6">
-                    <button type="button" class="btn btn-success btn-block">ยืนยัน</button>
-                </div>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">ปิด</button>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->

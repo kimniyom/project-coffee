@@ -2,7 +2,9 @@
 
 use yii\helpers\Url;
 use common\models\System;
+use app\models\Options;
 
+$Options = new Options();
 $system = new System();
 ?>    
 <div style=" font-size: 12px;">
@@ -20,16 +22,29 @@ $system = new System();
     <tbody>
         <?php
         $sum = 0;
+        $SumAll = 0;
         $sumProduct = 0;
         $j = 0;
         foreach ($orderlist as $rs):
-            $sum = $sum + $rs['price'];
+
             $j++;
+            //Get Options 
+            $dataOptions = $Options->Getdata($rs['order'], $rs['menu'], $rs['id']);
             ?>
             <tr>
-                <td><?php echo $j; ?></td>
-                <td><?php echo $rs['menuname'] ?></td>
-                <td style="text-align:right;"><?php echo number_format($rs['price'],2) ?></td>
+                <td valign="top"><?php echo $j; ?></td>
+                <td>
+                    <?php echo $rs['menuname'] ?>
+                    <?php
+                    $OptionsPrice = 0;
+                    foreach ($dataOptions as $op):
+                        echo "<br/>+ " . $op['optionsname'] . "(" . $op['price'] . ")";
+                        $OptionsPrice = $OptionsPrice + $op['price'];
+                    endforeach;
+                    $sum = $sum + ($rs['price'] + $OptionsPrice);
+                    ?>
+                </td>
+                <td style="text-align:right;" valign="top"><?php echo number_format($rs['price'] + $OptionsPrice, 2) ?></td>
             </tr>
         <?php endforeach; ?>
 
@@ -37,15 +52,15 @@ $system = new System();
     <tfoot>
         <tr style=" border-top: solid 1px #000;">
             <td colspan="2" style="text-align:center; font-weight: bold;"><b>รวม</b></td>
-            <td style="text-align:right; font-weight: bold;"><?php echo number_format($sum,2); ?></td>
+            <td style="text-align:right; font-weight: bold;"><?php echo number_format($sum, 2); ?></td>
         </tr>
         <tr>
             <td colspan="2" style="text-align:center; font-weight: bold;"><b>ส่วนลด</b></td>
-            <td style="text-align:right; font-weight: bold;"><?php echo number_format($order['distcount'],2); ?></td>
+            <td style="text-align:right; font-weight: bold;"><?php echo number_format($order['distcount'], 2); ?></td>
         </tr>
         <tr>
             <td colspan="2" style="text-align:center; font-weight: bold;"><b>รวมสุทธิ</b></td>
-            <td style="text-align:right; font-weight: bold;"><?php echo number_format($order['total'],2); ?></td>
+            <td style="text-align:right; font-weight: bold;"><?php echo number_format($order['total'], 2); ?></td>
         </tr>
     </tfoot>
 </table>

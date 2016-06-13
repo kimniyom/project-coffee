@@ -7,21 +7,23 @@ use app\models\Options;
 $Options = new Options();
 $system = new System();
 ?>      
-<div class="panel panel-default">
+<div class="panel panel-success">
     <div class="panel-heading">
         รายการขาย
     </div>
-    <div class="panel-body" id="table">
+    <div id="table">
         <table class="table table-striped">
             <thead>
                 <tr>
+                    <!--
                     <th></th>
+                    -->
                     <th>รายการ</th>
                     <th style=" text-align: center;">ราคา</th>
                     <th>Options</th>
+                    <th style=" text-align: center;" class="Toptions">เพิ่ม Options</th>
                     <th style=" text-align: center;">ราคา</th>
                     <th style="text-align: right;">รวม</th>
-                    <th>เพิ่ม Options</th>
                     <th></th>
                 </tr>
             </thead>
@@ -38,9 +40,11 @@ $system = new System();
                     $dataOptions = $Options->Getdata($rs['order'], $rs['menu'], $rs['id']);
                     ?>
                     <tr>
+                        <!--
                         <td style="width: 10%;">
-                            <img src="<?php echo $system->GetimagesProduct($rs['images']) ?>" alt="..." class="img-responsive img-circle" style=" max-height: 50px;">
+                            <img src="<?//php echo $system->GetimagesProduct($rs['images']) ?>" alt="..." class="img-responsive img-circle" style=" max-height: 50px;">
                         </td>
+                        -->
                         <td><?php echo $rs['menuname'] ?></td>
                         <td style="text-align:center;"><?php echo $rs['price'] ?></td>
                         <td>
@@ -52,12 +56,12 @@ $system = new System();
                             endforeach;
                             ?>
                         </td>
+                        <td style=" text-align: center;" class="Toptions">
+                            <button type="button" class="btn btn-success btn-sm"
+                                    onclick="popupoptions('<?php echo $rs['menu'] ?>', '<?php echo $rs['id'] ?>')"><i class="fa fa-plus"></i> เพิ่ม</button>
+                        </td>
                         <td style="text-align:center;"><?php echo $OptionsPrice ?></td>
                         <td style="text-align:right;"><?php echo $rs['price'] + $OptionsPrice ?></td>
-                        <td>
-                            <button type="button" class="btn btn-success"
-                                    onclick="popupoptions('<?php echo $rs['menu'] ?>', '<?php echo $rs['id'] ?>')">Add</button>
-                        </td>
                         <td style="text-align: right;">
                             <?php if ($rs['confirm'] == '0') { ?>
                                 <button type="button" class="btn btn-danger btn-xs"
@@ -71,4 +75,15 @@ $system = new System();
         </table>
     </div>
 </div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        var confirmorder = $("#confirmorder").val();
+        if (confirmorder == 1) {
+            $(".Toptions").hide();
+        } else {
+            $(".Toptions").show();
+        }
+    });
+</script>
 

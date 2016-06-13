@@ -67,7 +67,7 @@ class Orderlist extends \yii\db\ActiveRecord {
         $TotalAll = 0;
         foreach ($result1 as $rs):
             $Total = $Total + $rs['price'];
-            $Options = $Modeloptions->Getdata($rs['order'], $rs['menu']);
+            $Options = $Modeloptions->Getdata($rs['order'], $rs['menu'], $rs['id']);
             foreach ($Options as $op):
                 $TotalOptions = $TotalOptions + $op['price'];
             endforeach;
