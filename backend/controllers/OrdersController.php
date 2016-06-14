@@ -1,19 +1,18 @@
 <?php
 
-namespace frontend\controllers;
+namespace backend\controllers;
 
 use Yii;
-use app\models\Orderlist;
-use app\models\OrderlistSearch;
+use app\models\Orders;
+use app\models\OrdersSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use app\models\Mix;
-use app\models\Stock;
+
 /**
- * OrderlistController implements the CRUD actions for Orderlist model.
+ * OrderController implements the CRUD actions for Orders model.
  */
-class OrderlistController extends Controller
+class OrdersController extends Controller
 {
     /**
      * @inheritdoc
@@ -31,12 +30,12 @@ class OrderlistController extends Controller
     }
 
     /**
-     * Lists all Orderlist models.
+     * Lists all Orders models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new OrderlistSearch();
+        $searchModel = new OrdersSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -46,7 +45,7 @@ class OrderlistController extends Controller
     }
 
     /**
-     * Displays a single Orderlist model.
+     * Displays a single Orders model.
      * @param integer $id
      * @return mixed
      */
@@ -58,13 +57,13 @@ class OrderlistController extends Controller
     }
 
     /**
-     * Creates a new Orderlist model.
+     * Creates a new Orders model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Orderlist();
+        $model = new Orders();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -76,7 +75,7 @@ class OrderlistController extends Controller
     }
 
     /**
-     * Updates an existing Orderlist model.
+     * Updates an existing Orders model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -95,7 +94,7 @@ class OrderlistController extends Controller
     }
 
     /**
-     * Deletes an existing Orderlist model.
+     * Deletes an existing Orders model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -108,57 +107,18 @@ class OrderlistController extends Controller
     }
 
     /**
-     * Finds the Orderlist model based on its primary key value.
+     * Finds the Orders model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Orderlist the loaded model
+     * @return Orders the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Orderlist::findOne($id)) !== null) {
+        if (($model = Orders::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
-    }
-    
-    public function actionLoad(){
-        $post = \Yii::$app->request;
-        $orderid = $post->post('orderID');
-        $Model = new Orderlist();
-        $data['orderlist'] = $Model->Getdata($orderid);
-        return $this->renderPartial('loadorderlist',$data);
-    }
-    
-    public function actionSave(){
-        $post = \Yii::$app->request;
-        $stockModel = new Stock();
-        /*นำเมนูไปหาส่วนประกอบแต่ละอย่างเพื่อนำไปเช็ค Stock */
-        $menuID = $post->post('menu');
-        /*
-        $mix = Mix::find()->where(['menu' => $menuID])->all();
-        
-        foreach($mix as $m):
-            
-        endforeach;
-        */
-        $columns = array(
-            "order" => $post->post('order_id'),
-            "menu" => $menuID,
-            "create_date" => date('Y-m-d')
-        );
-        
-        \Yii::$app->db->createCommand()
-                ->insert("orderlist", $columns)
-                ->execute();
-    }
-    
-    public function actionDeleteorderlist(){
-        $post = \Yii::$app->request;
-        $id = $post->post('id');
-        \Yii::$app->db->createCommand()
-                ->delete("orderlist", "id = $id")
-                ->execute();
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace frontend\controllers;
+namespace backend\controllers;
 
 use Yii;
 use app\models\Orderlist;
@@ -8,8 +8,7 @@ use app\models\OrderlistSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use app\models\Mix;
-use app\models\Stock;
+
 /**
  * OrderlistController implements the CRUD actions for Orderlist model.
  */
@@ -121,44 +120,5 @@ class OrderlistController extends Controller
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
-    }
-    
-    public function actionLoad(){
-        $post = \Yii::$app->request;
-        $orderid = $post->post('orderID');
-        $Model = new Orderlist();
-        $data['orderlist'] = $Model->Getdata($orderid);
-        return $this->renderPartial('loadorderlist',$data);
-    }
-    
-    public function actionSave(){
-        $post = \Yii::$app->request;
-        $stockModel = new Stock();
-        /*นำเมนูไปหาส่วนประกอบแต่ละอย่างเพื่อนำไปเช็ค Stock */
-        $menuID = $post->post('menu');
-        /*
-        $mix = Mix::find()->where(['menu' => $menuID])->all();
-        
-        foreach($mix as $m):
-            
-        endforeach;
-        */
-        $columns = array(
-            "order" => $post->post('order_id'),
-            "menu" => $menuID,
-            "create_date" => date('Y-m-d')
-        );
-        
-        \Yii::$app->db->createCommand()
-                ->insert("orderlist", $columns)
-                ->execute();
-    }
-    
-    public function actionDeleteorderlist(){
-        $post = \Yii::$app->request;
-        $id = $post->post('id');
-        \Yii::$app->db->createCommand()
-                ->delete("orderlist", "id = $id")
-                ->execute();
     }
 }

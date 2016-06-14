@@ -20,6 +20,7 @@ class AdminLteAsset extends AssetBundle
     public $css = [
         'themes/AdminLTE/dist/css/AdminLTE.css',
         'themes/AdminLTE/dist/css/skins/_all-skins.css',
+        /*'themes/AdminLTE/bootstrap/css/bootstrap-paper.css',*/
         'themes/AdminLTE/plugins/datatables/dataTables.bootstrap.css',
         'lib/font-awesome/css/font-awesome.css'
     ];

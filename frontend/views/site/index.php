@@ -150,8 +150,10 @@ $menu = new Menu();
                     </div>
                 </div>
             </div>
-            <div class="panel-footer">
+            <div class="panel-footer" style=" text-align: center;">
+                <!--
                 <button type="button" class="btn btn-default">สั่ง</button>
+                -->
                 <?php
                 if ($model->confirm == '0') {
                     ?>

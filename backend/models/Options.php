@@ -13,21 +13,19 @@ use Yii;
  * @property string $create_date
  * @property integer $price
  */
-class Options extends \yii\db\ActiveRecord
-{
+class Options extends \yii\db\ActiveRecord {
+
     /**
      * @inheritdoc
      */
-    public static function tableName()
-    {
+    public static function tableName() {
         return 'options';
     }
 
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['menu', 'price'], 'integer'],
             [['create_date'], 'safe'],
@@ -38,8 +36,7 @@ class Options extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      */
-    public function attributeLabels()
-    {
+    public function attributeLabels() {
         return [
             'id' => 'ID',
             'menu' => 'เมนู',
@@ -48,4 +45,15 @@ class Options extends \yii\db\ActiveRecord
             'price' => 'ราคา',
         ];
     }
+
+    public function Getdata($orderID = null, $menu = null, $orderlist_id = null) {
+        $sql = "SELECT o.*,m.`options` AS optionsname,m.price
+                    FROM `options` o INNER JOIN  menuoptions m
+                    ON o.options_id = m.id
+                    WHERE o.order_id = '$orderID'
+                    AND o.menu = '$menu'
+                    AND o.orderlist_id = '$orderlist_id' ";
+        return Yii::$app->db->createCommand($sql)->queryAll();
+    }
+
 }
