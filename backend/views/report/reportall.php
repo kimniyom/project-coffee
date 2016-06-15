@@ -1,4 +1,3 @@
-
 <?php
 
 use app\models\Menu;
@@ -9,6 +8,10 @@ use kartik\select2\Select2;
 use app\models\Type;
 use yii\helpers\ArrayHelper;
 use app\models\Menu as menus;
+use app\models\Tables;
+use kartik\date\DatePicker;
+use yii\helpers\Url;
+
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\OrderlistSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -21,11 +24,65 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="row">
     <div class="col-md-4 col-lg-4">
         <label>ประเภท</label>
-        <select id="type" class="form-control">
-            <option value="">== ทั้งหมด ==</option>
-        </select>
+        <?php
+        // Multiple select without model
+        echo Select2::widget([
+            'name' => 'type',
+            'value' => '',
+            'data' => ArrayHelper::map(Type::find()->all(), 'id', 'typename'),
+            'theme' => Select2::THEME_BOOTSTRAP, // this is the default if theme is not set
+            'options' => [
+                'id' => 'type',
+                'multiple' => true,
+                'placeholder' => 'ทั้งหมด ...'
+            ]
+        ]);
+        ?>
     </div>
     <div class="col-md-4 col-lg-4">
+        <?php
+        // usage without model
+        echo '<label>เริ่มต้น</label>';
+        echo DatePicker::widget([
+            'name' => 'check_issue_date',
+            'value' => date('Y-m-d'),
+            'language' => 'th',
+            // 'value' => date('d-M-Y', strtotime('+2 days')),
+            'options' => [
+                'placeholder' => 'Select issue date ...',
+                'id' => 'date_start',
+            ],
+            'pluginOptions' => [
+                'format' => 'yyyy-mm-dd',
+                'todayHighlight' => true
+            ]
+        ]);
+        ?>
+    </div>
+    <div class="col-md-4 col-lg-4">
+        <?php
+        // usage without model
+        echo '<label>สิ้นสุด</label>';
+        echo DatePicker::widget([
+            'name' => 'check_issue_date',
+            'value' => date('Y-m-d'),
+            'language' => 'th',
+            // 'value' => date('d-M-Y', strtotime('+2 days')),
+            'options' => [
+                'placeholder' => 'Select issue date ...',
+                'id' => 'date_end',
+            ],
+            'pluginOptions' => [
+                'format' => 'yyyy-mm-dd',
+                'todayHighlight' => true
+            ]
+        ]);
+        ?>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 col-lg-12">
         <label>เมนู</label>
         <?php
         // Multiple select without model
@@ -35,71 +92,48 @@ $this->params['breadcrumbs'][] = $this->title;
             'data' => ArrayHelper::map(menus::find()->all(), 'id', 'menu'),
             'theme' => Select2::THEME_BOOTSTRAP, // this is the default if theme is not set
             'options' => [
-                 'id' => 'menu',
+                'id' => 'menu',
                 'multiple' => true,
-                'placeholder' => 'Select states ...'
+                'placeholder' => 'ทั้งหมด ...'
             ]
         ]);
         ?>
     </div>
-    <div class="col-md-4 col-lg-4">
-        <label>ประเภท</label>
-        <select id="type" class="form-control">
-            <option value="">== ทั้งหมด ==</option>
-        </select>
+</div>
+
+<div class="row">
+    <div class="col-md-12 col-lg-12">
+        <label>โต๊ะ</label>
+        <?php
+        // Multiple select without model
+        echo Select2::widget([
+            'name' => 'tables',
+            'value' => '',
+            'data' => ArrayHelper::map(Tables::find()->all(), 'tables', 'tables'),
+            'theme' => Select2::THEME_BOOTSTRAP, // this is the default if theme is not set
+            'options' => [
+                'id' => 'tables',
+                'multiple' => true,
+                'placeholder' => 'ทั้งหมด ...'
+            ]
+        ]);
+        ?>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-3 col-lg-3">
+        <br/>
+        <button type="button" class="btn btn-default btn-flat"
+                onclick="Getreport()"><i class="fa fa-eye"></i> ดูรายงาน</button>
     </div>
 </div>
 
 <div class="orderlist-index">
     <h2><i class="fa fa-file-text-o"></i> <?= Html::encode($this->title) ?></h2>
     <div class="box box-default">
-        <div class="box-body">
-            <table class=" table table-striped" id="reportall">
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>ประเภท</th>
-                        <th>รายการ</th>
-                        <th style=" text-align: right;">ราคา</th>
-                        <th style="text-align: center;">วันที่</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php
-                    $sum = 0;
-                    $i = 0;
-                    $sumProduct = 0;
-                    foreach ($datas as $rs): $i++;
-                        $dataOptions = $Options->Getdata($rs['order'], $rs['menu'], $rs['id']);
-                        ?>
-                        <tr>
-                            <td><?php echo $i; ?></td>
-                            <td><?php echo $rs['typename'] ?></td>
-                            <td>
-                                <?php echo $rs['menuname'] ?>
-                                <?php
-                                $OptionsPrice = 0;
-                                foreach ($dataOptions as $op):
-                                    echo "<br/>+ " . $op['optionsname'] . "(" . $op['price'] . ")";
-                                    $OptionsPrice = $OptionsPrice + $op['price'];
-                                endforeach;
-                                $sumProduct = ($rs['price'] + $OptionsPrice);
-                                $sum = $sum + $sumProduct;
-                                ?>
-                            </td>
-                            <td style=" text-align: right;"><?php echo number_format($sumProduct, 2) ?></td>
-                            <td style="text-align: center;"><?php echo $rs['create_date'] ?></td>
-                        </tr>
-                    <?php endforeach; ?>
-                </tbody>
-                <tfoot>
-                    <tr>
-                        <td colspan="3" style=" text-align: center; font-weight: bold;">รวม</td>
-                        <td style=" text-align: right; font-weight: bold;"><?php echo number_format($sum, 2) ?></td>
-                        <td></td>
-                    </tr>
-                </tfoot>
-            </table>
+        <div class="box-body" id="showreport">
+
         </div>
     </div>
 </div>
@@ -107,6 +141,35 @@ $this->params['breadcrumbs'][] = $this->title;
 <?php
 $this->registerJs('
         $(document).ready(function () {
-        $("#reportall").DataTable();
-    });')
+        Getreport();
+    });');
 ?>
+
+<script type="text/javascript">
+    function Getreport() {
+        var type = $("#type").val();
+        var menu = $("#menu").val();
+        var tables = $("#tables").val();
+        var date_start = $("#date_start").val();
+        var date_end = $("#date_end").val();
+        var url = "<?php echo Url::to(['report/getreport']) ?>";
+
+        /*
+         if (type == null || menu == null) {
+         sweetAlert("ข้อผิดพลาด...", "กรุณาตรวจสอบความครบถ้วนของเงื่อนไข (ประเภทหรือเมนู)..!", "error");
+         return false;
+         }
+         */
+        var data = {
+            type: type,
+            menu: menu,
+            date_start: date_start,
+            date_end: date_end,
+            tables: tables
+        };
+
+        $.post(url, data, function (result) {
+            $("#showreport").html(result);
+        });
+    }
+</script>

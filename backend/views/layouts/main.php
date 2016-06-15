@@ -180,7 +180,7 @@ AdminLteAsset::register($this);
                                     <i class="fa fa-file-text"></i> <span>รายงาน</span> <i class="fa fa-angle-left pull-right"></i>
                                 </a>
                                 <ul class="treeview-menu">
-                                    <li><a href="<?php echo Url::to(['category/index']); ?>"><i class="fa fa-circle-o"></i> แสดงรายการขาย</a></li>
+                                    <li><a href="<?php echo Url::to(['report/reportall']); ?>"><i class="fa fa-circle-o"></i> แสดงรายการขาย</a></li>
                                     <li><a href="<?php echo Url::to(['unit/index']); ?>"><i class="fa fa-circle-o"></i> ค้นหารายการขาย</a></li>
                                     <li><a href="<?php echo Url::to(['stockproduct/index']); ?>"><i class="fa fa-circle-o"></i> แสดงรายการขายแยกช่วงเวลา</a></li>
                                     <li><a href="<?php echo Url::to(['type/index']); ?>"><i class="fa fa-circle-o"></i> แสดงรายการขายแยกโต๊ะ</a></li>
