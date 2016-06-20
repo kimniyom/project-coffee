@@ -40,7 +40,7 @@ $config = new System();
                 'innerContainerOptions' => ['class' => 'container-fluid'],
             ]);
             $date = $config->Thaidate(date("Y-m-d H:i:s"));
-            
+
             $menuItems = [
                 /*
                   [
