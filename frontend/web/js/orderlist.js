@@ -34,6 +34,7 @@ function Save(menu) {
         menu: menu
     };
     $.post(url, data, function (success) {
+        alert(success);
         Load();
         $("#popupoptions").modal("hide");
     });

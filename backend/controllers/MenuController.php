@@ -192,7 +192,7 @@ class MenuController extends Controller {
         $rs = $this->findModel($id);
         $Model = new Menu();
         $Model->deleteimages($rs->images);
-        
+
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);

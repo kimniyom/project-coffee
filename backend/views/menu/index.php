@@ -86,14 +86,26 @@ $this->params['breadcrumbs'][] = $this->title;
                             //'attribute' => 'create_date',
                             'header' => 'ส่วนประกอบ',
                             'hAlign' => 'center',
+                            'format' => 'raw',
                             'value' => function($model) {
-                                $link = Url::to(['menu/view', 'id' => $model['id']]);
-                                return "<a href='" . $link . "'><button type='button' class='btn btn-default btn-sm'>ส่วนผสม</button></a>";
+                                if ($model->mix == 1) {
+                                    $link = Url::to(['menu/view', 'id' => $model['id']]);
+                                    $mix = \app\models\Mix::find()->where(['menu' => $model->id])->all();
+                                    if (empty($mix)) {
+                                        $text = "<i class='fa fa-warning text-danger'></i> ";
+                                    } else {
+                                        $text = "";
+                                    }
+                                    return "<a href='" . $link . "'><button type='button' class='btn btn-default btn-sm'>ส่วนผสม $text</button></a>";
+                                } else {
+                                    return "";
+                                }
                             },
                                     'format' => 'raw'
                                 ],
                                 [
                                     'header' => 'รูปภาพ',
+                                    'hAlign' => 'center',
                                     'options' => ['style' => 'width:150px;'],
                                     'format' => 'raw',
                                     'attribute' => 'images',
@@ -105,6 +117,7 @@ $this->params['breadcrumbs'][] = $this->title;
                           background-size: cover;
                           background-position:center center;
                           background-repeat:no-repeat;
+                          text-align:center;
                           ']);
                             }
                                 ],

@@ -38,21 +38,24 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="panel-body">
             <div class="row">
                 <div class="col-md-2 col-lg-2" style=" text-align: center;">
-                    
-                        <?= Html::img($model->getPhotoViewer(), ['style' => 'width:100px;', 'class' => 'img-rounded']); ?>
-                  
+
+                    <?= Html::img($model->getPhotoViewer(), ['style' => 'width:100px;', 'class' => 'img-rounded']); ?>
+
                 </div>
                 <div class="col-md-10 col-lg-10 text-left">
                     <input type="text" value="<?php echo "Menu : " . $model->menu; ?>" class="form-control" readonly="readonly" id="bold-text"/>
                     <?php $type = Type::find()->where(['id' => $model->type])->one()['typename'] ?>
                     <input type="text" value="<?php echo "ประเภท : " . $type; ?>" class="form-control" readonly="readonly" id="bold-text"/>
-                    <input type="text" value="<?php echo "ราคา : " . $model->price." บาท"; ?>" class="form-control" readonly="readonly" id="bold-text"/>
+                    <input type="text" value="<?php echo "ราคา : " . $model->price . " บาท"; ?>" class="form-control" readonly="readonly" id="bold-text"/>
                     <input type="text" value="<?php echo "วันที่บันทึก : " . $model->create_date; ?>" class="form-control" readonly="readonly" id="bold-text"/>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
+
+<?php if ($model->mix == 1) { ?>
     <div class="mix-form">
         <div class="well">
             <div class="comment-form">
@@ -132,86 +135,83 @@ $this->params['breadcrumbs'][] = $this->title;
             <?php ActiveForm::end(); ?>
         </div>
     </div>
-</div>
-
-<div class="panel panel-default">
-    <div class="panel-heading">รายการส่วนผสม</div>
-    <?=
-    GridView::widget([
-        'dataProvider' => $dataProvider,
-        //'filterModel' => $searchModel,
-        'pjax' => true, // pjax is set to always true for this demo
-        'pjaxSettings' => [
-            'neverTimeout' => true,
-            'options' => [
-                'id' => 'gview',
-            ]
-        ],
-        'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-            //'id',
-            //'menu',
-            [
-                //'attribute' => 'product_stock_id',
-                'format' => 'raw',
-                'label' => 'ประเภท',
-                'value' => function($model) {
-                    $pt = Stockproduct::find()->where(['id' => $model->product_stock_id])->one();
-                    $t = Category::find()->where(['id' => $pt->category])->one();
-                    return $t->cat_name;
-                }
-                    ],
-                    [
-                        //'attribute' => 'product_stock_id',
-                        'format' => 'raw',
-                        'label' => 'สินค้า',
-                        'value' => function($model) {
-                            $p = Stockproduct::find()->where(['id' => $model->product_stock_id])->one();
-                            return $p->productname;
-                        }
-                            ],
-                            [
-                                //'attribute' => 'product_stock_id',
-                                'format' => 'raw',
-                                'label' => 'จำนวน',
-                                'value' => function($model) {
-                                    return $model->number;
-                                },
-                                'hAlign' => 'center'
-                            ],
-                            [
-                                //'attribute' => 'product_stock_id',
-                                'format' => 'raw',
-                                'label' => 'หน่วยนับ',
-                                'hAlign' => 'center',
-                                'value' => function($model) {
-                                    $pu = Stockproduct::find()->where(['id' => $model->product_stock_id])->one();
-                                    $unit = Unit::find()->where(['id' => $pu->unit])->one();
-                                    return $unit->unit;
-                                }
-                                    ],
-                                    //'create_date',
-                                    [
-                                        'format' => 'raw',
-                                        'hAlign' => 'center',
-                                        'value' => function($model) {
-                                            return "<a href=\"Javascript:Delete('" . $model->id . "')\"><i class='glyphicon glyphicon-trash'></i></a>";
-                                        }
-                                    ],
-                                /*
-                                  [
-                                  'class' => 'yii\grid\ActionColumn',
-                                  'contentOptions' => ['style' => 'text-align:center;'],
-                                  'template' => '{delete}',
-                                  ],
-                                 * 
-                                 */
+    <div class="panel panel-default">
+        <div class="panel-heading">รายการส่วนผสม</div>
+        <?=
+        GridView::widget([
+            'dataProvider' => $dataProvider,
+            //'filterModel' => $searchModel,
+            'pjax' => true, // pjax is set to always true for this demo
+            'pjaxSettings' => [
+                'neverTimeout' => true,
+                'options' => [
+                    'id' => 'gview',
+                ]
+            ],
+            'columns' => [
+                ['class' => 'yii\grid\SerialColumn'],
+                //'id',
+                //'menu',
+                [
+                    //'attribute' => 'product_stock_id',
+                    'format' => 'raw',
+                    'label' => 'ประเภท',
+                    'value' => function($model) {
+                        $pt = Stockproduct::find()->where(['id' => $model->product_stock_id])->one();
+                        $t = Category::find()->where(['id' => $pt->category])->one();
+                        return $t->cat_name;
+                    }
+                        ],
+                        [
+                            //'attribute' => 'product_stock_id',
+                            'format' => 'raw',
+                            'label' => 'สินค้า',
+                            'value' => function($model) {
+                                $p = Stockproduct::find()->where(['id' => $model->product_stock_id])->one();
+                                return $p->productname;
+                            }
                                 ],
-                            ]);
-                            ?>
-                        </div>
-                        </div>
-
+                                [
+                                    //'attribute' => 'product_stock_id',
+                                    'format' => 'raw',
+                                    'label' => 'จำนวน',
+                                    'value' => function($model) {
+                                        return $model->number;
+                                    },
+                                    'hAlign' => 'center'
+                                ],
+                                [
+                                    //'attribute' => 'product_stock_id',
+                                    'format' => 'raw',
+                                    'label' => 'หน่วยนับ',
+                                    'hAlign' => 'center',
+                                    'value' => function($model) {
+                                        $pu = Stockproduct::find()->where(['id' => $model->product_stock_id])->one();
+                                        $unit = Unit::find()->where(['id' => $pu->unit])->one();
+                                        return $unit->unit;
+                                    }
+                                        ],
+                                        //'create_date',
+                                        [
+                                            'format' => 'raw',
+                                            'hAlign' => 'center',
+                                            'value' => function($model) {
+                                                return "<a href=\"Javascript:Delete('" . $model->id . "')\"><i class='glyphicon glyphicon-trash'></i></a>";
+                                            }
+                                        ],
+                                    /*
+                                      [
+                                      'class' => 'yii\grid\ActionColumn',
+                                      'contentOptions' => ['style' => 'text-align:center;'],
+                                      'template' => '{delete}',
+                                      ],
+                                     * 
+                                     */
+                                    ],
+                                ]);
+                                ?>
+                            </div>
+                        <?php } ?>
                         <script type="text/javascript">
                             function Delete(id) {
                                 var r = confirm("คุณแน่ใจหรือไม่ ... ?");

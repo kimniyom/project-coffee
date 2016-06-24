@@ -30,7 +30,7 @@ class Menu extends \yii\db\ActiveRecord {
     public function rules() {
         return [
             [['type', 'menu', 'price'], 'required'],
-            [['type'], 'integer'],
+            [['type','mix'], 'integer'],
             [['price'], 'number', 'numberPattern' => '/^\s*[+]?[0-9]*[.,]?[0-9]+([eE][+]?[0-9]+)?\s*$/'],
             [['create_date'], 'safe'],
             [['menu'], 'string', 'max' => 255],
@@ -50,6 +50,7 @@ class Menu extends \yii\db\ActiveRecord {
             'menu' => 'ชื่อเมนู',
             'type' => 'ประเภท',
             'price' => 'ราคา',
+            'mix' => 'ส่วนผสม',
             'create_date' => 'วันที่บันทึก',
         ];
     }

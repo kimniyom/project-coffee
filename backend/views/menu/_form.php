@@ -44,6 +44,12 @@ use yii\web\UrlManager;
             ])
             ?>
         </div>
+        <div class="col-md-2 col-lg-2">
+            <p style="margin-top:30px;"></p>
+            <?php
+            echo $form->field($model, 'mix')->checkBox(['label' => 'ส่วนผสม', 'uncheck' => 0, 'checked' => 1]);
+            ?>
+        </div>
     </div>
     <div class="row">
         <div class="col-md-2 col-lg-2">
@@ -53,6 +59,7 @@ use yii\web\UrlManager;
             <?= $form->field($model, 'images')->fileInput() ?>
         </div>
     </div>
+
     <div class="row">
         <div class="col-md-2 col-lg-2">
             <div class="form-group">

@@ -136,13 +136,14 @@ class OrderlistController extends Controller
         $stockModel = new Stock();
         /*นำเมนูไปหาส่วนประกอบแต่ละอย่างเพื่อนำไปเช็ค Stock */
         $menuID = $post->post('menu');
-        /*
+        
         $mix = Mix::find()->where(['menu' => $menuID])->all();
         
         foreach($mix as $m):
-            
+            echo $m->product_stock_id." จำนวน ".$m->number."<br/>";
         endforeach;
-        */
+        
+        /*Save
         $columns = array(
             "order" => $post->post('order_id'),
             "menu" => $menuID,
@@ -152,6 +153,7 @@ class OrderlistController extends Controller
         \Yii::$app->db->createCommand()
                 ->insert("orderlist", $columns)
                 ->execute();
+                */
     }
     
     public function actionDeleteorderlist(){
