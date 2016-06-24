@@ -54,7 +54,7 @@ $config = new System();
                 '<li><a href="javascript:window.location.reload();"><i class="fa fa-refresh"></i> Refresh</a></li>',
                 ['label' => "Date : " . $date],
             ];
-            $menuItems[] = ['label' => 'BackOffice', 'url' => $config->LinktoBackend(Yii::$app->urlManager->createUrl('stock'))];
+            $menuItems[] = ['label' => 'BackOffice', 'url' => $config->LinktoBackend(Yii::$app->urlManager->createUrl('site'))];
             //if (Yii::$app->session['admin'] == "TRUE") {
             //}
             /*
