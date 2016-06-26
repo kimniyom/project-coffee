@@ -54,164 +54,162 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
 </div>
 
+<div class="mix-form">
+    <div class="well">
+        <div class="comment-form">
+            <?php
+            $form = ActiveForm::begin([
+                        'enableAjaxValidation' => true,
+                        'validateOnSubmit' => true,
+                        'options' => ['id' => 'formsave']
+                            //'action' => ['mix/create'],
+            ]);
+            ?>
+            <?=
+            $form->field($mixModel, 'menu')->hiddenInput([
+                //'type' => 'hidden',
+                'value' => $model->id,
+            ])->label(false);
+            ?>
+            <div class="row">
+                <div class="col-md-3 col-lg-3">
+                    <label>หมวด</label>
+                    <?php
+                    /*
+                      $form->field($mixModel, 'category')->dropdownList(
+                      ArrayHelper::map(Category::find()->all(), 'id', 'cat_name'), [
+                      'id' => 'category',
+                      'prompt' => 'เลือกหมวด'
+                      ]);
+                     * 
+                     */
+                    // Multiple select without model
+                    echo Select2::widget([
+                        'id' => 'category',
+                        'name' => 'category',
+                        'value' => '',
+                        'data' => ArrayHelper::map(Category::find()->all(), 'id', 'cat_name'),
+                        'options' => [
+                            'multiple' => false,
+                            'placeholder' => 'Select states ...'
+                        ]
+                    ]);
+                    ?>
+                </div>
+                <div class="col-md-4 col-lg-4">
+                    <?php
+                    echo $form->field($mixModel, 'product_stock_id')->widget(DepDrop::classname(), [
+                        'options' => ['id' => 'product'],
+                        'data' => [],
+                        'type' => DepDrop::TYPE_SELECT2,
+                        'pluginOptions' => [
+                            'depends' => ['category'],
+                            'placeholder' => 'เลือกสินค้า...',
+                            'url' => Url::to(['/mix/getproduct'])
+                        ]
+                    ]);
+                    ?>
+                </div>
 
-<?php if ($model->mix == 1) { ?>
-    <div class="mix-form">
-        <div class="well">
-            <div class="comment-form">
-                <?php
-                $form = ActiveForm::begin([
-                            'enableAjaxValidation' => true,
-                            'validateOnSubmit' => true,
-                            'options' => ['id' => 'formsave']
-                                //'action' => ['mix/create'],
-                ]);
-                ?>
-                <?=
-                $form->field($mixModel, 'menu')->hiddenInput([
-                    //'type' => 'hidden',
-                    'value' => $model->id,
-                ])->label(false);
-                ?>
-                <div class="row">
-                    <div class="col-md-3 col-lg-3">
-                        <label>หมวด</label>
-                        <?php
-                        /*
-                          $form->field($mixModel, 'category')->dropdownList(
-                          ArrayHelper::map(Category::find()->all(), 'id', 'cat_name'), [
-                          'id' => 'category',
-                          'prompt' => 'เลือกหมวด'
-                          ]);
-                         * 
-                         */
-                        // Multiple select without model
-                        echo Select2::widget([
-                            'id' => 'category',
-                            'name' => 'category',
-                            'value' => '',
-                            'data' => ArrayHelper::map(Category::find()->all(), 'id', 'cat_name'),
-                            'options' => [
-                                'multiple' => false,
-                                'placeholder' => 'Select states ...'
-                            ]
-                        ]);
-                        ?>
-                    </div>
-                    <div class="col-md-4 col-lg-4">
-                        <?php
-                        echo $form->field($mixModel, 'product_stock_id')->widget(DepDrop::classname(), [
-                            'options' => ['id' => 'product'],
-                            'data' => [],
-                            'type' => DepDrop::TYPE_SELECT2,
-                            'pluginOptions' => [
-                                'depends' => ['category'],
-                                'placeholder' => 'เลือกสินค้า...',
-                                'url' => Url::to(['/mix/getproduct'])
-                            ]
-                        ]);
-                        ?>
-                    </div>
+                <div class="col-md-3 col-lg-3">
 
-                    <div class="col-md-3 col-lg-3">
-
-                        <?=
-                        $form->field($mixModel, 'number')->textInput([
-                            'type' => 'number',
-                        ])
-                        ?>
-                    </div>
-                    <div class="col-md-2 col-lg-2">
-                        <?php
-                        echo Html::submitButton($mixModel->isNewRecord ?
-                                        '<i class="fa fa-plus"></i> เพิ่ม' : 'Update', [
-                            'class' => $mixModel->isNewRecord ? 'btn btn-success btn-block' : 'btn btn-primary btn-block',
-                            'style' => 'margin-top:25px;',
-                        ])
-                        ?>
-                    </div>
+                    <?=
+                    $form->field($mixModel, 'number')->textInput([
+                        'type' => 'number',
+                    ])
+                    ?>
+                </div>
+                <div class="col-md-2 col-lg-2">
+                    <?php
+                    echo Html::submitButton($mixModel->isNewRecord ?
+                                    '<i class="fa fa-plus"></i> เพิ่ม' : 'Update', [
+                        'class' => $mixModel->isNewRecord ? 'btn btn-success btn-block' : 'btn btn-primary btn-block',
+                        'style' => 'margin-top:25px;',
+                    ])
+                    ?>
                 </div>
             </div>
-            <?php ActiveForm::end(); ?>
         </div>
+        <?php ActiveForm::end(); ?>
     </div>
-    <div class="panel panel-default">
-        <div class="panel-heading">รายการส่วนผสม</div>
-        <?=
-        GridView::widget([
-            'dataProvider' => $dataProvider,
-            //'filterModel' => $searchModel,
-            'pjax' => true, // pjax is set to always true for this demo
-            'pjaxSettings' => [
-                'neverTimeout' => true,
-                'options' => [
-                    'id' => 'gview',
-                ]
-            ],
-            'columns' => [
-                ['class' => 'yii\grid\SerialColumn'],
-                //'id',
-                //'menu',
-                [
-                    //'attribute' => 'product_stock_id',
-                    'format' => 'raw',
-                    'label' => 'ประเภท',
-                    'value' => function($model) {
-                        $pt = Stockproduct::find()->where(['id' => $model->product_stock_id])->one();
-                        $t = Category::find()->where(['id' => $pt->category])->one();
-                        return $t->cat_name;
-                    }
-                        ],
-                        [
-                            //'attribute' => 'product_stock_id',
-                            'format' => 'raw',
-                            'label' => 'สินค้า',
-                            'value' => function($model) {
-                                $p = Stockproduct::find()->where(['id' => $model->product_stock_id])->one();
-                                return $p->productname;
-                            }
-                                ],
-                                [
-                                    //'attribute' => 'product_stock_id',
-                                    'format' => 'raw',
-                                    'label' => 'จำนวน',
-                                    'value' => function($model) {
-                                        return $model->number;
-                                    },
-                                    'hAlign' => 'center'
-                                ],
-                                [
-                                    //'attribute' => 'product_stock_id',
-                                    'format' => 'raw',
-                                    'label' => 'หน่วยนับ',
-                                    'hAlign' => 'center',
-                                    'value' => function($model) {
-                                        $pu = Stockproduct::find()->where(['id' => $model->product_stock_id])->one();
-                                        $unit = Unit::find()->where(['id' => $pu->unit])->one();
-                                        return $unit->unit;
-                                    }
-                                        ],
-                                        //'create_date',
-                                        [
-                                            'format' => 'raw',
-                                            'hAlign' => 'center',
-                                            'value' => function($model) {
-                                                return "<a href=\"Javascript:Delete('" . $model->id . "')\"><i class='glyphicon glyphicon-trash'></i></a>";
-                                            }
-                                        ],
-                                    /*
-                                      [
-                                      'class' => 'yii\grid\ActionColumn',
-                                      'contentOptions' => ['style' => 'text-align:center;'],
-                                      'template' => '{delete}',
-                                      ],
-                                     * 
-                                     */
+</div>
+<div class="panel panel-default">
+    <div class="panel-heading">รายการส่วนผสม</div>
+    <?=
+    GridView::widget([
+        'dataProvider' => $dataProvider,
+        //'filterModel' => $searchModel,
+        'pjax' => true, // pjax is set to always true for this demo
+        'pjaxSettings' => [
+            'neverTimeout' => true,
+            'options' => [
+                'id' => 'gview',
+            ]
+        ],
+        'columns' => [
+            ['class' => 'yii\grid\SerialColumn'],
+            //'id',
+            //'menu',
+            [
+                //'attribute' => 'product_stock_id',
+                'format' => 'raw',
+                'label' => 'ประเภท',
+                'value' => function($model) {
+                    $pt = Stockproduct::find()->where(['id' => $model->product_stock_id])->one();
+                    $t = Category::find()->where(['id' => $pt->category])->one();
+                    return $t->cat_name;
+                }
+                    ],
+                    [
+                        //'attribute' => 'product_stock_id',
+                        'format' => 'raw',
+                        'label' => 'สินค้า',
+                        'value' => function($model) {
+                            $p = Stockproduct::find()->where(['id' => $model->product_stock_id])->one();
+                            return $p->productname;
+                        }
+                            ],
+                            [
+                                //'attribute' => 'product_stock_id',
+                                'format' => 'raw',
+                                'label' => 'จำนวน',
+                                'value' => function($model) {
+                                    return $model->number;
+                                },
+                                'hAlign' => 'center'
+                            ],
+                            [
+                                //'attribute' => 'product_stock_id',
+                                'format' => 'raw',
+                                'label' => 'หน่วยนับ',
+                                'hAlign' => 'center',
+                                'value' => function($model) {
+                                    $pu = Stockproduct::find()->where(['id' => $model->product_stock_id])->one();
+                                    $unit = Unit::find()->where(['id' => $pu->unit])->one();
+                                    return $unit->unit;
+                                }
                                     ],
-                                ]);
-                                ?>
-                            </div>
-                        <?php } ?>
+                                    //'create_date',
+                                    [
+                                        'format' => 'raw',
+                                        'hAlign' => 'center',
+                                        'value' => function($model) {
+                                            return "<a href=\"Javascript:Delete('" . $model->id . "')\"><i class='glyphicon glyphicon-trash'></i></a>";
+                                        }
+                                    ],
+                                /*
+                                  [
+                                  'class' => 'yii\grid\ActionColumn',
+                                  'contentOptions' => ['style' => 'text-align:center;'],
+                                  'template' => '{delete}',
+                                  ],
+                                 * 
+                                 */
+                                ],
+                            ]);
+                            ?>
+                        </div>
+
                         <script type="text/javascript">
                             function Delete(id) {
                                 var r = confirm("คุณแน่ใจหรือไม่ ... ?");

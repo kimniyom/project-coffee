@@ -88,7 +88,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             'hAlign' => 'center',
                             'format' => 'raw',
                             'value' => function($model) {
-                                if ($model->mix == 1) {
+                           
                                     $link = Url::to(['menu/view', 'id' => $model['id']]);
                                     $mix = \app\models\Mix::find()->where(['menu' => $model->id])->all();
                                     if (empty($mix)) {
@@ -97,9 +97,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                         $text = "";
                                     }
                                     return "<a href='" . $link . "'><button type='button' class='btn btn-default btn-sm'>ส่วนผสม $text</button></a>";
-                                } else {
-                                    return "";
-                                }
+                                
                             },
                                     'format' => 'raw'
                                 ],
