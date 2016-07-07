@@ -7,7 +7,9 @@ use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 //use backend\assets\AppAsset;
 use backend\assets\AdminLteAsset;
+use common\models\System;
 
+$system = new System();
 AdminLteAsset::register($this);
 $this->title = 'LoginBackoffice';
 //$this->params['breadcrumbs'][] = $this->title;
@@ -31,26 +33,31 @@ $this->title = 'LoginBackoffice';
             <!-- /.login-logo -->
             <div class="login-box-body">
 
-                <div class="row">
 
-                    <?php $form = ActiveForm::begin(['id' => 'login-form']); ?>
 
-                    <?= $form->field($model, 'username')->textInput(['autofocus' => true]) ?>
+                <?php $form = ActiveForm::begin(['id' => 'login-form']); ?>
 
-                    <?= $form->field($model, 'password')->passwordInput() ?>
+                <?= $form->field($model, 'username')->textInput(['autofocus' => true]) ?>
 
-                    <?= $form->field($model, 'rememberMe')->checkbox() ?>
+                <?= $form->field($model, 'password')->passwordInput() ?>
 
-                    <div class="form-group">
-                        <?= Html::submitButton('Login', ['class' => 'btn btn-primary btn-block', 'name' => 'login-button']) ?>
-                    </div>
+                <?= $form->field($model, 'rememberMe')->checkbox() ?>
 
-                    <?php ActiveForm::end(); ?>
-
+                <div class="form-group">
+                    <?= Html::submitButton('Login', ['class' => 'btn btn-primary btn-block', 'name' => 'login-button']) ?>
                 </div>
+
+                <?php ActiveForm::end(); ?>
+                <center>
+                    <a href="<?php echo $system->LinktoFrontend(Yii::$app->urlManager->createUrl('site')) ?>">
+                        <i class="fa fa-home"></i> หน้าหลัก
+                    </a>
+                </center>
             </div>
             <!-- /.login-box-body -->
+
         </div>
+
         <!-- /.login-box -->
         <?php $this->endBody() ?>
     </body>

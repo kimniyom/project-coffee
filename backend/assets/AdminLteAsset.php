@@ -30,6 +30,7 @@ class AdminLteAsset extends AssetBundle
         'themes/AdminLTE/dist/js/demo.js',
         'themes/AdminLTE/plugins/datatables/jquery.dataTables.js',
         'themes/AdminLTE/plugins/datatables/dataTables.bootstrap.js',
+        'themes/AdminLTE/plugins/slimScroll/jquery.slimscroll.min.js',
     ];
     public $depends = [
         'yii\web\YiiAsset',

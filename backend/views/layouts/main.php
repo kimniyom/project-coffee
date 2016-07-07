@@ -24,7 +24,7 @@ AdminLteAsset::register($this);
         <title><?= Html::encode($this->title) ?></title>
         <?php $this->head() ?>
     </head>
-    <body class="skin-black-light">
+    <body class="skin-black-light fixed">
         <?php $this->beginBody() ?>
 
         <div class="wrapper">
@@ -146,47 +146,41 @@ AdminLteAsset::register($this);
                         </div>
                     </div>
                     <!-- search form -->
-                    <form action="#" method="get" class="sidebar-form">
-                        <div class="input-group">
-                            <input type="text" name="q" class="form-control" placeholder="Search...">
-                            <span class="input-group-btn">
-                                <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
-                                </button>
-                            </span>
-                        </div>
-                    </form>
                     <!-- /.search form -->
                     <!-- sidebar menu: : style can be found in sidebar.less -->
                     <?php if (!\Yii::$app->user->isGuest) { ?>
                         <ul class="sidebar-menu">
-                            <li class="header">MAIN NAVIGATION</li>
+                            <li class="header"><i class="fa fa-gear"></i> ตั้งค่า</li>
+                            <!--
                             <li class="treeview">
                                 <a href="#">
                                     <i class="fa fa-gear"></i> <span>ตั้งค่า</span> <i class="fa fa-angle-left pull-right"></i>
                                 </a>
+                                <!--
                                 <ul class="treeview-menu">
-                                    <li><a href="<?php echo Url::to(['category/index']); ?>"><i class="fa fa-circle-o"></i> หมวดสินค้า</a></li>
-                                    <li><a href="<?php echo Url::to(['unit/index']); ?>"><i class="fa fa-circle-o"></i> หน่วยนับ</a></li>
-                                    <li><a href="<?php echo Url::to(['stockproduct/index']); ?>"><i class="fa fa-circle-o"></i> สินค้า</a></li>
-                                    <li><a href="<?php echo Url::to(['type/index']); ?>"><i class="fa fa-circle-o"></i> ประเภทรายการสินค้า</a></li>
-                                    <li><a href="<?php echo Url::to(['tables/index']); ?>"><i class="fa fa-circle-o"></i> โต๊อาหาร</a></li>
-                                    <li><a href="<?php echo Url::to(['menuoptions/index']); ?>"><i class="fa fa-circle-o"></i> Options เพิ่มเติม</a></li>
+                                    
                                 </ul>
+                                
                             </li>
-                            <li><a href="<?php echo Url::to(['stock/index']) ?>"><i class="fa fa-cube"></i>Stock</a></li>
-                            <li><a href="<?php echo Url::to(['menu/index']) ?>"><i class="fa fa-cutlery"></i>เมนูอาหาร / เครื่องดื่ม</a></li>
+                            -->
+                            <li><a href="<?php echo Url::to(['category/index']); ?>"><i class="fa fa-circle-o"></i> หมวดสินค้า</a></li>
+                            <li><a href="<?php echo Url::to(['unit/index']); ?>"><i class="fa fa-circle-o"></i> หน่วยนับ</a></li>
+                            <li><a href="<?php echo Url::to(['stockproduct/index']); ?>"><i class="fa fa-circle-o"></i> สินค้า</a></li>
+                            <li><a href="<?php echo Url::to(['type/index']); ?>"><i class="fa fa-circle-o"></i> ประเภทรายการสินค้า</a></li>
+                            <li><a href="<?php echo Url::to(['tables/index']); ?>"><i class="fa fa-circle-o"></i> โต๊อาหาร</a></li>
+                            <li><a href="<?php echo Url::to(['menuoptions/index']); ?>"><i class="fa fa-circle-o"></i> Options เพิ่มเติม</a></li>
+                            <!--
+                            <li><a href="<?//php echo Url::to(['stock/index']) ?>"><i class="fa fa-cube"></i>Stock</a></li>
+                            <li><a href="<?//php echo Url::to(['menu/index']) ?>"><i class="fa fa-cutlery"></i>เมนูอาหาร / เครื่องดื่ม</a></li>
                             <li class="treeview">
                                 <a href="#">
                                     <i class="fa fa-file-text"></i> <span>รายงาน</span> <i class="fa fa-angle-left pull-right"></i>
                                 </a>
                                 <ul class="treeview-menu">
-                                    <li><a href="<?php echo Url::to(['report/reportall']); ?>"><i class="fa fa-circle-o"></i> แสดงรายการขาย</a></li>
-                                    <li><a href="<?php echo Url::to(['unit/index']); ?>"><i class="fa fa-circle-o"></i> ค้นหารายการขาย</a></li>
-                                    <li><a href="<?php echo Url::to(['stockproduct/index']); ?>"><i class="fa fa-circle-o"></i> แสดงรายการขายแยกช่วงเวลา</a></li>
-                                    <li><a href="<?php echo Url::to(['type/index']); ?>"><i class="fa fa-circle-o"></i> แสดงรายการขายแยกโต๊ะ</a></li>
-                                    <li><a href="<?php echo Url::to(['tables/index']); ?>"><i class="fa fa-circle-o"></i> แสดงรายการขายแยกประเภท</a></li>
+                                    <li><a href="<?//php echo Url::to(['report/reportall']); ?>"><i class="fa fa-circle-o"></i> แสดงรายการขาย</a></li>
                                 </ul>
                             </li>
+                            -->
                         </ul>
                     <?php } ?>
                 </section>

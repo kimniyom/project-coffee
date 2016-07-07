@@ -9,6 +9,7 @@ $Options = new Options();
         <thead>
             <tr>
                 <th>#</th>
+                <th>รหัสการขาย</th>
                 <th>ประเภท</th>
                 <th>รายการ</th>
                 <th style=" text-align: center;">เลขโต๊ะ</th>
@@ -26,6 +27,7 @@ $Options = new Options();
                 ?>
                 <tr>
                     <td><?php echo $i; ?></td>
+                    <td><?php echo $rs['order'] ?></td>
                     <td><?php echo $rs['typename'] ?></td>
                     <td>
                         <?php echo $rs['menuname'] ?>
@@ -47,7 +49,7 @@ $Options = new Options();
         </tbody>
         <tfoot>
             <tr>
-                <td colspan="3" style=" text-align: center; font-weight: bold;">รวม</td>
+                <td colspan="4" style=" text-align: center; font-weight: bold;">รวม</td>
                 <td style=" text-align: right; font-weight: bold;"><?php echo number_format($sum, 2) ?></td>
                 <td></td>
             </tr>

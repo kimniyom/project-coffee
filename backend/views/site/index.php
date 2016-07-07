@@ -1,64 +1,48 @@
-<!-- Small boxes (Stat box) -->
-<div class="row">
-    <div class="col-lg-3 col-xs-6">
-        <!-- small box -->
-        <div class="small-box bg-aqua">
-            <div class="inner">
-                <h3>150</h3>
+<?php
 
-                <p>New Orders</p>
-            </div>
-            <div class="icon">
-                <i class="ion ion-bag"></i>
-            </div>
-            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-        </div>
-    </div>
-    <!-- ./col -->
-    <div class="col-lg-3 col-xs-6">
-        <!-- small box -->
-        <div class="small-box bg-green">
-            <div class="inner">
-                <h3>53<sup style="font-size: 20px">%</sup></h3>
+use yii\helpers\Url;
+?>
 
-                <p>Bounce Rate</p>
-            </div>
-            <div class="icon">
-                <i class="ion ion-stats-bars"></i>
-            </div>
-            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-        </div>
-    </div>
-    <!-- ./col -->
-    <div class="col-lg-3 col-xs-6">
-        <!-- small box -->
-        <div class="small-box bg-yellow">
-            <div class="inner">
-                <h3>44</h3>
+<style type="text/css">
+    #con_menu button{
+        margin-bottom: 20px;
+    }
+</style>
 
-                <p>User Registrations</p>
-            </div>
-            <div class="icon">
-                <i class="ion ion-person-add"></i>
-            </div>
-            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-        </div>
-    </div>
-    <!-- ./col -->
-    <div class="col-lg-3 col-xs-6">
-        <!-- small box -->
-        <div class="small-box bg-red">
-            <div class="inner">
-                <h3>65</h3>
-
-                <p>Unique Visitors</p>
-            </div>
-            <div class="icon">
-                <i class="ion ion-pie-graph"></i>
-            </div>
-            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-        </div>
-    </div>
-    <!-- ./col -->
+<div style=" text-align: center;">
+    <br/><br/>
+    <h1><i class="fa fa-gear"></i> BackOffice DemoCoffee</h1><br/><br/>
 </div>
-<!-- /.row -->
+
+<div class="row" style=" text-align: center;" id="con_menu">
+    <div class="col-lg-2"></div>
+    <div class="col-sm-6 col-md-6 col-lg-2">
+        <a href="<?php echo Url::to(['stock/index'])?>">
+        <button type="button" class="btn btn-default btn-block">
+            <img src="<?php echo Url::to('@web/images/shop-icon.png') ?>"/><br/>
+            Stock สินค้า
+        </button></a>
+    </div>
+    <div class="col-sm-6 col-md-6 col-lg-2">
+        <a href="<?php echo Url::to(['menu/index'])?>">
+        <button type="button" class="btn btn-default btn-block">
+            <img src="<?php echo Url::to('@web/images/food-icon.png') ?>"/><br/>
+            เมนูอาหารและเครื่องดื่ม
+        </button></a>
+    </div>
+    <div class="col-sm-6 col-md-6 col-lg-2">
+        <a href="<?php echo Url::to(['report/reportall'])?>">
+        <button type="button" class="btn btn-default btn-block">
+            <img src="<?php echo Url::to('@web/images/seo-icon.png') ?>"/><br/>
+            รายงาน
+        </button></a>
+    </div>
+    <div class="col-sm-6 col-md-6 col-lg-2">
+        <a href="<?php echo Url::to(['employee/index'])?>">
+        <button type="button" class="btn btn-default btn-block">
+            <img src="<?php echo Url::to('@web/images/users-icon.png') ?>"/><br/>
+            พนักงาน
+        </button></a>
+    </div>
+    <div class="col-lg-2"></div>
+</div>

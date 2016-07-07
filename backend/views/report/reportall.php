@@ -9,6 +9,7 @@ use app\models\Type;
 use yii\helpers\ArrayHelper;
 use app\models\Menu as menus;
 use app\models\Tables;
+use app\models\Orders;
 use kartik\date\DatePicker;
 use yii\helpers\Url;
 
@@ -23,22 +24,25 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <div class="row">
     <div class="col-md-4 col-lg-4">
-        <label>ประเภท</label>
+        <label>รหัสการขาย</label>
         <?php
         // Multiple select without model
         echo Select2::widget([
-            'name' => 'type',
+            'name' => 'orders',
             'value' => '',
-            'data' => ArrayHelper::map(Type::find()->all(), 'id', 'typename'),
+            'data' => ArrayHelper::map(Orders::find()->all(), 'order_id', 'order_id'),
             'theme' => Select2::THEME_BOOTSTRAP, // this is the default if theme is not set
             'options' => [
-                'id' => 'type',
+                'id' => 'orders',
                 'multiple' => true,
                 'placeholder' => 'ทั้งหมด ...'
             ]
         ]);
         ?>
     </div>
+</div>
+
+<div class="row">
     <div class="col-md-4 col-lg-4">
         <?php
         // usage without model
@@ -75,6 +79,26 @@ $this->params['breadcrumbs'][] = $this->title;
             'pluginOptions' => [
                 'format' => 'yyyy-mm-dd',
                 'todayHighlight' => true
+            ]
+        ]);
+        ?>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-9 col-lg-9">
+        <label>ประเภท</label>
+        <?php
+        // Multiple select without model
+        echo Select2::widget([
+            'name' => 'type',
+            'value' => '',
+            'data' => ArrayHelper::map(Type::find()->all(), 'id', 'typename'),
+            'theme' => Select2::THEME_BOOTSTRAP, // this is the default if theme is not set
+            'options' => [
+                'id' => 'type',
+                'multiple' => true,
+                'placeholder' => 'ทั้งหมด ...'
             ]
         ]);
         ?>
@@ -152,6 +176,7 @@ $this->registerJs('
         var tables = $("#tables").val();
         var date_start = $("#date_start").val();
         var date_end = $("#date_end").val();
+        var orders = $("#orders").val();
         var url = "<?php echo Url::to(['report/getreport']) ?>";
 
         /*
@@ -165,7 +190,8 @@ $this->registerJs('
             menu: menu,
             date_start: date_start,
             date_end: date_end,
-            tables: tables
+            tables: tables,
+            orders: orders
         };
 
         $.post(url, data, function (result) {

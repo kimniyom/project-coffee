@@ -60,7 +60,7 @@ class Orderlist extends \yii\db\ActiveRecord {
         return $this->hasOne(Orders::className(), ['order_id' => 'order']);
     }
 
-    public function Getlistorder($Wtype = null, $Wmenu = null, $Wtable = null, $date_start = null, $date_end = null) {
+    public function Getlistorder($Wtype = null, $Wmenu = null, $Wtable = null, $date_start = null, $date_end = null,$Worders = null) {
         $sql = "SELECT o.*,m.menu AS menuname,m.price,t.typename,r.tables
                     FROM orders r INNER JOIN orderlist o ON r.order_id = o.order
                     INNER JOIN menu m ON o.menu = m.id
@@ -68,6 +68,7 @@ class Orderlist extends \yii\db\ActiveRecord {
                     WHERE $Wtype 
                         AND $Wmenu
                         AND $Wtable
+                        AND $Worders
                         AND o.create_date BETWEEN '$date_start' AND '$date_end' ";
         return \Yii::$app->db->createCommand($sql)->queryAll();
     }

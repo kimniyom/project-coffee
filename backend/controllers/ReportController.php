@@ -19,7 +19,7 @@ class ReportController extends Controller {
         $tables = $input->post('tables');
         $date_start = $input->post('date_start');
         $date_end = $input->post('date_end');
-
+        $orders = $input->post('orders');
         if ($type == '') {
             $Wtype = "1=1";
         } else {
@@ -33,6 +33,13 @@ class ReportController extends Controller {
             $STmenu = implode("','", $menu);
             $Wmenu = "o.menu IN('" . $STmenu . "')";
         }
+        
+        if ($orders == '') {
+            $Worders = "1=1";
+        } else {
+            $SOrders = implode("','", $orders);
+            $Worders = "r.order_id IN('" . $SOrders . "')";
+        }
 
         if ($tables == '') {
             $Wtables = "1=1";
@@ -42,7 +49,7 @@ class ReportController extends Controller {
         }
 
         $Model = new Orderlist();
-        $data['datas'] = $Model->Getlistorder($Wtype, $Wmenu, $Wtables, $date_start, $date_end);
+        $data['datas'] = $Model->Getlistorder($Wtype, $Wmenu, $Wtables, $date_start, $date_end,$Worders);
         return $this->renderPartial('_reportall', $data);
     }
 

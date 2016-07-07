@@ -35,5 +35,9 @@ class System {
     function LinktoBackend($url = null) {
         return str_replace('frontend', 'backend/web', $url);
     }
+    
+    function LinktoFrontend($url = null) {
+        return str_replace('backend/web', 'frontend', $url);
+    }
 
 }
