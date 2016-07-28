@@ -14,6 +14,7 @@ use Yii;
  * @property string $password
  * @property string $resgister
  * @property integer $salary
+ * @property string $status
  */
 class Employee extends \yii\db\ActiveRecord
 {
@@ -31,9 +32,10 @@ class Employee extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'lname', 'username','password','resgister'],'required'],
+            [['name', 'lname', 'username','password','resgister','status'],'required'],
             [['resgister'], 'safe'],
             [['salary'], 'integer'],
+            [['status'], 'string'],
             [['name', 'lname', 'username'], 'string', 'max' => 100],
             [['password'], 'string', 'max' => 50],
         ];
@@ -52,6 +54,7 @@ class Employee extends \yii\db\ActiveRecord
             'password' => 'Password',
             'resgister' => 'วันที่เข้าทำงาน',
             'salary' => 'เงินเดือน',
+            'status' => 'A = admin M = Employee',
         ];
     }
 }

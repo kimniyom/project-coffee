@@ -24,6 +24,14 @@ use yii\helpers\Url;
     </center>
 </div>
 
+<?php
+$this->registerJs(' $(document).ready(function () {
+        var defaults = "' . $typeBuy . '";
+            if(defaults == "0"){
+                Openorders(defaults);
+            }
+    });')
+?>
 <script type="text/javascript">
     function Openorders(tables) {
         var url = "<?php echo Url::to(['orders/openorders']) ?>";

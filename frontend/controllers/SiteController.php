@@ -18,6 +18,7 @@ use app\models\Orders;
 use yii\db\Query;
 use app\models\Orderlist;
 use yii\helpers\Json;
+use common\models\Setting;
 
 /**
  * Site controller
@@ -213,11 +214,14 @@ class SiteController extends Controller {
     }
 
     public function actionIndex() {
-        $data['tables'] = Tables::find()->all();
+        $Setting = new Setting();
+        $data['typeBuy'] = $Setting->DetailShop('defaulttable');
+        $data['tables'] = Tables::find()->where(['!=', 'tables', '0'])->all();
         return $this->render("tables", $data);
     }
 
     public function actionCalculator() {
+
         $post = \Yii::$app->request;
         $orderID = $post->post('orderID');
         $Model = new Orderlist();

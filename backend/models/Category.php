@@ -44,4 +44,12 @@ class Category extends \yii\db\ActiveRecord
             'status' => 'สถานะ',
         ];
     }
+    
+    public function getstatus($status = null){
+        if($status == 1){
+            return "active";
+        } else {
+            return "unactive";
+        }
+    }
 }

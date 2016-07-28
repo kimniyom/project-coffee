@@ -12,9 +12,12 @@ use kartik\widgets\Select2;
 use app\models\Stockproduct;
 use app\models\Unit;
 use kartik\widgets\ActiveForm;
+use common\models\System;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Menu */
+
+$config = new System();
 
 $this->title = $model->id;
 $this->params['breadcrumbs'][] = ['label' => 'Menus', 'url' => ['index']];
@@ -47,7 +50,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     <?php $type = Type::find()->where(['id' => $model->type])->one()['typename'] ?>
                     <input type="text" value="<?php echo "ประเภท : " . $type; ?>" class="form-control" readonly="readonly" id="bold-text"/>
                     <input type="text" value="<?php echo "ราคา : " . $model->price . " บาท"; ?>" class="form-control" readonly="readonly" id="bold-text"/>
-                    <input type="text" value="<?php echo "วันที่บันทึก : " . $model->create_date; ?>" class="form-control" readonly="readonly" id="bold-text"/>
+                    <input type="text" value="<?php echo "วันที่บันทึก : " . $config->Thaidate($model->create_date); ?>" class="form-control" readonly="readonly" id="bold-text"/>
                 </div>
             </div>
         </div>
@@ -134,7 +137,16 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
 </div>
 <div class="panel panel-default">
-    <div class="panel-heading">รายการส่วนผสม</div>
+    <div class="panel-heading">
+        รายการส่วนผสม
+        <?php if ($countLock == 0) { ?>
+            <button type="button" class="btn btn-danger btn-xs pull-right"
+                    onclick="lock('Y')"><i class="fa fa-lock"></i> Lock</button>
+                <?php } else { ?>
+            <button type="button" class="btn btn-info btn-xs pull-right"
+                    onclick="lock('N')"><i class="fa fa-unlock"></i> UnLock</button>
+        <?php } ?>
+    </div>
     <?=
     GridView::widget([
         'dataProvider' => $dataProvider,
@@ -194,7 +206,11 @@ $this->params['breadcrumbs'][] = $this->title;
                                         'format' => 'raw',
                                         'hAlign' => 'center',
                                         'value' => function($model) {
-                                            return "<a href=\"Javascript:Delete('" . $model->id . "')\"><i class='glyphicon glyphicon-trash'></i></a>";
+                                            if ($model->lock == 'N') {
+                                                return "<a href=\"Javascript:Delete('" . $model->id . "')\"><i class='fa fa-trash'></i> delete</a>";
+                                            } else {
+                                                return "delete";
+                                            }
                                         }
                                     ],
                                 /*
@@ -225,8 +241,20 @@ $this->params['breadcrumbs'][] = $this->title;
                             function Reload() {
                                 $.pjax.reload({container: '#gview'});
                             }
+
                         </script>
 
+
+                        <script type="text/javascript">
+                            function lock(status) {
+                                var url = "<?php echo Url::to(['mix/lock']) ?>";
+                                var menu = "<?php echo $model->id ?>";
+                                var data = {status: status, menu: menu};
+                                $.post(url, data, function () {
+                                    window.location.reload();
+                                });
+                            }
+                        </script>
 
                         <?php
                         $url = Url::to(['mix/create']);

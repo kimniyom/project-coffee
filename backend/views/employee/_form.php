@@ -33,6 +33,7 @@ use kartik\widgets\Widget;
 
     <?= $form->field($model, 'salary')->textInput() ?>
 
+    <?= $form->field($model, 'status')->dropDownList([ 'A' => 'A', 'M' => 'M',], ['prompt' => '']) ?>
     <?php
     // Usage with model and Active Form (with no default initial value)
     echo $form->field($model, 'resgister')->widget(DatePicker::classname(), [
@@ -58,3 +59,6 @@ use kartik\widgets\Widget;
     <?php ActiveForm::end(); ?>
 
 </div>
+
+
+

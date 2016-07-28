@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use kartik\grid\GridView;
+use common\models\System;
 
 //use yii\grid\GridView;
 
@@ -14,10 +15,10 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="menuoptions-index">
 
-    <?php // echo $this->render('_search', ['model' => $searchModel]);  ?>
+<?php // echo $this->render('_search', ['model' => $searchModel]);   ?>
 
     <p>
-        <?= Html::a('Create Menuoptions', ['create'], ['class' => 'btn btn-success']) ?>
+<?= Html::a('Create Menuoptions', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
     <div class="panel panel-default">
         <div class="panel-heading"><h4><?= Html::encode($this->title) ?></h4></div>
@@ -31,8 +32,19 @@ $this->params['breadcrumbs'][] = $this->title;
                     //'id',
                     'options',
                     'price',
-                    'create_date',
-                    ['class' => 'yii\grid\ActionColumn'],
+                    //'create_date',
+                    [
+                        'attribute' => 'create_date',
+                        'hAlign' => 'center',
+                        //'label' => 'วันที่',
+                        'value' => function($model) {
+                            $config = new System();
+                            return $config->Thaidate($model->create_date);
+                        }
+                    ],
+                    [
+                        'class' => 'yii\grid\ActionColumn'
+                        ],
                 ],
             ]);
             ?>

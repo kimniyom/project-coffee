@@ -49,7 +49,7 @@ $Options = new Options();
         </tbody>
         <tfoot>
             <tr>
-                <td colspan="4" style=" text-align: center; font-weight: bold;">รวม</td>
+                <td colspan="5" style=" text-align: center; font-weight: bold;">รวม</td>
                 <td style=" text-align: right; font-weight: bold;"><?php echo number_format($sum, 2) ?></td>
                 <td></td>
             </tr>

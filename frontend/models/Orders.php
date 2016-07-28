@@ -28,7 +28,7 @@ class Orders extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['order_id', 'tables'], 'integer'],
+            [['order_id', 'tables','flag'], 'integer'],
             [['create_date'], 'safe'],
         ];
     }
@@ -42,6 +42,7 @@ class Orders extends \yii\db\ActiveRecord
             'id' => 'ID',
             'order_id' => 'Order ID',
             'tables' => 'Tables',
+            'flag' => 'flag',
             'create_date' => 'Create Date',
         ];
     }

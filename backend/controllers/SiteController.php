@@ -26,7 +26,7 @@ class SiteController extends Controller {
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['logout', 'index'],
+                        'actions' => ['logout', 'index','activemenu'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -55,6 +55,13 @@ class SiteController extends Controller {
     public function actionIndex() {
         return $this->render('index');
     }
+    
+    public function actionActivemenu(){
+        $menu = \Yii::$app->request->post('menu');
+        //$menu = 1;
+        \Yii::$app->session['menu'] = $menu;
+        //\Yii::$app->session['menu'];
+    }
 
     public function actionLogin() {
         if (!\Yii::$app->user->isGuest) {
@@ -75,5 +82,5 @@ class SiteController extends Controller {
         Yii::$app->user->logout();
         return $this->goHome();
     }
-
+   
 }

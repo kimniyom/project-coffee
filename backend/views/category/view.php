@@ -2,7 +2,9 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+use app\models\Category;
 
+$cat = new Category();
 /* @var $this yii\web\View */
 /* @var $model app\models\Category */
 
@@ -32,7 +34,10 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'id',
             'cat_name',
-            'status',
+            [                      // the owner name of the model
+            'label' => 'status',
+            'value' => $cat->getstatus($model->status),
+        ],
         ],
     ]) ?>
         </div>

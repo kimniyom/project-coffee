@@ -40,7 +40,7 @@ $menu = new Menu();
 <div class="row">
     <div class="col-md-8 col-lg-8">
         <div class="panel panel-primary" id="menuproduct">
-            <div class="panel-heading">Menu</div>
+            <div class="panel-heading"><h4><i class="fa fa-coffee"></i> เมนูอาหาร / เครื่องดื่ม</h4></div>
             <div class="panel-body" id="menubody">
                 <!-- Nav tabs -->
                 <ul class="nav nav-tabs" role="tablist">
@@ -80,7 +80,7 @@ $menu = new Menu();
                                 <center>
                                     <?php foreach ($product as $p): ?>
                                         <div class="col-xs-6 col-sm-6 col-md-4 col-lg-4">
-                                            <button type="button" class="btn btn-primary btn-block" style=" margin-bottom: 5px;"
+                                            <button type="button" class="btn btn-default btn-block" style=" margin-bottom: 5px;"
                                                     onclick="Save('<?php echo $p['id'] ?>')">
                                                 <img src="<?php echo $system->GetimagesProduct($p['images']) ?>" style=" max-height: 50px;"><br/>
                                                 <p id="mmenu"><?php echo $p['menu'] ?></p>
@@ -101,7 +101,6 @@ $menu = new Menu();
         <div id="orderlist"></div>
     </div>
 
-
     <div class="col-sm-12 col-md-4 col-lg-4">
         <!--
             ########################
@@ -110,26 +109,18 @@ $menu = new Menu();
         -->
 
         <div class="panel panel-danger">
-            <div class="panel-heading">Calculator</div>
+            <div class="panel-heading"><h4><i class="fa fa-calculator"></i> คำนวณค่าใช้จ่าย</h4></div>
             <div class="panel-body">
                 <div class="well well-sm">
                     รหัสรายการ <?php echo $order_id ?>
                     โต๊ะที่ <?php echo $tables ?> 
                     วันที่ขาย <?php echo $system->Thaidate(date("Y-m-d")) ?>
                 </div>
-                <div class="form-group">
-                    <div class="input-group">
-                        <div class="input-group-addon">Tel.</div>
-                        <input type="text" class="form-control" id="tel" placeholder="เบอร์โทรศัพท์ ...">
-                        <div class="input-group-addon btn btn-success"
-                             onclick="AddTel()"><i class="fa fa-plus"></i> เพิ่ม</div>
-                    </div>
-                </div>
 
                 <div class="form-group">
                     <div class="input-group">
                         <div class="input-group-addon">ราคารวม</div>
-                        <input type="text" class="form-control" id="total" placeholder="ราคารวม" value="0">
+                        <input type="text" class="form-control" id="total" placeholder="ราคารวม" value="0" readonly="readonly">
                         <div class="input-group-addon">บาท</div>
                     </div>
                 </div>
@@ -145,40 +136,59 @@ $menu = new Menu();
                 <div class="form-group">
                     <div class="input-group">
                         <div class="input-group-addon">รวมสุทธิ</div>
-                        <input type="text" class="form-control" id="_total" placeholder="ราคารวม">
+                        <input type="text" class="form-control" id="_total" placeholder="ราคารวม" readonly="readonly">
                         <div class="input-group-addon">บาท</div>
                     </div>
                 </div>
+                <?php if ($model->flag == '1') { ?>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-addon">Tel.</div>
+                            <input type="text" class="form-control" id="tel" placeholder="เบอร์โทรศัพท์ ..."
+                                   onkeypress="return chkNumber(this.value)">
+                            <div class="input-group-addon btn btn-success"
+                                 onclick="AddTel()"><i class="fa fa-plus"></i> เพิ่ม</div>
+                        </div>
+                    </div>
+                <?php } ?>
             </div>
+
             <div class="panel-footer" style=" text-align: center;">
                 <!--
                 <button type="button" class="btn btn-default">สั่ง</button>
                 -->
+                <?php if ($model->flag == '0') { ?>
+                    <button type="button" class="btn btn-primary" onclick="send('<?php echo $order_id ?>')">สั่ง</button>
+                <?php } else { ?>
+                    <button type="button" class="btn btn-primary disabled">สั่ง</button>
+                <?php } ?>
                 <?php
                 if ($model->confirm == '0') {
                     ?>
-                    <button type="button" class="btn btn-success"
-                            onclick="Check_bill()">ชำระเงิน</button>
+                    <?php if ($model->flag == 1) { ?>
+                        <button type="button" class="btn btn-success"
+                                onclick="Check_bill()">ชำระเงิน</button>
+                            <?php } ?>
                     <button type="button" class="btn btn-warning disabled">พิมพ์ใบเสร็จ</button>
                 <?php } else { ?>
                     <button type="button" class="btn btn-success disabled">ชำระเงินแล้ว</button>
                     <button type="button" class="btn btn-warning" onclick="Bill()">พิมพ์ใบเสร็จ</button>
                 <?php } ?>
-
-
-                <?php
-                if ($model->confirm == '1') {
-                    ?>
-                    <button type="button" class="btn btn-danger"
-                            onclick="EndOrder()">สิ้นสุดการขาย</button>
-                        <?php } else { ?>
-                    <button type="button" class="btn btn-danger disabled">สิ้นสุดการขาย</button>
-                <?php } ?>
             </div>
+
         </div>
 
+        <?php
+        if ($model->confirm == '1') {
+            ?>
+            <button type="button" class="btn btn-danger btn-lg btn-block"
+                    onclick="EndOrder()">สิ้นสุดการขาย</button>
+                <?php } else { ?>
+            <button type="button" class="btn btn-default btn-lg btn-block disabled">สิ้นสุดการขาย</button>
+        <?php } ?>
+
         <button type="button" class="btn btn-danger btn-lg btn-block"
-                onclick="cancelorder('<?php echo $order_id ?>','<?php echo $tables ?>')"><i class="fa fa-remove"></i> ยกเลิกการขายทั้งหมด</button>
+                onclick="cancelorder('<?php echo $order_id ?>', '<?php echo $tables ?>')"><i class="fa fa-remove"></i> ยกเลิก</button>
 
     </div>
 </div>
@@ -236,6 +246,22 @@ $menu = new Menu();
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+
+
+<script type="text/javascript">
+    function send(orderId) {
+        var total = $("#_total").val();
+        var url = "<?php echo Url::to(['orders/buy']) ?>";
+        var data = {orderid: orderId};
+        if (total <= 0) {
+            alert("ยังไม่มีรายการสินค้า ...");
+            return false;
+        }
+        $.post(url, data, function (success) {
+            window.location.reload();
+        });
+    }
+</script>
 
 
 

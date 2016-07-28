@@ -31,6 +31,19 @@ $this->params['breadcrumbs'][] = $this->title;
                     'password',
                     // 'resgister',
                     // 'salary',
+                    [
+                        'attribute' => 'Status',
+                        'label' => 'status',
+                        'value' => function($model) {
+                            if ($model->status == 'A') {
+                                $status = "Admin";
+                            } else {
+                                $status = "Employee";
+                            }
+
+                            return $status;
+                        }
+                    ],
                     ['class' => 'yii\grid\ActionColumn'],
                 ],
             ]);

@@ -9,7 +9,7 @@ $system = new System();
 ?>      
 <div class="panel panel-success">
     <div class="panel-heading">
-        รายการขาย
+        <h4><i class="fa fa-list"></i> รายการที่เลือก</h4>
     </div>
     <div id="table">
         <table class="table table-striped">
@@ -57,7 +57,7 @@ $system = new System();
                             ?>
                         </td>
                         <td style=" text-align: center;" class="Toptions">
-                            <button type="button" class="btn btn-success btn-sm"
+                            <button type="button" class="btn btn-success btn-xs"
                                     onclick="popupoptions('<?php echo $rs['menu'] ?>', '<?php echo $rs['id'] ?>')"><i class="fa fa-plus"></i> เพิ่ม</button>
                         </td>
                         <td style="text-align:center;"><?php echo $OptionsPrice ?></td>
@@ -66,7 +66,7 @@ $system = new System();
                             <?php if ($rs['confirm'] == '0') { ?>
                                 <button type="button" class="btn btn-danger btn-xs"
                                         onclick="Deleteorderlist('<?php echo $rs['id'] ?>')">
-                                    <i class="fa fa-trash-o"></i></button>
+                                    <i class="fa fa-trash-o"></i> ยกเลิก</button>
                                 <?php } ?>
                         </td>
                     </tr>
