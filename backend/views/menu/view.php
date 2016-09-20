@@ -139,12 +139,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="panel panel-default">
     <div class="panel-heading">
         รายการส่วนผสม
-<<<<<<< HEAD
-        <?php 
-        if ($countLock == 0) { ?>
-=======
         <?php if ($countLock == 0) { ?>
->>>>>>> origin/master
             <button type="button" class="btn btn-danger btn-xs pull-right"
                     onclick="lock('Y')"><i class="fa fa-lock"></i> Lock</button>
                 <?php } else { ?>
