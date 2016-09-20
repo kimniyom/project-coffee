@@ -139,8 +139,12 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="panel panel-default">
     <div class="panel-heading">
         รายการส่วนผสม
+<<<<<<< HEAD
         <?php 
         if ($countLock == 0) { ?>
+=======
+        <?php if ($countLock == 0) { ?>
+>>>>>>> origin/master
             <button type="button" class="btn btn-danger btn-xs pull-right"
                     onclick="lock('Y')"><i class="fa fa-lock"></i> Lock</button>
                 <?php } else { ?>
@@ -242,8 +246,20 @@ $this->params['breadcrumbs'][] = $this->title;
                             function Reload() {
                                 $.pjax.reload({container: '#gview'});
                             }
+
                         </script>
 
+
+                        <script type="text/javascript">
+                            function lock(status) {
+                                var url = "<?php echo Url::to(['mix/lock']) ?>";
+                                var menu = "<?php echo $model->id ?>";
+                                var data = {status: status, menu: menu};
+                                $.post(url, data, function () {
+                                    window.location.reload();
+                                });
+                            }
+                        </script>
 
                         <?php
                         $url = Url::to(['mix/create']);

@@ -107,7 +107,11 @@ AdminLteAsset::register($this);
                             ?>>
                                 <a href="<?php echo Url::to(['stock/index']) ?>"
                                    onclick="Activemenu('m1')" id="menunav">
+<<<<<<< HEAD
                                     <img src="<?php echo Url::to('@web/images/shop-icon.png') ?>" height="18"/> เช็คสต๊อกสินค้า</a>
+=======
+                                    <img src="<?php echo Url::to('@web/images/shop-icon.png') ?>" height="18"/> เช็ค / เพิ่ม สต๊อกสินค้า</a>
+>>>>>>> origin/master
                             </li>
                             <li <?php
                             if (Yii::$app->session['menu'] == 'm2') {
@@ -232,6 +236,15 @@ AdminLteAsset::register($this);
                                 echo $style;
                             }
                             ?>><a href="<?php echo Url::to(['menuoptions/index']); ?>" id="menuleft" onclick="Activemenu('6')"><i class="fa fa-circle-o text-green"></i> Options เพิ่มเติม</a></li>
+<<<<<<< HEAD
+=======
+                            <li <?php
+                            if (Yii::$app->session['menu'] == '7') {
+                                echo $style;
+                            }
+                            ?>><a href="<?php echo Url::to(['setting/view', 'id' => 1]); ?>" id="menuleft" onclick="Activemenu('7')"><i class="fa fa-gears text-red"></i> ตั้งค่าร้านค้า</a></li>
+
+>>>>>>> origin/master
                             <!--
                             <li><a href="<?//php echo Url::to(['stock/index']) ?>"><i class="fa fa-cube"></i>Stock</a></li>
                             <li><a href="<?//php echo Url::to(['menu/index']) ?>"><i class="fa fa-cutlery"></i>เมนูอาหาร / เครื่องดื่ม</a></li>
@@ -246,10 +259,18 @@ AdminLteAsset::register($this);
                             -->
                             <li class="header"><i class="fa fa-file-o"></i> รายงาน</li>
                             <li <?php
+<<<<<<< HEAD
                             if (Yii::$app->session['menu'] == '7') {
                                 echo $style;
                             }
                             ?>><a href="<?php echo Url::to(['report/reportall']); ?>" id="menuleft" onclick="Activemenu('7')"><i class="fa fa-file text-yellow"></i> รายงานการขาย</a></li>
+=======
+                            if (Yii::$app->session['menu'] == '8') {
+                                echo $style;
+                            }
+                            ?>><a href="<?php echo Url::to(['report/reportall']); ?>" id="menuleft" onclick="Activemenu('8')"><i class="fa fa-file text-yellow"></i> รายงานการขาย</a></li>
+
+>>>>>>> origin/master
                         </ul>
                     <?php } ?>
                 </section>

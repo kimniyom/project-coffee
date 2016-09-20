@@ -11,9 +11,11 @@ use common\widgets\Alert;
 use common\models\System;
 use yii\helpers\Url;
 use yii\web\UrlManager;
+use common\models\Setting;
 
 AppAsset::register($this);
 $config = new System();
+$setting = new Setting();
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -29,10 +31,12 @@ $config = new System();
         <?php $this->beginBody() ?>
 
         <div class="wrap">
-
             <?php
+            $urlBE = Url::to('@web/uploads', TRUE);
+            $logo = $config->LinktoBackend($urlBE . '/' . $setting->DetailShop('logo'));
+
             NavBar::begin([
-                'brandLabel' => 'DemoCoffee',
+                //'brandLabel' => Html::img($logo, ['', 'class' => 'img-responsive', 'width' => '32px']) . $setting->DetailShop('shopname'),
                 'brandUrl' => Yii::$app->homeUrl,
                 'options' => [
                     'class' => 'navbar navbar-inverse navbar-fixed-top',
@@ -40,21 +44,14 @@ $config = new System();
                 'innerContainerOptions' => ['class' => 'container-fluid'],
             ]);
             $date = $config->Thaidate(date("Y-m-d H:i:s"));
-
             $menuItems = [
-                /*
-                  [
-                  //'label' => 'Home',
-                  //'url' => ['/site/index'],
-                  //'id' => 'btnhome',
-                  //'options' => ['id' => 'btnhome'],
-                  ],
-                 * 
-                 */
-                '<li><a href="javascript:window.location.reload();"><i class="fa fa-refresh"></i> Refresh</a></li>',
-                ['label' => "Date : " . $date],
+                    /*
+                      '<li><a href="javascript:window.location.reload();"><i class="fa fa-refresh"></i> Refresh</a></li>',
+                      ['label' => "Date : " . $date],
+                     * 
+                     */
             ];
-            $menuItems[] = ['label' => 'BackOffice', 'url' => $config->LinktoBackend(Yii::$app->urlManager->createUrl('site'))];
+            //$menuItems[] = ['label' => 'BackOffice', 'url' => $config->LinktoBackend(Yii::$app->urlManager->createUrl('site'))];
             //if (Yii::$app->session['admin'] == "TRUE") {
             //}
             /*
@@ -72,14 +69,45 @@ $config = new System();
               }
              * 
              */
-            echo Nav::widget([
-                'options' => ['class' => 'navbar-nav navbar-right'],
-                'items' => $menuItems,
-            ]);
-
+            /*
+              echo Nav::widget([
+              'options' => ['class' => 'navbar-nav navbar-right'],
+              'items' => $menuItems,
+              ]);
+             */
             NavBar::end();
             ?>
 
+<<<<<<< HEAD
+=======
+            <nav class="navbar navbar-inverse navbar-fixed-top">
+                <div class="container-fluid">
+                    <!-- Brand and toggle get grouped for better mobile display -->
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand" style="padding-top: 5px;">
+                            <img src="<?php echo $logo ?>" class="img-responsive" style="width: 38px;"/>
+                        </a>
+                        <a class="navbar-brand"><?php echo $setting->DetailShop('shopname') ?></a>
+                    </div>
+
+                    <!-- Collect the nav links, forms, and other content for toggling -->
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                        <ul class="nav navbar-nav navbar-right">
+                            <li><a href="javascript:window.location.reload();"><i class="fa fa-refresh"></i> Refresh</a></li>
+                            <li><a href="<?php echo $config->LinktoBackend(Yii::$app->urlManager->createUrl('site')) ?>">Backoffice</a></li>
+                            <li><a><?php echo $date ?></a></li>
+                        </ul>
+                    </div><!-- /.navbar-collapse -->
+                </div><!-- /.container-fluid -->
+            </nav>
+
+>>>>>>> origin/master
             <div class="navbar navbar-inverse"></div>
             <div class="navbar navbar-fixed-top navbar-default" style=" margin-top: 50px; z-index: 10;">
                 <div class="navbar-custom-menu container-fluid">
@@ -119,6 +147,10 @@ $config = new System();
             </div>
         </footer>
         -->
+<<<<<<< HEAD
+=======
+        <!--
+>>>>>>> origin/master
         <div class="navbar navbar-fixed-bottom navbar-inverse">
             <div class="container" style=" padding-top: 7px;">
                 <button type="button" class="btn btn-info">สั่ง</button>
@@ -130,6 +162,10 @@ $config = new System();
                 </div>
             </div>
         </div>
+<<<<<<< HEAD
+=======
+        -->
+>>>>>>> origin/master
         <?php $this->endBody() ?>
     </body>
 </html>

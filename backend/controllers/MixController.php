@@ -10,6 +10,7 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use app\models\Stockproduct;
 use yii\helpers\Json;
+
 /**
  * MixController implements the CRUD actions for Mix model.
  */
@@ -102,12 +103,12 @@ class MixController extends Controller {
 
         return $this->redirect(['index']);
     }
-    
+
     public function actionDelmix() {
         $id = \Yii::$app->request->post('id');
         $this->findModel($id)->delete();
 
-       // return $this->redirect(['index']);
+        // return $this->redirect(['index']);
     }
 
     /**
@@ -150,6 +151,22 @@ class MixController extends Controller {
             array_push($obj, ['id' => $value->{$fieldId}, 'name' => $value->{$fieldName}]);
         }
         return $obj;
+    }
+
+    public function actionLock() {
+        $status = \Yii::$app->request->post('status');
+        $menu = \Yii::$app->request->post('menu');
+        if ($status == 'Y') {
+            $columns = array("lock" => "Y");
+            \Yii::$app->db->createCommand()
+                    ->update("mix", $columns, "menu='$menu'")
+                    ->execute();
+        } else {
+            $columns = array("lock" => "N");
+            \Yii::$app->db->createCommand()
+                    ->update("mix", $columns, "menu='$menu'")
+                    ->execute();
+        }
     }
 
 }

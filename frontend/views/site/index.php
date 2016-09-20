@@ -50,10 +50,14 @@ $menu = new Menu();
 <div class="row">
     <div class="col-md-8 col-lg-8">
         <div class="panel panel-primary" id="menuproduct">
+<<<<<<< HEAD
             <div class="panel-heading">
                 <h4><i class="fa fa-coffee"></i> เมนูอาหาร / เครื่องดื่ม</h4>
                 <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>
             </div>
+=======
+            <div class="panel-heading"><h4><i class="fa fa-coffee"></i> เมนูอาหาร / เครื่องดื่ม</h4></div>
+>>>>>>> origin/master
             <div class="panel-body" id="menubody">
                 <!-- Nav tabs -->
                 <ul class="nav nav-tabs" role="tablist">
@@ -92,7 +96,11 @@ $menu = new Menu();
                             <div role="tabpanel" class="tab-pane <?php echo $class ?>" id="<?php echo $a ?>">
                                 <center>
                                     <?php foreach ($product as $p): ?>
+<<<<<<< HEAD
                                         <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4">
+=======
+                                        <div class="col-xs-6 col-sm-6 col-md-4 col-lg-4">
+>>>>>>> origin/master
                                             <button type="button" class="btn btn-default btn-block" style=" margin-bottom: 5px;"
                                                     onclick="Save('<?php echo $p['id'] ?>')">
                                                 <img src="<?php echo $system->GetimagesProduct($p['images']) ?>" style=" max-height: 50px;"><br/>
@@ -122,10 +130,14 @@ $menu = new Menu();
         -->
 
         <div class="panel panel-danger">
+<<<<<<< HEAD
             <div class="panel-heading">
                 <h4><i class="fa fa-calculator"></i> คำนวณค่าใช้จ่าย</h4>
                 <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>
             </div>
+=======
+            <div class="panel-heading"><h4><i class="fa fa-calculator"></i> คำนวณค่าใช้จ่าย</h4></div>
+>>>>>>> origin/master
             <div class="panel-body">
                 <div class="well well-sm">
                     รหัสรายการ <?php echo $order_id ?>
@@ -280,6 +292,22 @@ $menu = new Menu();
             "
             );
 ?>
+<script type="text/javascript">
+    function send(orderId) {
+        var total = $("#_total").val();
+        var url = "<?php echo Url::to(['orders/buy']) ?>";
+        var data = {orderid: orderId};
+        if (total <= 0) {
+            alert("ยังไม่มีรายการสินค้า ...");
+            return false;
+        }
+        $.post(url, data, function (success) {
+            window.location.reload();
+        });
+    }
+</script>
+
+
 <script type="text/javascript">
     function send(orderId) {
         var total = $("#_total").val();
