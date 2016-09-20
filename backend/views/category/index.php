@@ -28,7 +28,17 @@ $this->params['breadcrumbs'][] = $this->title;
                     ['class' => 'yii\grid\SerialColumn'],
                     'id',
                     'cat_name',
-                    'status',
+                    [
+                        'attribute' => 'status',
+                        'format' => 'raw',
+                        'value' => function($model) {
+                            if($model->status == 1){
+                                return "active";
+                            } else {
+                                return "unactive";
+                            }
+                        }
+                    ],
                     ['class' => 'yii\grid\ActionColumn'],
                 ],
             ]);

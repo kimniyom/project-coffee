@@ -24,7 +24,7 @@ AdminLteAsset::register($this);
         <title><?= Html::encode($this->title) ?></title>
         <?php $this->head() ?>
     </head>
-    <body class="skin-black-light fixed">
+    <body class="skin-blue fixed">
         <?php $this->beginBody() ?>
 
         <div class="wrapper">
@@ -71,16 +71,16 @@ AdminLteAsset::register($this);
              */
             ?>
 
-            <header class="main-header">
+            <header class="main-header" style=" background: #212121;">
                 <!-- Logo -->
-                <a href="../../index2.html" class="logo">
+                <a href="../../index2.html" class="logo" style=" background: #212121;">
                     <!-- mini logo for sidebar mini 50x50 pixels -->
                     <span class="logo-mini"><b>C</b>offee</span>
                     <!-- logo for regular state and mobile devices -->
                     <span class="logo-lg"><b>Coffee</b>BackOffice</span>
                 </a>
                 <!-- Header Navbar: style can be found in header.less -->
-                <nav class="navbar navbar-static-top">
+                <nav class="navbar navbar-static-top" style=" background: #212121;">
                     <!-- Sidebar toggle button-->
                     <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
                         <span class="sr-only">Toggle navigation</span>
@@ -89,8 +89,44 @@ AdminLteAsset::register($this);
                         <span class="icon-bar"></span>
                     </a>
 
-                    <div class="navbar-custom-menu">
+                    <div class="navbar-custom-menu" style="background: #3e2723;">
                         <ul class="nav navbar-nav">
+                            <li <?php
+                            if (Yii::$app->session['menu'] == 'm0') {
+                                echo "class='Mactive'";
+                            }
+                            ?>>
+                                <a href="<?php echo Url::to(['cutstock/index']) ?>"
+                                   onclick="Activemenu('m0')" id="menunav">
+                                    <img src="<?php echo Url::to('@web/images/shop-icon.png') ?>" height="18"/> <i class="fa fa-cut"></i> ตัดสต๊อก</a>
+                            </li>
+                            <li <?php
+                            if (Yii::$app->session['menu'] == 'm1') {
+                                echo "class='Mactive'";
+                            }
+                            ?>>
+                                <a href="<?php echo Url::to(['stock/index']) ?>"
+                                   onclick="Activemenu('m1')" id="menunav">
+                                    <img src="<?php echo Url::to('@web/images/shop-icon.png') ?>" height="18"/> เช็คสต๊อกสินค้า</a>
+                            </li>
+                            <li <?php
+                            if (Yii::$app->session['menu'] == 'm2') {
+                                echo "class='Mactive'";
+                            }
+                            ?>>
+                                <a href="<?php echo Url::to(['menu/index']) ?>"
+                                   onclick="Activemenu('m2')" id="menunav">
+                                    <img src="<?php echo Url::to('@web/images/food-icon.png') ?>" height="18"/> เมนูอาหาร / เครื่องดื่ม</a>
+                            </li>
+                            <li <?php
+                            if (Yii::$app->session['menu'] == 'm3') {
+                                echo "class='Mactive'";
+                            }
+                            ?>>
+                                <a href="<?php echo Url::to(['employee/index']) ?>"
+                                   onclick="Activemenu('m3')" id="menunav">
+                                    <img src="<?php echo Url::to('@web/images/users-icon.png') ?>" height="18"/> ข้อมูลพนักงาน</a>
+                            </li>
                             <!-- User Account: style can be found in dropdown.less -->
                             <li class="user user-menu">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -126,11 +162,11 @@ AdminLteAsset::register($this);
             <!-- =============================================== -->
 
             <!-- Left side column. contains the sidebar -->
-            <aside class="main-sidebar">
+            <aside class="main-sidebar" style=" background: #424242;">
                 <!-- sidebar: style can be found in sidebar.less -->
                 <section class="sidebar">
                     <!-- Sidebar user panel -->
-                    <div class="user-panel">
+                    <div class="user-panel" style=" background: #424242;">
                         <div class="pull-left image">
                             <img src="<?php echo Url::to('@web/themes/AdminLTE/dist/img/user2-160x160.jpg') ?>" class="img-circle" alt="User Image">
                         </div>
@@ -148,7 +184,10 @@ AdminLteAsset::register($this);
                     <!-- search form -->
                     <!-- /.search form -->
                     <!-- sidebar menu: : style can be found in sidebar.less -->
-                    <?php if (!\Yii::$app->user->isGuest) { ?>
+                    <?php
+                    if (!\Yii::$app->user->isGuest) {
+                        $style = " class='activemenu'";
+                        ?>
                         <ul class="sidebar-menu">
                             <li class="header"><i class="fa fa-gear"></i> ตั้งค่า</li>
                             <!--
@@ -156,19 +195,43 @@ AdminLteAsset::register($this);
                                 <a href="#">
                                     <i class="fa fa-gear"></i> <span>ตั้งค่า</span> <i class="fa fa-angle-left pull-right"></i>
                                 </a>
-                                <!--
-                                <ul class="treeview-menu">
-                                    
-                                </ul>
+                            <!--
+                            <ul class="treeview-menu">
                                 
-                            </li>
+                            </ul>
+                            
+                        </li>
                             -->
-                            <li><a href="<?php echo Url::to(['category/index']); ?>"><i class="fa fa-circle-o"></i> หมวดสินค้า</a></li>
-                            <li><a href="<?php echo Url::to(['unit/index']); ?>"><i class="fa fa-circle-o"></i> หน่วยนับ</a></li>
-                            <li><a href="<?php echo Url::to(['stockproduct/index']); ?>"><i class="fa fa-circle-o"></i> สินค้า</a></li>
-                            <li><a href="<?php echo Url::to(['type/index']); ?>"><i class="fa fa-circle-o"></i> ประเภทรายการสินค้า</a></li>
-                            <li><a href="<?php echo Url::to(['tables/index']); ?>"><i class="fa fa-circle-o"></i> โต๊อาหาร</a></li>
-                            <li><a href="<?php echo Url::to(['menuoptions/index']); ?>"><i class="fa fa-circle-o"></i> Options เพิ่มเติม</a></li>
+                            <li <?php
+                            if (Yii::$app->session['menu'] == '1') {
+                                echo $style;
+                            }
+                            ?>><a href="<?php echo Url::to(['category/index']); ?>" id="menuleft" onclick="Activemenu('1')"><i class="fa fa-circle-o text-green"></i> หมวดสินค้า</a></li>
+                            <li <?php
+                            if (Yii::$app->session['menu'] == '2') {
+                                echo $style;
+                            }
+                            ?>><a href="<?php echo Url::to(['unit/index']); ?>" id="menuleft" onclick="Activemenu('2')"><i class="fa fa-circle-o text-green"></i> หน่วยนับ</a></li>
+                            <li <?php
+                            if (Yii::$app->session['menu'] == '3') {
+                                echo $style;
+                            }
+                            ?>><a href="<?php echo Url::to(['stockproduct/index']); ?>" id="menuleft" onclick="Activemenu('3')"><i class="fa fa-circle-o text-green"></i> สินค้า</a></li>
+                            <li <?php
+                            if (Yii::$app->session['menu'] == '4') {
+                                echo $style;
+                            }
+                            ?>><a href="<?php echo Url::to(['type/index']); ?>" id="menuleft" onclick="Activemenu('4')"><i class="fa fa-circle-o text-green"></i> ประเภทรายการสินค้า</a></li>
+                            <li <?php
+                            if (Yii::$app->session['menu'] == '5') {
+                                echo $style;
+                            }
+                            ?>><a href="<?php echo Url::to(['tables/index']); ?>" id="menuleft" onclick="Activemenu('5')"><i class="fa fa-circle-o text-green"></i> โต๊อาหาร</a></li>
+                            <li <?php
+                            if (Yii::$app->session['menu'] == '6') {
+                                echo $style;
+                            }
+                            ?>><a href="<?php echo Url::to(['menuoptions/index']); ?>" id="menuleft" onclick="Activemenu('6')"><i class="fa fa-circle-o text-green"></i> Options เพิ่มเติม</a></li>
                             <!--
                             <li><a href="<?//php echo Url::to(['stock/index']) ?>"><i class="fa fa-cube"></i>Stock</a></li>
                             <li><a href="<?//php echo Url::to(['menu/index']) ?>"><i class="fa fa-cutlery"></i>เมนูอาหาร / เครื่องดื่ม</a></li>
@@ -181,6 +244,12 @@ AdminLteAsset::register($this);
                                 </ul>
                             </li>
                             -->
+                            <li class="header"><i class="fa fa-file-o"></i> รายงาน</li>
+                            <li <?php
+                            if (Yii::$app->session['menu'] == '7') {
+                                echo $style;
+                            }
+                            ?>><a href="<?php echo Url::to(['report/reportall']); ?>" id="menuleft" onclick="Activemenu('7')"><i class="fa fa-file text-yellow"></i> รายงานการขาย</a></li>
                         </ul>
                     <?php } ?>
                 </section>
@@ -188,7 +257,7 @@ AdminLteAsset::register($this);
             </aside><!--
               ##### content #####
             -->
-            <div class="content-wrapper">
+            <div class="content-wrapper" style=" background: #FFFFFF;">
                 <!-- Content Header (Page header) -->
                 <!--
             <section class="content-header">
@@ -229,3 +298,14 @@ AdminLteAsset::register($this);
     </body>
 </html>
 <?php $this->endPage() ?>
+
+<script type="text/javascript">
+    function Activemenu(id) {
+        var url = "<?php echo Url::to(['site/activemenu']) ?>";
+
+        var data = {menu: id};
+        $.post(url, data, function (result) {
+            //alert(result);
+        });
+    }
+</script>

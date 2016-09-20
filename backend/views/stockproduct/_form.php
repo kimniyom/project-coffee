@@ -30,7 +30,7 @@ use app\models\Unit;
         </div>
         <div class="col-md-3 col-lg-3">
             <?php
-            echo $form->field($model, 'category')->dropDownList(ArrayHelper::map(app\models\Category::find()->all(), 'id', 'cat_name'), ['id' => 'id', 'required' => 'required', 'prompt' => 'เลือกหมวด',
+            echo $form->field($model, 'category')->dropDownList(ArrayHelper::map(app\models\Category::find()->where(['status' => '1'])->all(), 'id', 'cat_name'), ['id' => 'id', 'required' => 'required', 'prompt' => 'เลือกหมวด',
                     /*
                       'pluginOptions' => [
                       'allowClear' => true

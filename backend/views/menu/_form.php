@@ -44,12 +44,14 @@ use yii\web\UrlManager;
             ])
             ?>
         </div>
+        <!--
         <div class="col-md-2 col-lg-2">
             <p style="margin-top:30px;"></p>
             <?php
-            echo $form->field($model, 'mix')->checkBox(['label' => 'ส่วนผสม', 'uncheck' => 0, 'checked' => 1]);
+            //echo $form->field($model, 'mix')->checkBox(['label' => 'ส่วนผสม', 'uncheck' => 0, 'checked' => 1]);
             ?>
         </div>
+        -->
     </div>
     <div class="row">
         <div class="col-md-2 col-lg-2">
@@ -75,11 +77,11 @@ use yii\web\UrlManager;
         </div>
     </div>
     <?php ActiveForm::end(); ?>
-
+    <!--
     <div class="panel panel-default">
         <div class="panel-heading"><?php echo $this->title; ?></div>
-        <?=
-        GridView::widget([
+        <?php
+        /*GridView::widget([
             'dataProvider' => $dataProvider,
             'filterModel' => $searchModel,
             'columns' => [
@@ -143,11 +145,13 @@ use yii\web\UrlManager;
                                 ],
                             ],
                         ]);
+         * 
+         */
                         ?>
     </div>
 
 </div>
-
+-->
 <script type="text/javascript">
     function Checked() {
         if ($('#options').is(':checked')) {

@@ -58,7 +58,7 @@ class MenuController extends Controller {
         $mixModel = new Mix();
         $searchModel = new MixSearch();
         $query = Mix::find()->where(['menu' => $id]);
-
+        $lock = Mix::find()->where(['menu' => $id,'lock' => 'Y'])->count();
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
@@ -72,6 +72,7 @@ class MenuController extends Controller {
                     'searchModel' => $searchModel,
                     'dataProvider' => $dataProvider,
                     'mixModel' => $mixModel,
+                    'countLock' => $lock,
         ]);
     }
 

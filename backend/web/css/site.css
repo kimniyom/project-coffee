@@ -1,10 +1,13 @@
 html,
 body {
+    /*
     background: url(images/801.jpg) no-repeat center center fixed; 
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
+    */
+    background: #FFFFFF;
     height: 100%;
 }
 
@@ -113,4 +116,12 @@ a.desc:after {
     font-size: 24px;
     font-weight: bold;
     color: #ff3300;
+}
+
+.Mactive{
+    background: #FFFFFF;
+}
+
+.Mactive > #menunav{
+    color: #000000;
 }

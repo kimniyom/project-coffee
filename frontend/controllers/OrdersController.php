@@ -224,4 +224,13 @@ class OrdersController extends Controller {
                 ->execute();
     }
 
+    public function actionBuy() {
+        $input = Yii::$app->request;
+        $orderid = $input->post('orderid');
+        $columns = array("flag" => "1");
+        \Yii::$app->db->createCommand()
+                ->update("orders", $columns,"order_id = '$orderid' ")
+                ->execute();
+    }
+
 }

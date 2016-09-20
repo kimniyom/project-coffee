@@ -42,7 +42,8 @@ class Orderlist extends \yii\db\ActiveRecord {
             'id' => 'ID',
             'order' => 'รหัสสั่งซื้อ',
             'menu' => 'รหัสเมนู',
-            'create_date' => 'วันที่ขาย'
+            'create_date' => 'วันที่ขาย',
+            'flagstock' => 'ตัดสต๊อก'
         ];
     }
 

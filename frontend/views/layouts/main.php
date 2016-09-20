@@ -35,7 +35,7 @@ $config = new System();
                 'brandLabel' => 'DemoCoffee',
                 'brandUrl' => Yii::$app->homeUrl,
                 'options' => [
-                    'class' => 'navbar-inverse navbar-default navbar-fixed-top',
+                    'class' => 'navbar navbar-inverse navbar-fixed-top',
                 ],
                 'innerContainerOptions' => ['class' => 'container-fluid'],
             ]);
@@ -80,7 +80,25 @@ $config = new System();
             NavBar::end();
             ?>
 
-            <div class="container-fluid" style="padding-top:60px;">
+            <div class="navbar navbar-inverse"></div>
+            <div class="navbar navbar-fixed-top navbar-default" style=" margin-top: 50px; z-index: 10;">
+                <div class="navbar-custom-menu container-fluid">
+                    <ul class="nav navbar-nav pull-right">
+                        <li>
+                            <a href="#">
+                                ผู้ใช้งาน :
+                                <?php if (isset(Yii::$app->session['employee'])) { ?>
+                                    <?php echo Yii::$app->session['employee'] ?> 
+                                <?php } else { ?>
+                                    Admin
+                                <?php } ?>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="container" style="padding-top:40px;">
                 <div id="padding"></div>
                 <?=
                 Breadcrumbs::widget([
@@ -92,15 +110,29 @@ $config = new System();
             </div>
         </div>
 
+        <!--
         <footer class="footer">
             <div class="container">
-                <p class="pull-left">&copy; My Company <?= date('Y') ?></p>
+                <p class="pull-left">&copy; My Company <?//= date('Y') ?></p>
 
-                <p class="pull-right"><?= Yii::powered() ?></p>
+                <p class="pull-right"><?//= Yii::powered() ?></p>
             </div>
         </footer>
-
+        -->
+        <div class="navbar navbar-fixed-bottom navbar-inverse">
+            <div class="container" style=" padding-top: 7px;">
+                <button type="button" class="btn btn-info">สั่ง</button>
+                <button type="button" class="btn btn-success">ชำระเงิน</button>
+                <button type="button" class="btn btn-warning">พิมพ์</button>
+                <div class="pull-right">
+                    <button type="button" class="btn btn-default"><i class="fa fa-check"></i> สิ้นสุดการขาย</button>
+                    <button type="button" class="btn btn-danger"><i class="fa fa-remove"></i> ยกเลิก</button>
+                </div>
+            </div>
+        </div>
         <?php $this->endBody() ?>
     </body>
 </html>
 <?php $this->endPage() ?>
+
+

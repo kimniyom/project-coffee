@@ -21,6 +21,7 @@ $this->params['breadcrumbs'][] = 'แก้ไข';
         'searchModel' => $searchModel,
         'dataProvider' => $dataProvider,
         'product' => $product,
+        'type' => '1',
     ])
     ?>
 

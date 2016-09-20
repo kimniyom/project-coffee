@@ -37,10 +37,16 @@ class StockController extends Controller {
     public function actionIndex() {
         $searchModel = new StockSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $countLock = Stock::find()->where(['lock' => 'N'])->count();
 
+        //GetFilterProduct 
+        $sql = "SELECT s.id,s.productname FROM stockproduct s INNER JOIN category c ON s.category = c.id WHERE c.status = '1' ";
+        $filterProduct = \Yii::$app->db->createCommand($sql)->queryAll();
         return $this->render('index', [
                     'searchModel' => $searchModel,
                     'dataProvider' => $dataProvider,
+                    'countLock' => $countLock,
+                    'filterP' => $filterProduct,
         ]);
     }
 
@@ -65,7 +71,9 @@ class StockController extends Controller {
         $searchModel = new StockSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post())) {
+            $model->total = $model->number;
+            $model->save();
             return $this->redirect(['index', 'id' => $model->id]);
         } else {
             return $this->render('create', [
@@ -136,6 +144,21 @@ class StockController extends Controller {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
+
+    public function actionLock() {
+        $status = \Yii::$app->request->post('status');
+        if ($status == 'Y') {
+            $columns = array("lock" => "Y");
+            \Yii::$app->db->createCommand()
+                    ->update("stock", $columns, "1=1")
+                    ->execute();
+        } else {
+            $columns = array("lock" => "N");
+            \Yii::$app->db->createCommand()
+                    ->update("stock", $columns, "1=1")
+                    ->execute();
         }
     }
 
