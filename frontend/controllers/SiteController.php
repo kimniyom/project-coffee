@@ -19,6 +19,7 @@ use yii\db\Query;
 use app\models\Orderlist;
 use yii\helpers\Json;
 use common\models\Setting;
+use app\models\Menu;
 
 /**
  * Site controller
@@ -229,6 +230,18 @@ class SiteController extends Controller {
 
         $json = array("total" => $total);
         echo json_encode($json);
+    }
+
+    public function actionActivemenu() {
+        $catID = \Yii::$app->request->post('catID');
+        Yii::$app->session['fmenu'] = $catID;
+    }
+
+    public function actionGetitems() {
+        $catID = \Yii::$app->request->post('catid');
+        $menu = new Menu();
+        $data['product'] = $menu->Getmenu($catID);
+        return $this->renderPartial('product', $data);
     }
 
 }
