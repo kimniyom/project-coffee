@@ -107,6 +107,7 @@ AdminLteAsset::register($this);
                             ?>>
                                 <a href="<?php echo Url::to(['stock/index']) ?>"
                                    onclick="Activemenu('m1')" id="menunav">
+                                    <img src="<?php echo Url::to('@web/images/shop-icon.png') ?>" height="18"/> เช็คสต๊อกสินค้า</a>
                                     <img src="<?php echo Url::to('@web/images/shop-icon.png') ?>" height="18"/> เช็ค / เพิ่ม สต๊อกสินค้า</a>
                             </li>
                             <li <?php
@@ -252,11 +253,14 @@ AdminLteAsset::register($this);
                             -->
                             <li class="header"><i class="fa fa-file-o"></i> รายงาน</li>
                             <li <?php
-                            if (Yii::$app->session['menu'] == '8') {
+                            if (Yii::$app->session['menu'] == '7') {
                                 echo $style;
                             }
-                            ?>><a href="<?php echo Url::to(['report/reportall']); ?>" id="menuleft" onclick="Activemenu('8')"><i class="fa fa-file text-yellow"></i> รายงานการขาย</a></li>
-
+                            ?>><a href="<?php echo Url::to(['report/reportall']); ?>" id="menuleft" onclick="Activemenu('7')"><i class="fa fa-file text-yellow"></i> รายงานการขาย</a></li>
+                            <?phpif (Yii::$app->session['menu'] == '8') {
+                                echo $style;
+                            }
+                            ?><a href="<?php echo Url::to(['report/reportall']); ?>" id="menuleft" onclick="Activemenu('8')"><i class="fa fa-file text-yellow"></i> รายงานการขาย</a></li>
                         </ul>
                     <?php } ?>
                 </section>

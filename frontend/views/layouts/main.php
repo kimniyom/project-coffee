@@ -84,6 +84,7 @@ $categoryActive = $ActiveCat['id'];
             $logo = $config->LinktoBackend($urlBE . '/' . $setting->DetailShop('logo'));
             ?>
 
+<<<<<<< HEAD
             <header class="main-header" style=" background: #212121;">
                 <!-- Logo -->
                 <a href="#" class="logo" style=" background: #212121;">
@@ -99,6 +100,25 @@ $categoryActive = $ActiveCat['id'];
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </a>
+=======
+<<<<<<< HEAD
+=======
+            <nav class="navbar navbar-inverse navbar-fixed-top">
+                <div class="container-fluid">
+                    <!-- Brand and toggle get grouped for better mobile display -->
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand" style="padding-top: 5px;">
+                            <img src="<?php echo $logo ?>" class="img-responsive" style="width: 38px;"/>
+                        </a>
+                        <a class="navbar-brand"><?php echo $setting->DetailShop('shopname') ?></a>
+                    </div>
+>>>>>>> origin/master
 
                     <div class="navbar-custom-menu" style="background: #3e2723;">
                         <ul class="nav navbar-nav">
@@ -147,6 +167,7 @@ $categoryActive = $ActiveCat['id'];
             -->
             <!-- =============================================== -->
 
+<<<<<<< HEAD
             <!-- Left side column. contains the sidebar -->
             <aside class="main-sidebar" style=" background: #424242;">
                 <!-- sidebar: style can be found in sidebar.less -->
@@ -174,6 +195,14 @@ $categoryActive = $ActiveCat['id'];
                         <li class="header"><i class="fa fa-gear"></i> ตั้งค่า</li>
                         <!--
                         <li class="treeview">
+=======
+>>>>>>> origin/master
+            <div class="navbar navbar-inverse"></div>
+            <div class="navbar navbar-fixed-top navbar-default" style=" margin-top: 50px; z-index: 10;">
+                <div class="navbar-custom-menu container-fluid">
+                    <ul class="nav navbar-nav pull-right">
+                        <li>
+>>>>>>> origin/master
                             <a href="#">
                                 <i class="fa fa-gear"></i> <span>ตั้งค่า</span> <i class="fa fa-angle-left pull-right"></i>
                             </a>
@@ -225,25 +254,61 @@ $categoryActive = $ActiveCat['id'];
                     <?= $content ?>
                 </section>
             </div>
+<<<<<<< HEAD
             <footer class="main-footer">
                 <div class="pull-right hidden-xs">
                     <b>Version</b> 2.3.3
+=======
+        </div>
+
+        <!--
+        <footer class="footer">
+            <div class="container">
+                <p class="pull-left">&copy; My Company <?//= date('Y') ?></p>
+
+                <p class="pull-right"><?//= Yii::powered() ?></p>
+            </div>
+        </footer>
+        -->
+<<<<<<< HEAD
+=======
+        <!--
+>>>>>>> origin/master
+        <div class="navbar navbar-fixed-bottom navbar-inverse">
+            <div class="container" style=" padding-top: 7px;">
+                <button type="button" class="btn btn-info">สั่ง</button>
+                <button type="button" class="btn btn-success">ชำระเงิน</button>
+                <button type="button" class="btn btn-warning">พิมพ์</button>
+                <div class="pull-right">
+                    <button type="button" class="btn btn-default"><i class="fa fa-check"></i> สิ้นสุดการขาย</button>
+                    <button type="button" class="btn btn-danger"><i class="fa fa-remove"></i> ยกเลิก</button>
+>>>>>>> origin/master
                 </div>
                 <strong>Copyright &copy; 2014-2015 <a href="http://almsaeedstudio.com">Almsaeed Studio</a>.</strong> All rights
                 reserved.
             </footer>
         </div>
+<<<<<<< HEAD
 
+=======
+<<<<<<< HEAD
+=======
+        -->
+>>>>>>> origin/master
+>>>>>>> origin/master
         <?php $this->endBody() ?>
 
     </body>
 </html>
 <?php $this->endPage() ?>
 
+<<<<<<< HEAD
 <script type="text/javascript">
     $(document).ready(function () {
         Activemenu('<?php echo $categoryActive ?>', '<?php echo $ActiveCat['cat_name'] ?>');
         Getitems('<?php echo $categoryActive ?>');
     });
 </script>
+=======
+>>>>>>> origin/master
 
