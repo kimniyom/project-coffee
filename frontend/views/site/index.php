@@ -19,6 +19,10 @@ $menu = new Menu();
     .nav-tabs, .nav-pills {
         text-align:center;
     }
+
+    .activemenu{
+        background: #FFFFFF;
+    }
 </style>
 
 <!--
@@ -40,58 +44,65 @@ $menu = new Menu();
 <div class="row">
     <div class="col-md-8 col-lg-8">
         <div class="panel panel-primary" id="menuproduct">
-            <div class="panel-heading"><h4><i class="fa fa-coffee"></i> เมนูอาหาร / เครื่องดื่ม</h4></div>
+            <div class="panel-heading"><h4><i class="fa fa-coffee"></i> <font id="h_category"></font></h4></div>
             <div class="panel-body" id="menubody">
-                <!-- Nav tabs -->
+                <div id="showItems"></div>
+                <!-- Nav tabs
                 <ul class="nav nav-tabs" role="tablist">
-                    <?php
-                    $i = 0;
-                    $typeproduct = Type::find()->all();
-                    foreach ($typeproduct as $t):
-                        $i++;
-                        if ($i == 1) {
-                            $hclass = "active";
-                        } else {
-                            $hclass = "";
-                        }
-                        ?>
-                        <li role="presentation" class="<?php echo $hclass ?>">
-                            <a href="#<?php echo $i; ?>" aria-controls="<?php echo $i; ?>" role="tab" data-toggle="tab" id="htab"><?php echo $t['typename'] ?></a>
+                <?php
+                /*
+                  $i = 0;
+                  $typeproduct = Type::find()->all();
+                  foreach ($typeproduct as $t):
+                  $i++;
+                  if ($i == 1) {
+                  $hclass = "active";
+                  } else {
+                  $hclass = "";
+                  }
+                 * 
+                 */
+                ?>
+                        <li role="presentation" class="<?//php echo $hclass ?>">
+                            <a href="#<?//php echo $i; ?>" aria-controls="<?//php echo $i; ?>" role="tab" data-toggle="tab" id="htab"><?//php echo $t['typename'] ?></a>
                         </li>
-                    <?php endforeach; ?>
+                    <?//php endforeach; ?>
                 </ul>
 
-                <!-- Tab panes -->
                 <div class="row">
                     <div class="tab-content" 
                          style="border-radius: 0px; border-top: none; border: none; box-shadow: none; padding-top: 10px;">
-                             <?php
-                             $a = 0;
-                             foreach ($typeproduct as $t2):
-                                 $a++;
-                                 if ($a == 1) {
-                                     $class = "active";
-                                 } else {
-                                     $class = "";
-                                 }
-                                 $product = $menu->Getmenu($t2['id']);
-                                 ?>
-                            <div role="tabpanel" class="tab-pane <?php echo $class ?>" id="<?php echo $a ?>">
+                <?php
+                /*
+                  $a = 0;
+                  foreach ($typeproduct as $t2):
+                  $a++;
+                  if ($a == 1) {
+                  $class = "active";
+                  } else {
+                  $class = "";
+                  }
+                  $product = $menu->Getmenu($t2['id']);
+                 * 
+                 */
+                ?>
+                            <div role="tabpanel" class="tab-pane <?//php echo $class ?>" id="<?//php echo $a ?>">
                                 <center>
-                                    <?php foreach ($product as $p): ?>
-                                        <div class="col-xs-6 col-sm-6 col-md-4 col-lg-4">
+                                    <?//php foreach ($product as $p): ?>
+                                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4">
                                             <button type="button" class="btn btn-default btn-block" style=" margin-bottom: 5px;"
-                                                    onclick="Save('<?php echo $p['id'] ?>')">
-                                                <img src="<?php echo $system->GetimagesProduct($p['images']) ?>" style=" max-height: 50px;"><br/>
-                                                <p id="mmenu"><?php echo $p['menu'] ?></p>
+                                                    onclick="Save('<?//php echo $p['id'] ?>')">
+                                                <img src="<?//php echo $system->GetimagesProduct($p['images']) ?>" style=" max-height: 50px;"><br/>
+                                                <p id="mmenu"><?//php echo $p['menu'] ?></p>
                                             </button>
                                         </div>
-                                    <?php endforeach; ?>
+                                    <?//php endforeach; ?>
                                 </center>
                             </div>
-                        <?php endforeach; ?>
+                        <?//php endforeach; ?>
                     </div>
                 </div>
+                -->
             </div>
         </div>
 
@@ -108,7 +119,7 @@ $menu = new Menu();
             ########################
         -->
 
-        <div class="panel panel-danger">
+        <div class="panel panel-danger" id="calculator">
             <div class="panel-heading"><h4><i class="fa fa-calculator"></i> คำนวณค่าใช้จ่าย</h4></div>
             <div class="panel-body">
                 <div class="well well-sm">
@@ -260,6 +271,23 @@ $menu = new Menu();
         $.post(url, data, function (success) {
             window.location.reload();
         });
+    }
+
+    function Getitems(id,hmenu) {
+        $("#h_category").html(hmenu);
+        var url = "<?php echo Url::to(['site/getitems']) ?>";
+        var data = {catid: id};
+        var loading = '<center><i class="fa fa-spinner fa-spin fa-3x fa-fw text-danger"></i><br/>Loading...<center>';
+        $("#showItems").html(loading);
+        $.post(url, data, function (datas) {
+            $("#showItems").html(datas);
+        });
+    }
+
+    function Activemenu(id,hmenu) {
+        $(".ac").removeClass('activemenu');
+        $("#" + id).addClass('activemenu');
+        Getitems(id,hmenu);
     }
 </script>
 
