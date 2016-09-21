@@ -140,7 +140,7 @@ $menu = new Menu();
                         <div class="input-group-addon">บาท</div>
                     </div>
                 </div>
-                <?php if ($model->flag == '1') { ?>
+                <?php if ($model['flag'] == '1') { ?>
                     <div class="form-group">
                         <div class="input-group">
                             <div class="input-group-addon">Tel.</div>
@@ -157,15 +157,15 @@ $menu = new Menu();
                 <!--
                 <button type="button" class="btn btn-default">สั่ง</button>
                 -->
-                <?php if ($model->flag == '0') { ?>
+                <?php if ($model['flag'] == '0') { ?>
                     <button type="button" class="btn btn-primary" onclick="send('<?php echo $order_id ?>')">สั่ง</button>
                 <?php } else { ?>
                     <button type="button" class="btn btn-primary disabled">สั่ง</button>
                 <?php } ?>
                 <?php
-                if ($model->confirm == '0') {
+                if ($model['confirm'] == '0') {
                     ?>
-                    <?php if ($model->flag == 1) { ?>
+                    <?php if ($model['flag'] == 1) { ?>
                         <button type="button" class="btn btn-success"
                                 onclick="Check_bill()">ชำระเงิน</button>
                             <?php } ?>
@@ -179,7 +179,7 @@ $menu = new Menu();
         </div>
 
         <?php
-        if ($model->confirm == '1') {
+        if ($model['confirm'] == '1') {
             ?>
             <button type="button" class="btn btn-danger btn-lg btn-block"
                     onclick="EndOrder()">สิ้นสุดการขาย</button>
