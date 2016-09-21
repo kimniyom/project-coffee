@@ -27,30 +27,6 @@ $system = new System();
                         <th style=" text-align: center;">ราคา</th>
                         <th style="text-align: right;">รวม</th>
                         <th></th>
-                        <td><?php echo $rs['menuname'] ?></td>
-                        <td style="text-align:center;"><?php echo $rs['price'] ?></td>
-                        <td>
-                            <?php
-                            $OptionsPrice = 0;
-                            foreach ($dataOptions as $op):
-                                echo "+ " . $op['optionsname'] . "(" . $op['price'] . ")<br/>";
-                                $OptionsPrice = $OptionsPrice + $op['price'];
-                            endforeach;
-                            ?>
-                        </td>
-                        <td style=" text-align: center;" class="Toptions">
-                            <button type="button" class="btn btn-success btn-xs"
-                                    onclick="popupoptions('<?php echo $rs['menu'] ?>', '<?php echo $rs['id'] ?>')"><i class="fa fa-plus"></i> เพิ่ม</button>
-                        </td>
-                        <td style="text-align:center;"><?php echo $OptionsPrice ?></td>
-                        <td style="text-align:right;"><?php echo $rs['price'] + $OptionsPrice ?></td>
-                        <td style="text-align: right;">
-                            <?php if ($rs['confirm'] == '0') { ?>
-                                <button type="button" class="btn btn-danger btn-xs"
-                                        onclick="Deleteorderlist('<?php echo $rs['id'] ?>')">
-                                    <i class="fa fa-trash-o"></i> ยกเลิก</button>
-                                <?php } ?>
-                        </td>
                     </tr>
                 </thead>
                 <tbody>
