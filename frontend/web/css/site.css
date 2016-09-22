@@ -12,6 +12,10 @@ body {
     */
 }
 
+#body{
+    background:url('images/bg-body.gif');
+}
+
 .wrap {
     min-height: 100%;
     height: auto;
@@ -148,6 +152,33 @@ a.desc:after {
 }
 */
 
-#calculator .panel-body{
+#calculator .panel-body .input-group-addon{
     font-size: 22px;
+    color: #0000ff;
+}
+
+#calculator .form-control{
+    font-size: 22px;
+    text-align: center;
+    padding: 20px;
+    color: #ff0000;
+}
+
+.clickable{
+    cursor: pointer;   
+}
+
+.panel-heading span {
+	margin-top: -30px;
+	font-size: 15px;
+}
+
+#headcalculator{
+    text-align: center;
+    color: #339900;
+    font-weight: bold;
+}
+
+.hand{
+    cursor: pointer;
 }

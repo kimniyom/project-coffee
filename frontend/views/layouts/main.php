@@ -19,8 +19,7 @@ AdminLteAsset::register($this);
 $config = new System();
 $setting = new Setting();
 $category = \app\models\Category::findAll(['status' => '1']);
-$ActiveCat = \app\models\Category::find(['status' => '1', 'active' => '1'])->one();
-$categoryActive = $ActiveCat['id'];
+
 ?>
 
 <?php $this->beginPage() ?>
@@ -33,7 +32,7 @@ $categoryActive = $ActiveCat['id'];
         <title><?= Html::encode($this->title) ?></title>
         <?php $this->head() ?>
     </head>
-    <body class="skin-blue fixed">
+    <body class="skin-blue fixed" id="mainpage">
         <?php $this->beginBody() ?>
 
         <div class="wrapper">
@@ -98,6 +97,7 @@ $categoryActive = $ActiveCat['id'];
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
+                        เมนู
                     </a>
 
                     <div class="navbar-custom-menu" style="background: #3e2723;">
@@ -148,7 +148,7 @@ $categoryActive = $ActiveCat['id'];
             <!-- =============================================== -->
 
             <!-- Left side column. contains the sidebar -->
-            <aside class="main-sidebar" style=" background: #424242;">
+            <aside class="main-sidebar" style=" background: #424242;" id="menuleft">
                 <!-- sidebar: style can be found in sidebar.less -->
                 <section class="sidebar">
                     <!-- Sidebar user panel -->
@@ -198,7 +198,7 @@ $categoryActive = $ActiveCat['id'];
             </aside><!--
               ##### content #####
             -->
-            <div class="content-wrapper" style=" background: #FFFFFF;">
+            <div class="content-wrapper" id="body">
                 <!-- Content Header (Page header) -->
                 <!--
             <section class="content-header">
@@ -240,10 +240,5 @@ $categoryActive = $ActiveCat['id'];
 </html>
 <?php $this->endPage() ?>
 
-<script type="text/javascript">
-    $(document).ready(function () {
-        Activemenu('<?php echo $categoryActive ?>', '<?php echo $ActiveCat['cat_name'] ?>');
-        Getitems('<?php echo $categoryActive ?>');
-    });
-</script>
+
 
