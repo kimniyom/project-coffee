@@ -168,11 +168,30 @@ $categoryActive = $ActiveCat['id'];
                                 <div class="input-group">
                                     <div class="input-group-addon">Tel.</div>
                                     <input type="text" class="form-control" id="tel" placeholder="เบอร์โทรศัพท์ ..."
-                                           onkeypress="return chkNumber(this.value)">
-                                    <div class="input-group-addon btn btn-success"
+                                           onkeypress="return chkNumber(this.value)" value="<?php echo $model['tel']?>">
+                                    <div class="input-group-addon btn btn-success" id="btn-tel"
                                          onclick="AddTel()"><i class="fa fa-plus"></i> เพิ่ม</div>
                                 </div>
                             </div>
+                        <?php } ?>
+                        <?php if ($model['flag'] == 1) { ?>
+                        <hr/>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <div class="input-group-addon">รับเงิน</div>
+                                <input type="text" class="form-control" id="income" value="<?php echo $model['income']?>" placeholder="รับเงิน"
+                                       onkeypress="return chkNumber(this.value)"
+                                       onkeyup="Income(this.value)">
+                                <div class="input-group-addon">บาท</div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <div class="input-group-addon">เงินทอน</div>
+                                <input type="text" class="form-control" id="change" value="<?php echo $model['change']?>" readonly="readonly">
+                                <div class="input-group-addon">บาท</div>
+                            </div>
+                        </div>
                         <?php } ?>
                     </div>
 
