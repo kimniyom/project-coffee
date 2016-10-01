@@ -99,6 +99,18 @@ function Calculator(orderID) {
     $.post(url, data, function (response) {
         var datas = jQuery.parseJSON(response);
         $("#total").val(datas.total);
+        var imcome = datas.income;
+        var confirm = datas.confirm;
+        var tel = datas.tel;
+        if(confirm === 1){
+            $("#income").attr("disabled",true);
+            $("#discount").attr("disabled",true);
+        }
+        
+        if(tel != null){
+            $("#btn-tel").hide();
+            $("#tel").attr("disabled",true);
+        }
         Distcount(0);
     });
 }
@@ -111,16 +123,24 @@ function LoadCal() {
 function Check_bill() {
     var url = $("#Urlcheckbill").val();
     var orderID = $("#orderID").val();
-    var total = $("#_total").val();
+    var total = parseInt($("#_total").val());
     var distcount = $("#distcount").val();
+    var income = parseInt($("#income").val());
+    var change = $("#change").val();
     if (total <= 0) {
         alert("ยังไม่มีรายการสินค้า ...");
+        return false;
+    }
+    if(income < total){
+        alert("ยังไม่ได้รับเงินจากลูกค้า ...");
         return false;
     }
     var data = {
         orderID: orderID,
         total: total,
-        distcount: distcount
+        distcount: distcount,
+        income: income,
+        change: change
     };
     $.post(url, data, function (response) {
         window.location.reload();
@@ -160,6 +180,8 @@ function Distcount(value) {
         var _total = parseInt((total - distcount));
         $("#_total").val(_total);
     }
+    var incomes = parseInt($("#income").val());
+    Income(incomes);
 }
 
 function chkNumber(ele)
@@ -231,6 +253,18 @@ function cancelorder(orderID,tables) {
         $.post(url, data, function (success) {
             window.location = "index.php?r=site/index";
         });
+    }
+}
+
+function Income(value){
+    var total = parseInt($("#_total").val());
+    var income = parseInt(value);
+    
+    if (income < total || isNaN(income)) {
+        $("#change").val(0);
+    } else {
+        var changes = parseInt((income - total));
+        $("#change").val(changes);
     }
 }
 
