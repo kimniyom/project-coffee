@@ -157,7 +157,9 @@ class OrdersController extends Controller {
         $columns = array(
             "total" => $input->post('total'),
             "distcount" => $input->post('distcount'),
-            "confirm" => '1'
+            "confirm" => '1',
+            "income" => $input->post('income'),
+            "change" => $input->post('change')
         );
 
         Yii::$app->db->createCommand()

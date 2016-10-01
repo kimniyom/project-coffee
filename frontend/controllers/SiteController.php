@@ -227,8 +227,13 @@ class SiteController extends Controller {
         $orderID = $post->post('orderID');
         $Model = new Orderlist();
         $total = $Model->Getsumorder($orderID);
-
-        $json = array("total" => $total);
+        $order = Orders::find()->where(['order_id' => $orderID])->one();
+        $json = array(
+            "total" => $total,
+            "income" => $order['income'],
+            "confirm" => $order['confirm'],
+            "tel" => $order['tel']
+            );
         echo json_encode($json);
     }
 
