@@ -14,7 +14,7 @@ $system = new System();
     </div>
     <div class="panel-body">
         <div id="table">
-            <table class="table table-striped">
+            <table class="table table-striped  table-bordered">
                 <thead>
                     <tr>
                         <!--
@@ -64,11 +64,11 @@ $system = new System();
                             </td>
                             <td style="text-align:center;"><?php echo $OptionsPrice ?></td>
                             <td style="text-align:right;"><?php echo $rs['price'] + $OptionsPrice ?></td>
-                            <td style="text-align: right;">
+                            <td style="text-align: center;">
                                 <?php if ($rs['confirm'] == '0') { ?>
                                     <button type="button" class="btn btn-danger btn-xs"
                                             onclick="Deleteorderlist('<?php echo $rs['id'] ?>')">
-                                        <i class="fa fa-trash-o"></i> ยกเลิก</button>
+                                        <i class="fa fa-trash-o"></i> ลบ</button>
                                     <?php } ?>
                             </td>
                         </tr>
