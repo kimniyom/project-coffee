@@ -74,6 +74,14 @@ $logo = $config->LinktoBackend($urlBE . '/' . $setting->DetailShop('logo'));
             <td colspan="2" style="text-align:center; font-weight: bold;"><b>รวมสุทธิ</b></td>
             <td style="text-align:right; font-weight: bold;"><?php echo number_format($order['total'], 2); ?></td>
         </tr>
+        <tr>
+            <td colspan="2" style="text-align:center; font-weight: bold;"><b>รับเงิน</b></td>
+            <td style="text-align:right; font-weight: bold;"><?php echo number_format($order['income'], 2); ?></td>
+        </tr>
+        <tr>
+            <td colspan="2" style="text-align:center; font-weight: bold;"><b>เงินทอน</b></td>
+            <td style="text-align:right; font-weight: bold;"><?php echo number_format($order['change'], 2); ?></td>
+        </tr>
     </tfoot>
 </table>
 
