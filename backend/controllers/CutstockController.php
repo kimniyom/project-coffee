@@ -31,12 +31,13 @@ class CutstockController extends Controller {
                 $checkstatus = $status;
             }
         endforeach;
-
-        if ($checkstatus != '0') {
+       
+        if ($checkstatus > '0') {
             $this->actionCutstock($orderid, $menu);
         } else {
             echo $checkstatus;
         }
+   
 
         //Update Flag
         /*

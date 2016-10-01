@@ -130,7 +130,9 @@ $this->registerJs(
         var url = "<?php echo Url::to(['cutstock/checkstock']) ?>";
         var data = {orderid: orderid, menuid: menuid};
         $.post(url, data, function (success) {
+         
             if (success === '0') {
+                
                 //alert("ไม่สามารถตัดสต๊อกรายการนี้ได้ เนื่องจากวัถุดิบไม่เพียงพอ ....!");
                 var url2 = "<?php echo Url::to(['cutstock/listorder']) ?>";
                 var data2 = {menuid: menuid};

@@ -7,6 +7,7 @@ use kartik\widgets\Select2;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
 use app\models\Menu;
+use app\models\Unit;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\MenuSearch */
@@ -88,16 +89,15 @@ $this->params['breadcrumbs'][] = $this->title;
                             'hAlign' => 'center',
                             'format' => 'raw',
                             'value' => function($model) {
-                           
-                                    $link = Url::to(['menu/view', 'id' => $model['id']]);
-                                    $mix = \app\models\Mix::find()->where(['menu' => $model->id])->all();
-                                    if (empty($mix)) {
-                                        $text = "<i class='fa fa-warning text-danger'></i> ";
-                                    } else {
-                                        $text = "";
-                                    }
-                                    return "<a href='" . $link . "'><button type='button' class='btn btn-default btn-sm'>ส่วนผสม $text</button></a>";
-                                
+
+                                $link = Url::to(['menu/view', 'id' => $model['id']]);
+                                $mix = \app\models\Mix::find()->where(['menu' => $model->id])->all();
+                                if (empty($mix)) {
+                                    $text = "<i class='fa fa-warning text-danger'></i> ";
+                                } else {
+                                    $text = "";
+                                }
+                                return "<a href='" . $link . "'><button type='button' class='btn btn-default btn-sm'>ส่วนผสม $text</button></a>";
                             },
                                     'format' => 'raw'
                                 ],
@@ -120,18 +120,48 @@ $this->params['breadcrumbs'][] = $this->title;
                             }
                                 ],
                                 [
-                                    'attribute' => 'create_date',
-                                    'header' => 'วันที่นำเข้า',
+                                    //'label' => 'create_date',
+                                    'header' => 'เหลือขายได้',
                                     'hAlign' => 'center',
-                                ],
-                                [
-                                    'class' => 'yii\grid\ActionColumn',
-                                    'header' => 'Actions',
-                                    'headerOptions' => ['style' => 'text-align:center;'], // not max-width
-                                    'contentOptions' => ['style' => 'text-align:center;'], // not max-wisdth
-                                ],
-                            ],
-                        ]);
-                        ?>
+                                    'format' => 'raw',
+                                    'value' => function($model) {
+                                        $Menu = new Menu();
+                                        $Total = $Menu->CheckCub($model->id);
+                                        if ($Total > 0) {
+                                            $color = "green";
+                                            $totals = $Total;
+                                        } else {
+                                            $color = "red";
+                                            $totals = "0";
+                                        } 
+                                        return "<font style='color:$color'><b>" . $totals . "</b></font>";
+                                    }
+                                        ],
+                                        [
+                                            //'label' => 'create_date',
+                                            'header' => 'หน่วย',
+                                            'hAlign' => 'center',
+                                            'format' => 'raw',
+                                            'value' => function($model) {
+                                                $unit = new Unit();
+                                                $units = $unit->findOne(['id' => $model->unit])['unit'];
+
+                                                return $units;
+                                            }
+                                                ],
+                                                [
+                                                    'attribute' => 'create_date',
+                                                    'header' => 'วันที่นำเข้า',
+                                                    'hAlign' => 'center',
+                                                ],
+                                                [
+                                                    'class' => 'yii\grid\ActionColumn',
+                                                    'header' => 'Actions',
+                                                    'headerOptions' => ['style' => 'text-align:center;'], // not max-width
+                                                    'contentOptions' => ['style' => 'text-align:center;'], // not max-wisdth
+                                                ],
+                                            ],
+                                        ]);
+                                        ?>
     </div>
 </div>

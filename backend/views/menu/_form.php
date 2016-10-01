@@ -8,7 +8,7 @@ use kartik\grid\GridView;
 use yii\helpers\Url;
 use kartik\select2\Select2;
 use yii\web\UrlManager;
-
+use app\models\Unit;
 /* @var $this yii\web\View */
 /* @var $model app\models\Menu */
 /* @var $form yii\widgets\ActiveForm */
@@ -31,8 +31,17 @@ use yii\web\UrlManager;
             ]);
             ?>
         </div>
-        <div class="col-md-9 col-lg-9">
+        <div class="col-md-7 col-lg-7">
             <?= $form->field($model, 'menu')->textInput(['maxlength' => true]) ?>
+        </div>
+        <div class="col-md-2 col-lg-2">
+            <?=
+            $form->field($model, 'unit')->dropdownList(
+                    ArrayHelper::map(Unit::find()->all(), 'id', 'unit'), [
+                'id' => 'ddl-type',
+                'prompt' => 'หน่วยนับ'
+            ]);
+            ?>
         </div>
     </div>
     <div class="row">

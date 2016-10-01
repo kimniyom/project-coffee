@@ -29,8 +29,8 @@ class Menu extends \yii\db\ActiveRecord {
      */
     public function rules() {
         return [
-            [['type', 'menu', 'price'], 'required'],
-            [['type','mix'], 'integer'],
+            [['type', 'menu', 'price','unit'], 'required'],
+            [['type','unit','mix'], 'integer'],
             [['price'], 'number', 'numberPattern' => '/^\s*[+]?[0-9]*[.,]?[0-9]+([eE][+]?[0-9]+)?\s*$/'],
             [['create_date'], 'safe'],
             [['menu'], 'string', 'max' => 255],
@@ -51,6 +51,7 @@ class Menu extends \yii\db\ActiveRecord {
             'type' => 'ประเภท',
             'price' => 'ราคา',
             'mix' => 'ส่วนผสม',
+            'unit' => 'หน่วย',
             'create_date' => 'วันที่บันทึก',
         ];
     }
@@ -86,6 +87,30 @@ class Menu extends \yii\db\ActiveRecord {
         if (!empty($images)) {
             unlink("./uploads/" . $images);
         }
+    }
+    
+    public function CheckCub($menuid = null){
+        $sql = "SELECT IFNULL((ROUND(Q1.total/x.number,0)),0) AS CUB
+            FROM menu m INNER JOIN mix x ON m.id = x.menu
+
+            INNER JOIN 
+
+            (
+               SELECT s.product,SUM(s.total) AS total 
+               FROM stock s 
+               WHERE s.total > 0 
+               GROUP BY s.product
+            ) Q1
+
+            ON x.product_stock_id = Q1.product
+
+
+            WHERE m.id = '$menuid'
+            ORDER BY CUB ASC 
+            LIMIT 1 ";
+        
+        $rs = \Yii::$app->db->createCommand($sql)->queryOne();
+        return $rs['CUB'];
     }
 
 }

@@ -18,7 +18,7 @@ class MenuSearch extends Menu
     public function rules()
     {
         return [
-            [['id', 'type'], 'integer'],
+            [['id', 'type','unit'], 'integer'],
             [['menu'], 'safe'],
         ];
     }
@@ -61,6 +61,7 @@ class MenuSearch extends Menu
         $query->andFilterWhere([
             'id' => $this->id,
             'type' => $this->type,
+            'unit' => $this->unit,
             'create_date' => $this->create_date,
         ]);
 
