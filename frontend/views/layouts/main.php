@@ -18,8 +18,12 @@ AppAsset::register($this);
 AdminLteAsset::register($this);
 $config = new System();
 $setting = new Setting();
-$category = \app\models\Category::findAll(['status' => '1']);
-
+$category = app\models\Type::find()->where(['active' => '1'])->all();
+if (!Yii::$app->user->isGuest) {
+    $user_id = Yii::$app->user->identity->id;
+    $ProfileModel = new \dektrium\user\models\Profile();
+    $Profile = $ProfileModel->findOne(['user_id' => $user_id]);
+}
 ?>
 
 <?php $this->beginPage() ?>
@@ -31,11 +35,50 @@ $category = \app\models\Category::findAll(['status' => '1']);
         <?= Html::csrfMetaTags() ?>
         <title><?= Html::encode($this->title) ?></title>
         <?php $this->head() ?>
+        <style type="text/css">
+            html,body{
+                /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#eeeeee+0,cccccc+100;Gren+3D */
+                background: #63636f; /* Old browsers */
+                background: -moz-linear-gradient(top,  #63636f 0%, #474653 100%); /* FF3.6-15 */
+                background: -webkit-linear-gradient(top,  #63636f 0%,#474653 100%); /* Chrome10-25,Safari5.1-6 */
+                background: linear-gradient(to bottom,  #63636f 0%,#474653 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+                filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#63636f', endColorstr='#474653',GradientType=0 ); /* IE6-9 */
+                background-repeat: no-repeat;
+                background-attachment: fixed;
+                background-position: center;      
+            }
+            @media screen and (max-width: 1024px) {
+                #textnav{
+                    display: none;
+                }
+            }
+
+            @media screen and (min-width: 1024px) {
+                #textnav{
+                    display: inline;
+                }
+            }
+
+            #repeat:hover{
+                color: #212121;
+                text-decoration: none;
+            }
+
+           
+.activemenu{
+    background:#2b9cf9;
+    color:#999;
+}
+.activemenu #menuleft{
+    background: #2b9cf9;
+    color: #ffffff;
+}
+        </style>
     </head>
     <body class="skin-blue fixed" id="mainpage">
         <?php $this->beginBody() ?>
 
-        <div class="wrapper">
+        <div class="wrapper" style=" background: none;">
             <?php
             /*
               NavBar::begin([
@@ -87,10 +130,10 @@ $category = \app\models\Category::findAll(['status' => '1']);
                 <!-- Logo -->
                 <a href="#" class="logo" style=" background: #212121;">
                     <img src="<?php echo $logo ?>" class="img-responsive" style="width: 38px; position: absolute;  top: 5px; left: 5px;"/>
-                    <span class="logo-lg"><?php echo $setting->DetailShop('shopname') ?></span>
+                    <span class="logo-lg" style=" color: #ffbf2f; font-weight: bold;"><?php echo $setting->DetailShop('shopname') ?></span>
                 </a>
                 <!-- Header Navbar: style can be found in header.less -->
-                <nav class="navbar navbar-static-top" style=" background: #212121;">
+                <nav class="navbar navbar-inverse navbar-static-top" style=" background: #474754;">
                     <!-- Sidebar toggle button-->
                     <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button" >
                         <span class="sr-only">Toggle navigation</span>
@@ -100,43 +143,59 @@ $category = \app\models\Category::findAll(['status' => '1']);
                         เมนู
                     </a>
 
-                    <div class="navbar-custom-menu" style="background: #3e2723;">
+                    <div class="navbar-custom-menu" style="background:#474754;">
                         <ul class="nav navbar-nav">
-                            <li <?php
-                            if (Yii::$app->session['menu'] == 'm0') {
-                                echo "class='Mactive'";
-                            }
-                            ?>>
-                                <a href="javascript:(0)"
-                                   onclick="Activemenu('m0')" id="menunav">
-                                       <?php
-                                       if (!Yii::$app->user->isGuest) {
-                                           echo '<img src="' . Url::to('@web/web/images/user-icon.png') . '" height="18"/>';
-                                           echo Yii::$app->user->identity->username;
-                                       } else {
-                                           echo '<img src="' . Url::to('@web/web/images/user-icon.png') . '" height="18"/>';
-                                           echo "Admin";
-                                       }
-                                       ?></a>
+                            <li class="dropdown">
+                                <a href="#" id="menunav" class="dropdown-toggle" data-toggle="dropdown">
+                                    <?php
+                                    if (!Yii::$app->user->isGuest) {
+                                        echo '<img src="' . Url::to('@web/web/images/user-icon.png') . '" height="18"/>';
+                                        echo Yii::$app->user->identity->username;
+                                    } else {
+                                        echo '<img src="' . Url::to('@web/web/images/user-icon.png') . '" height="18"/>';
+                                        echo "Admin";
+                                    }
+                                    ?> <span class="caret"></span></a>
+                                <ul class="dropdown-menu" role="menu">
+                                    <?php
+                                    //if (!Yii::$app->user->isGuest) {
+                                    echo '<li>'
+                                    . Html::beginForm(['/site/logout'], 'post')
+                                    . Html::submitButton(
+                                            '<i class="fa fa-exchange"></i> เปลี่ยนผู้ใช้งาน', ['class' => 'btn btn-link', 'id' => 'repeat']
+                                    )
+                                    . Html::endForm()
+                                    . '</li>';
+                                    //}
+                                    ?>
+                                </ul>
                             </li>
-                            <li <?php
-                            if (Yii::$app->session['menu'] == 'm2') {
-                                echo "class='Mactive'";
-                            }
-                            ?>>
+
+
+                            <li>
                                 <a href="javascript:window.location.reload();"
                                    onclick="Activemenu('m2')" id="menunav">
-                                    <img src="<?php echo Url::to('@web/web/images/refresh-icon.png') ?>" height="18"/> Refresh</a>
+                                    <img src="<?php echo Url::to('@web/web/images/refresh-icon.png') ?>" height="18"/> <font id="textnav">Refresh</font></a>
                             </li>
-                            <li <?php
-                            if (Yii::$app->session['menu'] == 'm3') {
-                                echo "class='Mactive'";
-                            }
-                            ?>>
-                                <a href="<?php echo $config->LinktoBackend(Yii::$app->urlManager->createUrl('site')) ?>"
-                                   onclick="Activemenu('m3')" id="menunav">
-                                    <img src="<?php echo Url::to('@web/web/images/settings-icon.png') ?>" height="18"/> Backoffice</a>
+
+                            <?php
+                            /*
+                              if (!Yii::$app->user->isGuest) {
+                              if ($Profile['status'] == "A") {
+                             * 
+                             */
+                            ?>
+                            <li>
+                                <a href="<?php echo $config->LinktoBackend(Yii::$app->urlManager->createUrl('site')) ?>" id="menunav">
+                                    <img src="<?php echo Url::to('@web/web/images/settings-icon.png') ?>" height="18"/> <font id="textnav">Backoffice</font></a>
                             </li>
+                            <?php
+                            /*
+                              }
+                              }
+                             * 
+                             */
+                            ?>
                         </ul>
                     </div>
                 </nav>
@@ -148,30 +207,36 @@ $category = \app\models\Category::findAll(['status' => '1']);
             <!-- =============================================== -->
 
             <!-- Left side column. contains the sidebar -->
-            <aside class="main-sidebar" style=" background: #424242;" id="menuleft">
+            <aside class="main-sidebar" style="background: #29272d; /*background: url(<?//php echo Url::to('@web/web/images/bg-sidebar.png') ?>) fixed left bottom no-repeat #000000*/" id="menuleft">
                 <!-- sidebar: style can be found in sidebar.less -->
                 <section class="sidebar">
                     <!-- Sidebar user panel -->
-                    <div class="user-panel" style=" background: #424242;">
+                    <div class="user-panel" style="background: #424242;">
                         <div class="pull-left image">
-                            <img src="<?php echo Url::to('@web/themes/AdminLTE/dist/img/user2-160x160.jpg') ?>" class="img-circle" alt="User Image">
+                            <img src="<?php echo Url::to('@web/themes/AdminLTE/dist/img/avatar04.png') ?>" class="img-circle" alt="User Image">
                         </div>
                         <div class="pull-left info">
                             <p>
                                 <?php
                                 if (!Yii::$app->user->isGuest) {
-                                    echo Yii::$app->user->identity->username;
+                                    echo $Profile['name'] . "</br>";
+                                    if ($Profile['status'] == "M")
+                                        echo "พนักงาน";
+                                    else
+                                        echo "ผู้ดูแลระบบ";
+                                } else {
+                                    echo "Admin";
                                 }
                                 ?>
+                                <i class="fa fa-circle text-success"></i> Online
                             </p>
-                            <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
                         </div>
                     </div>
                     <!-- search form -->
                     <!-- /.search form -->
                     <!-- sidebar menu: : style can be found in sidebar.less -->
                     <ul class="sidebar-menu">
-                        <li class="header"><i class="fa fa-gear"></i> ตั้งค่า</li>
+                        <li class="header" style=" font-size: 20px; color: #FFFFFF;"><i class="fa fa-coffee"></i> อาหาร / เครื่องดื่ม</li>
                         <!--
                         <li class="treeview">
                             <a href="#">
@@ -189,7 +254,11 @@ $category = \app\models\Category::findAll(['status' => '1']);
                         $i = 0;
                         foreach ($category as $cat): $i++;
                             ?>
-                            <li onclick="Activemenu('<?php echo $cat['id'] ?>','<?php echo $cat['cat_name'] ?>')" class="ac" id="<?php echo $cat['id'] ?>"><a href="#" id="menuleft"><i class="fa fa-circle-o text-green"></i> <?php echo $cat['cat_name'] ?></a></li>
+                            <li onclick="Activemenu('<?php echo $cat['id'] ?>', '<?php echo $cat['typename'] ?>')" class="ac" id="<?php echo $cat['id'] ?>" style=" text-align: center; border-bottom: #424242 solid 1px;">
+                                <a href="#" id="menuleft">
+                                    <center><img src="<?php echo $config->GetimagesProduct($cat['images']) ?>" style=" width: 64px;" class="img-responsive"/></center>
+                                    <b><?php echo $cat['typename'] ?></b></a>
+                            </li>
                         <?php endforeach; ?>
                     </ul>
 
@@ -198,7 +267,7 @@ $category = \app\models\Category::findAll(['status' => '1']);
             </aside><!--
               ##### content #####
             -->
-            <div class="content-wrapper" id="body">
+            <div class="content-wrapper" style=" background: none;">
                 <!-- Content Header (Page header) -->
                 <!--
             <section class="content-header">

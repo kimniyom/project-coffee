@@ -20,6 +20,7 @@ use app\models\Orderlist;
 use yii\helpers\Json;
 use common\models\Setting;
 use app\models\Menu;
+use common\models\System;
 
 /**
  * Site controller
@@ -79,9 +80,23 @@ class SiteController extends Controller {
     public function actionTables($tables = null, $order = null) {
 
         //$data['id'] = $id;
-        $data['model'] = Orders::find()->where(['order_id' => $order])->one();
+        $orders = Orders::find()->where(['order_id' => $order])->one();
+        $data['model'] = $orders;
         $data['order_id'] = $order;
         $data['tables'] = $tables;
+
+        if (!Yii::$app->user->isGuest) {
+            $user_id = Yii::$app->user->identity->id;
+            $columns = array("user_id" => $user_id);
+            if (empty($orders['user_id']) || $orders['user_id'] == "0") {
+                \Yii::$app->db->createCommand()
+                        ->update("orders", $columns, "order_id = '$order' ")
+                        ->execute();
+            }
+        }
+
+
+
         return $this->render('index', $data);
     }
 
@@ -112,8 +127,10 @@ class SiteController extends Controller {
      */
     public function actionLogout() {
         Yii::$app->user->logout();
-
-        return $this->goHome();
+        $system = new System();
+        $link = $system->LinktoBackend(Yii::$app->urlManager->createUrl('site'));
+        $this->redirect($link);
+        //return $this->goHome();
     }
 
     /**
@@ -153,6 +170,7 @@ class SiteController extends Controller {
      * @return mixed
      */
     public function actionSignup() {
+        $this->layout = "backend";
         $model = new SignupForm();
         if ($model->load(Yii::$app->request->post())) {
             if ($user = $model->signup()) {
@@ -217,7 +235,8 @@ class SiteController extends Controller {
     public function actionIndex() {
         $Setting = new Setting();
         $data['typeBuy'] = $Setting->DetailShop('defaulttable');
-        $data['tables'] = Tables::find()->where(['!=', 'tables', '0'])->all();
+        $data['tables'] = Tables::find()->all();
+        //$data['tables'] = Tables::find()->where(['!=', 'tables', '0'])->all();
         return $this->render("tables", $data);
     }
 
@@ -232,8 +251,9 @@ class SiteController extends Controller {
             "total" => $total,
             "income" => $order['income'],
             "confirm" => $order['confirm'],
-            "tel" => $order['tel']
-            );
+            "tel" => $order['tel'],
+            "customer" => $order['customer']
+        );
         echo json_encode($json);
     }
 

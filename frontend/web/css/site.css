@@ -1,7 +1,8 @@
 html,
 body {
     height: 100%;
-    background:url('images/bg-body.gif');
+  
+    /*background:url('images/bg-body.gif');*/
     /*background: #a94442;*/
     /*
     background: url(images/772098-coffee-wallpaper.jpg) no-repeat center center fixed; 
@@ -12,8 +13,15 @@ body {
     */
 }
 
-#body{
-    background:url('images/bg-body.gif');
+.body{
+    /*background:url('images/bg-body.gif');*/
+    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#00b7ea+0,009ec3+100;Blue+3D+%2315 */
+    background: #00b7ea; /* Old browsers */
+    background: -moz-linear-gradient(top,  #00b7ea 0%, #009ec3 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(top,  #00b7ea 0%,#009ec3 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to bottom,  #00b7ea 0%,#009ec3 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00b7ea', endColorstr='#009ec3',GradientType=0 ); /* IE6-9 */
+
 }
 
 .wrap {
@@ -21,10 +29,12 @@ body {
     height: auto;
     margin: 0 auto -60px;
     padding: 0 0 60px;
+
 }
 
 .wrap > .container {
     padding: 70px 15px 20px;
+
 }
 
 .footer {
@@ -154,13 +164,12 @@ a.desc:after {
 
 #calculator .panel-body .input-group-addon{
     font-size: 20px;
-    color: #0000ff;
+    color: #2b9cf9;
 }
 
 #calculator .form-control{
     font-size: 22px;
     text-align: center;
-  
     color: #ff0000;
 }
 
@@ -169,8 +178,8 @@ a.desc:after {
 }
 
 .panel-heading span {
-	margin-top: -30px;
-	font-size: 15px;
+    margin-top: -30px;
+    font-size: 15px;
 }
 
 #headcalculator{
@@ -181,4 +190,8 @@ a.desc:after {
 
 .hand{
     cursor: pointer;
+}
+
+.sidebar ul li{
+    border-bottom: #666666 solid 1px;
 }

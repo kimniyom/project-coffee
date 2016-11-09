@@ -128,7 +128,11 @@ $this->params['breadcrumbs'][] = $this->title;
                                                 'format' => 'raw',
                                                 'value' => function($model) {
                                                     $str = "<center><a href='" . Url::to(['stock/view', 'id' => $model->id]) . "'><i class='fa fa-eye'></i></a> ";
-                                                    $str .= " <a href='" . Url::to(['stock/update', 'id' => $model->id]) . "'><i class='fa fa-pencil'></i></a></center>";
+                                                    if ($model->lock == 'N' && $model->total > 0) {
+                                                        $str .= " <a href='" . Url::to(['stock/update', 'id' => $model->id]) . "'><i class='fa fa-pencil'></i></a></center>";
+                                                    } else {
+                                                        $str .= "<i class='fa fa-pencil'></i></center>";
+                                                    }
                                                     //$str .= " <a href='" . Url::to(['stock/update', 'id' => $model->id]) . "'><i class='fa fa-trash'></i></a></center>";
                                                     return $str;
                                                 }

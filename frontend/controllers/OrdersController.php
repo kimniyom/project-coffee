@@ -120,6 +120,13 @@ class OrdersController extends Controller {
     }
 
     public function actionOpenorders() {
+
+        if (!Yii::$app->user->isGuest) {
+            $user_id = Yii::$app->user->identity->id;
+        } else {
+            $user_id = "0";
+        }
+
         $input = \Yii::$app->request;
         $tables = $input->post('tables');
         $ModelTables = new Tables();
@@ -140,6 +147,7 @@ class OrdersController extends Controller {
             $columns = array(
                 "order_id" => $orderID,
                 "tables" => $tables,
+                "user_id" => $user_id,
                 "create_date" => date("Y-m-d H:i:s")
             );
             \Yii::$app->db->createCommand()
@@ -176,6 +184,25 @@ class OrdersController extends Controller {
         Yii::$app->db->createCommand()
                 ->update("orders", $columns, "order_id = '$orderID' ")
                 ->execute();
+
+        $rs = order::findOne(['order_id' => $orderID]);
+        $json = array("tel" => $rs['tel']);
+        echo json_encode($json);
+    }
+    
+    public function actionAddcustomer() {
+        $input = Yii::$app->request;
+        $orderID = $input->post('orderID');
+        $columns = array(
+            "customer" => $input->post('customer')
+        );
+        Yii::$app->db->createCommand()
+                ->update("orders", $columns, "order_id = '$orderID' ")
+                ->execute();
+
+        $rs = order::findOne(['order_id' => $orderID]);
+        $json = array("customer" => $rs['customer']);
+        echo json_encode($json);
     }
 
     public function actionBill() {
@@ -231,7 +258,7 @@ class OrdersController extends Controller {
         $orderid = $input->post('orderid');
         $columns = array("flag" => "1");
         \Yii::$app->db->createCommand()
-                ->update("orders", $columns,"order_id = '$orderid' ")
+                ->update("orders", $columns, "order_id = '$orderid' ")
                 ->execute();
     }
 

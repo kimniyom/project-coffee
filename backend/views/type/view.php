@@ -30,16 +30,9 @@ $this->params['breadcrumbs'][] = $this->title;
             <h4><?= Html::encode($this->title) ?></h4>
         </div>
         <div class="panel-body">
-            <?=
-            DetailView::widget([
-                'model' => $model,
-                'attributes' => [
-                    'id',
-                    'typename',
-                ],
-            ])
-            ?>
-
+            <?= Html::img($model->getPhotoViewer(), ['style' => 'width:100px;', 'class' => 'img-rounded']); ?><br/><br/>
+            <b>ประเภทเครื่องดื่ม / อาหาร : </b> <?php echo $model->typename ?><br/>
+            <b>สถานะ : </b> <?php if($model->active == "1") echo "<i class='fa fa-check text-green'></i> Active"; else echo "<i class='fa fa-remove text-red'></i> Unactive";?>
         </div>
     </div>
 </div>

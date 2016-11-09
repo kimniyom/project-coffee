@@ -142,8 +142,17 @@ class StockproductController extends Controller {
     }
 
     protected function getData($id) {
-        $datas = Stockproduct::find()->where(['category' => $id])->all();
-        return $this->MapData($datas, 'id', 'productname');
+        //$datas = Stockproduct::find()->where(['category' => $id])->all();
+        $sql = "SELECT s.id,CONCAT(s.productname,'(',u.unit,')') AS productname
+        FROM stockproduct s INNER JOIN unit u ON s.unit = u.id 
+        WHERE s.category = '$id' ";
+        $datas = \Yii::$app->db->createCommand($sql)->queryAll();
+        $obj = [];
+        foreach ($datas as $key) {
+            array_push($obj, ['id' => $key['id'], 'name' => $key['productname']]);
+        }
+        return $obj;
+        //return $datas;//$this->MapData($datas, 'id', 'productname');
     }
 
     protected function MapData($datas, $fieldId, $fieldName) {

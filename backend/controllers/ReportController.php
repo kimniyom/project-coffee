@@ -5,11 +5,15 @@ namespace backend\controllers;
 use Yii;
 use yii\web\Controller;
 use app\models\Orderlist;
-
+use app\models\Orders;
 class ReportController extends Controller {
 
     public function actionReportall() {
         return $this->render('reportall');
+    }
+
+    public function actionReportorder() {
+        return $this->render('reportorder');
     }
 
     public function actionGetreport() {
@@ -33,7 +37,7 @@ class ReportController extends Controller {
             $STmenu = implode("','", $menu);
             $Wmenu = "o.menu IN('" . $STmenu . "')";
         }
-        
+
         if ($orders == '') {
             $Worders = "1=1";
         } else {
@@ -49,8 +53,37 @@ class ReportController extends Controller {
         }
 
         $Model = new Orderlist();
-        $data['datas'] = $Model->Getlistorder($Wtype, $Wmenu, $Wtables, $date_start, $date_end,$Worders);
+        $data['datas'] = $Model->Getlistorder($Wtype, $Wmenu, $Wtables, $date_start, $date_end, $Worders);
         return $this->renderPartial('_reportall', $data);
+    }
+
+    public function actionGetreportorder() {
+        $input = \Yii::$app->request;
+
+        $tables = $input->post('tables');
+        $date_start = $input->post('date_start');
+        $date_end = $input->post('date_end');
+
+        if ($tables == '') {
+            $Wtables = "1=1";
+        } else {
+            $STtables = implode("','", $tables);
+            $Wtables = "r.tables IN('" . $STtables . "')";
+        }
+
+        $Model = new Orderlist();
+        $data['datas'] = $Model->Getlistordergroup($Wtables, $date_start, $date_end);
+        return $this->renderPartial('_reportorder', $data);
+    }
+
+    public function actionDetailorder() {
+        $orderlisModel = new Orderlist();
+        $input = Yii::$app->request;
+        $orderID = $input->post('orderId');
+        $data['order'] = Orders::find()->where(['order_id' => $orderID])->one();
+        $data['orderlist'] = $orderlisModel->Getdata($orderID);
+
+        return $this->renderPartial('_detailorder', $data);
     }
 
 }

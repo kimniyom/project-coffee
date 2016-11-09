@@ -23,15 +23,20 @@ $this->title = 'LoginBackoffice';
         <?= Html::csrfMetaTags() ?>
         <title><?= Html::encode($this->title) ?></title>
         <?php $this->head() ?>
+        <style type="text/css">
+            html,body{
+                background:url('images/coffee-beans.png') fixed bottom no-repeat;
+            }
+        </style>
     </head>
-    <body class="hold-transition login-page">
+    <body class="hold-transition login-page" style=" background: none;">
         <?php $this->beginBody() ?>
-        <div class="login-box">
+        <div class="login-box" style=" background: none;">
             <div class="login-logo">
                 <a href="../../index2.html"><?= Html::encode($this->title) ?></a>
             </div>
             <!-- /.login-logo -->
-            <div class="login-box-body">
+            <div class="login-box-body" style=" background: none;">
 
 
 

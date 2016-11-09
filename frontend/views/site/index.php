@@ -8,7 +8,7 @@ use common\models\System;
 $system = new System();
 $menu = new Menu();
 
-$ActiveCat = \app\models\Category::find(['status' => '1', 'active' => '1'])->one();
+$ActiveCat = \app\models\Type::find(['active' => '1', 'setactive' => '1'])->one();
 $categoryActive = $ActiveCat['id'];
 ?>
 <style type="text/css">
@@ -26,6 +26,52 @@ $categoryActive = $ActiveCat['id'];
     .activemenu{
         background: #FFFFFF;
     }
+
+    .panel .panel-heading{
+        background: #474754;
+        color: #cccccc;
+    }
+
+    #btn-controls .btn{
+        margin-bottom: 10px;
+    }
+
+    @media screen and (max-width: 1024px) {
+        #Rcontrol{
+            text-align: center;
+        }
+    }
+
+    @media screen and (min-width: 1024px) {
+        #Rcontrol{
+            text-align: right;
+        }
+    }
+    
+    @media screen and (max-width: 480px) {
+        #btn-control{
+            display: none;
+        }
+    }
+    
+
+    @media screen and (max-width: 768px) {
+        #btn-control{
+            font-size: 12px;
+        }
+    }
+    
+    .panel{
+        border: none;
+    }
+    
+    .panel .panel-body{
+        
+    }
+    
+    .panel .panel-heading{
+        border: none;
+    }
 </style>
 
 <!--
@@ -41,12 +87,70 @@ $categoryActive = $ActiveCat['id'];
 <input type="hidden" id="calculator" value="<?php echo Url::to(['site/calculator']) ?>"/>
 <input type="hidden" id="Urlcheckbill" value="<?php echo Url::to(['orders/checkbill']) ?>"/>
 <input type="hidden" id="Urltel" value="<?php echo Url::to(['orders/addtel']) ?>"/>
+<input type="hidden" id="Urlcustomer" value="<?php echo Url::to(['orders/addcustomer']) ?>"/>
 <input type="hidden" id="Urlbill" value="<?php echo Url::to(['orders/bill']) ?>"/>
 <input type="hidden" id="Urlendorder" value="<?php echo Url::to(['orders/endorder']) ?>"/>
 
+<div class="well well-sm" style=" padding-bottom: 0px; background:#474754; border: none;">
+    <div class="row">
+        <div class="col-lg-6" style=" margin-bottom: 0px;">
+            <div class="row" id="btn-controls">
+                <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                    <?php if ($model['flag'] == '0') { ?>
+                    <button type="button" class="btn btn-primary btn-lg btn-block" onclick="send('<?php echo $order_id ?>')"><img src="<?php echo Url::to('@web/web/images/Status-mail-task-icon.png') ?>"/> <span id="btn-control">สั่ง</span></button>
+                    <?php } else { ?>
+                        <button type="button" class="btn btn-default btn-lg disabled btn-block"><img src="<?php echo Url::to('@web/web/images/Status-mail-task-icon.png') ?>"/> <span id="btn-control">สั่ง</span></button>
+                    <?php } ?>
+                </div>
+
+                <?php
+                if ($model['confirm'] == '0') {
+                    ?>
+                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                        <?php if ($model['flag'] == 1) { ?>
+                            <button type="button" class="btn btn-success btn-lg btn-block"
+                                    onclick="Check_bill()"><img src="<?php echo Url::to('@web/web/images/Cash-register-icon.png') ?>"/> <span id="btn-control">ชำระเงิน</span></button>
+                                <?php } else { ?>
+                        <button type="button" class="btn btn-default btn-lg disabled btn-block"><img src="<?php echo Url::to('@web/web/images/Cash-register-icon.png') ?>"/> <span id="btn-control">ชำระเงิน</span></button>
+                        <?php } ?>
+                    </div>
+                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                        <button type="button" class="btn btn-default btn-lg disabled btn-block"><img src="<?php echo Url::to('@web/web/images/print-icon.png') ?>"/> <span id="btn-control">พิมพ์ใบเสร็จ</span></button>
+                    </div>
+                <?php } else { ?>
+                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                        <button type="button" class="btn btn-default btn-lg disabled btn-block"><img src="<?php echo Url::to('@web/web/images/success-icon.png') ?>"/> <span id="btn-control">ชำระเงินแล้ว</span></button>
+                    </div>
+                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                        <button type="button" class="btn btn-warning btn-lg btn-block" onclick="Bill()"><img src="<?php echo Url::to('@web/web/images/print-icon.png') ?>"/> <span id="btn-control">พิมพ์ใบเสร็จ</span></button>
+                    </div>
+                <?php } ?>
+            </div>
+        </div>
+        <div class="col-lg-6" style="margin-bottom: 10px;" id="Rcontrol">
+            <div class="row">
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                    <?php
+                    if ($model['confirm'] == '1') {
+                        ?>
+                        <button type="button" class="btn btn-primary btn-lg btn-block"
+                                onclick="EndOrder()"><img src="<?php echo Url::to('@web/web/images/success-icon.png') ?>"/> <span id="btn-control">สิ้นสุดการขาย</span></button>
+                            <?php } else { ?>
+                    <button type="button" class="btn btn-default btn-lg disabled btn-block"><img src="<?php echo Url::to('@web/web/images/success-icon.png') ?>"/> <span id="btn-control">สิ้นสุดการขาย</span></button>
+                    <?php } ?>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                    <button type="button" class="btn btn-danger btn-lg btn-block"
+                            onclick="cancelorder('<?php echo $order_id ?>', '<?php echo $tables ?>')"><img src="<?php echo Url::to('@web/web/images/Status-dialog-error-icon.png') ?>"/> <span id="btn-control">ยกเลิก</span></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="row">
     <div class="col-md-8 col-lg-8">
-        <div class="panel panel-primary" id="menuproduct">
+        <div class="panel panel-default" id="menuproduct">
             <div class="panel-heading">
                 <h4><i class="fa fa-coffee"></i> <font id="h_category"></font></h4>
                 <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>
@@ -126,7 +230,7 @@ $categoryActive = $ActiveCat['id'];
         -->
         <div id="boxcalculator">
             <div class="calculator">
-                <div class="panel panel-danger" id="calculator">
+                <div class="panel panel-default" id="calculator">
                     <div class="panel-heading">
                         <h4><i class="fa fa-calculator"></i> คำนวณค่าใช้จ่าย</h4>
                         <span class="pull-right clickable" id="resizesmall" title="ซ่อน"><i class="glyphicon glyphicon-chevron-up"></i></span>
@@ -166,73 +270,59 @@ $categoryActive = $ActiveCat['id'];
                         <?php if ($model['flag'] == '1') { ?>
                             <div class="form-group">
                                 <div class="input-group">
+                                    <div class="input-group-addon">ชื่อลูกค้า</div>
+                                    <input type="text" class="form-control" id="customer" placeholder="ชื่อลูกค้า ..." value="<?php echo $model['customer'] ?>">
+                                    <div class="input-group-addon btn btn-default" id="btn-customer"
+                                         onclick="AddCustomer()"><i class="fa fa-plus"></i> เพิ่ม</div>
+                                </div>
+                            </div>
+                        
+                            <div class="form-group">
+                                <div class="input-group">
                                     <div class="input-group-addon">Tel.</div>
                                     <input type="text" class="form-control" id="tel" placeholder="เบอร์โทรศัพท์ ..."
-                                           onkeypress="return chkNumber(this.value)" value="<?php echo $model['tel']?>">
-                                    <div class="input-group-addon btn btn-success" id="btn-tel"
+                                           onkeypress="return chkNumber(this.value)" value="<?php echo $model['tel'] ?>">
+                                    <div class="input-group-addon btn btn-default" id="btn-tel"
                                          onclick="AddTel()"><i class="fa fa-plus"></i> เพิ่ม</div>
                                 </div>
                             </div>
                         <?php } ?>
                         <?php if ($model['flag'] == 1) { ?>
-                        <hr/>
-                        <div class="form-group">
-                            <div class="input-group">
-                                <div class="input-group-addon">รับเงิน</div>
-                                <input type="text" class="form-control" id="income" value="<?php echo $model['income']?>" placeholder="รับเงิน"
-                                       onkeypress="return chkNumber(this.value)"
-                                       onkeyup="Income(this.value)">
-                                <div class="input-group-addon">บาท</div>
+                            <hr/>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <div class="input-group-addon">รับเงิน</div>
+                                    <input type="text" class="form-control" id="income" value="<?php echo $model['income'] ?>" placeholder="รับเงิน"
+                                           onkeypress="return chkNumber(this.value)"
+                                           onkeyup="Income(this.value)">
+                                    <div class="input-group-addon">บาท</div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="input-group">
-                                <div class="input-group-addon">เงินทอน</div>
-                                <input type="text" class="form-control" id="change" value="<?php echo $model['change']?>" readonly="readonly">
-                                <div class="input-group-addon">บาท</div>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <div class="input-group-addon">เงินทอน</div>
+                                    <input type="text" class="form-control" id="change" value="<?php echo $model['change'] ?>" readonly="readonly">
+                                    <div class="input-group-addon">บาท</div>
+                                </div>
                             </div>
-                        </div>
                         <?php } ?>
                     </div>
 
-                    <div class="panel-footer" style=" text-align: center;">
-                        <!--
-                        <button type="button" class="btn btn-default">สั่ง</button>
-                        -->
-                        <?php if ($model['flag'] == '0') { ?>
-                            <button type="button" class="btn btn-primary" onclick="send('<?php echo $order_id ?>')">สั่ง</button>
-                        <?php } else { ?>
-                            <button type="button" class="btn btn-primary disabled">สั่ง</button>
-                        <?php } ?>
-                        <?php
-                        if ($model['confirm'] == '0') {
-                            ?>
-                            <?php if ($model['flag'] == 1) { ?>
-                                <button type="button" class="btn btn-success"
-                                        onclick="Check_bill()">ชำระเงิน</button>
-                                    <?php } ?>
-                            <button type="button" class="btn btn-warning disabled">พิมพ์ใบเสร็จ</button>
-                        <?php } else { ?>
-                            <button type="button" class="btn btn-success disabled">ชำระเงินแล้ว</button>
-                            <button type="button" class="btn btn-warning" onclick="Bill()">พิมพ์ใบเสร็จ</button>
+                    <div class="panel-footer" id="calculator-footer" style=" display: none;">
+                        <?php if ($model['confirm'] == 0) { ?>
+                            <button type="button" class="btn btn-success btn-lg btn-block"
+                                    onclick="Check_bill()"><img src="<?php echo Url::to('@web/web/images/Cash-register-icon.png') ?>"/> ชำระเงิน</button>
+                                <?php } else { ?>
+                            <button type="button" class="btn btn-default btn-lg disabled btn-block"><img src="<?php echo Url::to('@web/web/images/Cash-register-icon.png') ?>"/> ชำระเงิน</button>
                         <?php } ?>
                     </div>
 
                 </div>
             </div>
+
+
         </div>
 
-        <?php
-        if ($model['confirm'] == '1') {
-            ?>
-            <button type="button" class="btn btn-danger btn-lg btn-block"
-                    onclick="EndOrder()">สิ้นสุดการขาย</button>
-                <?php } else { ?>
-            <button type="button" class="btn btn-default btn-lg btn-block disabled">สิ้นสุดการขาย</button>
-        <?php } ?>
-
-        <button type="button" class="btn btn-danger btn-lg btn-block"
-                onclick="cancelorder('<?php echo $order_id ?>', '<?php echo $tables ?>')"><i class="fa fa-remove"></i> ยกเลิก</button>
 
     </div>
 </div>
@@ -300,11 +390,12 @@ $categoryActive = $ActiveCat['id'];
 <div class="modal fade" tabindex="-1" role="dialog" id="popupcalculator" data-backdrop="static">
     <div class="modal-dialog">
         <div class="modal-content" style=" background: none;">
-            
-            <div class="modal-body" id="calculatorfull">
 
+            <div class="modal-body">
+                <div id="calculatorfull"></div>
+                <div id="boxlistorderfull"></div>
             </div>
-            
+
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
@@ -322,8 +413,10 @@ $this->registerjs("$(document).on('click', '.panel-heading span.clickable', func
             t.find('i').removeClass('glyphicon-chevron-down').addClass('glyphicon-chevron-up');
         }
     });
- Activemenu('" . $categoryActive . "', '" . $ActiveCat['cat_name'] . "');
- Getitems('" . $categoryActive . "');    
+ Activemenu('" . $categoryActive . "', '" . $ActiveCat['typename'] . "');
+ Getitems('" . $categoryActive . "');  
+    
+ 
 ");
 ?>
 <script type="text/javascript">
@@ -333,7 +426,8 @@ $this->registerjs("$(document).on('click', '.panel-heading span.clickable', func
         var url = "<?php echo Url::to(['orders/buy']) ?>";
         var data = {orderid: orderId};
         if (total <= 0) {
-            alert("ยังไม่มีรายการสินค้า ...");
+            //alert("ยังไม่มีรายการสินค้า ...");
+            swal("แจ้งเตือน!", "ยังไม่มีรายการสินค้า ...!", "warning");
             return false;
         }
         $.post(url, data, function (success) {
@@ -360,6 +454,9 @@ $this->registerjs("$(document).on('click', '.panel-heading span.clickable', func
 
     function PopupCalcular() {
         $("#calculatorfull").html($(".calculator"));
+        $("#boxlistorderfull").html($(".boxlistorder"));
+        $("#calculator-footer").show();
+        $(".ht").hide();
         $("#c_calculator").show();
         $("#resize").hide();
         $("#resizesmall").hide();
@@ -368,11 +465,16 @@ $this->registerjs("$(document).on('click', '.panel-heading span.clickable', func
 
     function RePopupCalcular() {
         $("#boxcalculator").html($(".calculator"));
+        $("#boxlistorder").html($(".boxlistorder"));
+        $("#calculator-footer").hide();
+        $(".ht").show();
         $("#c_calculator").hide();
         $("#resize").show();
         $("#resizesmall").show();
         $("#popupcalculator").modal('hide');
     }
+
+    
 </script>
 
 

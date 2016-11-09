@@ -86,11 +86,31 @@ class Cutstock extends \yii\db\ActiveRecord {
     }
 
     public function Getmixser($menuId = null) {
+        /*
         $sql = "SELECT p.productname,SUM(s.total) AS total,m.number
                 FROM mix m INNER JOIN stock s ON m.product_stock_id = s.product
                 INNER JOIN stockproduct p ON s.product = p.id
                 WHERE m.menu = '$menuId'
                 GROUP BY s.product ";
+         * 
+         */
+        $sql = "(SELECT p.productname,SUM(s.total) AS total,m.number
+                FROM mix m INNER JOIN stock s ON m.product_stock_id = s.product
+                INNER JOIN stockproduct p ON s.product = p.id
+                WHERE m.menu = '$menuId'
+                GROUP BY s.product
+)
+UNION
+(
+	SELECT p.productname,'',m.number
+	FROM mix m INNER JOIN stockproduct p ON m.product_stock_id = p.id
+	WHERE m.menu = '$menuId' 
+	AND m.product_stock_id NOT IN (SELECT s.product
+		FROM stock s INNER JOIN mix m ON s.product = m.product_stock_id
+		WHERE m.menu = '$menuId'
+		GROUP BY s.product
+	)
+)";
         $result = Yii::$app->db->createCommand($sql)->queryAll();
         return $result;
     }

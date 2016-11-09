@@ -21,141 +21,144 @@ $Options = new Options();
 $this->title = 'การขายทั้งหมด';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
+<div class="panel panel-primary">
+    <div class="panel-heading">ตัวกรองรายงาน</div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-md-4 col-lg-4">
+                <label>รหัสการขาย</label>
+                <?php
+                // Multiple select without model
+                echo Select2::widget([
+                    'name' => 'orders',
+                    'value' => '',
+                    'data' => ArrayHelper::map(Orders::find()->all(), 'order_id', 'order_id'),
+                    'theme' => Select2::THEME_BOOTSTRAP, // this is the default if theme is not set
+                    'options' => [
+                        'id' => 'orders',
+                        'multiple' => true,
+                        'placeholder' => 'ทั้งหมด ...'
+                    ]
+                ]);
+                ?>
+            </div>
+        </div>
 
-<div class="row">
-    <div class="col-md-4 col-lg-4">
-        <label>รหัสการขาย</label>
-        <?php
-        // Multiple select without model
-        echo Select2::widget([
-            'name' => 'orders',
-            'value' => '',
-            'data' => ArrayHelper::map(Orders::find()->all(), 'order_id', 'order_id'),
-            'theme' => Select2::THEME_BOOTSTRAP, // this is the default if theme is not set
-            'options' => [
-                'id' => 'orders',
-                'multiple' => true,
-                'placeholder' => 'ทั้งหมด ...'
-            ]
-        ]);
-        ?>
+        <div class="row">
+            <div class="col-md-4 col-lg-4">
+                <?php
+                // usage without model
+                echo '<label>เริ่มต้น</label>';
+                echo DatePicker::widget([
+                    'name' => 'check_issue_date',
+                    'value' => date('Y-m-d'),
+                    'language' => 'th',
+                    // 'value' => date('d-M-Y', strtotime('+2 days')),
+                    'options' => [
+                        'placeholder' => 'Select issue date ...',
+                        'id' => 'date_start',
+                    ],
+                    'pluginOptions' => [
+                        'format' => 'yyyy-mm-dd',
+                        'todayHighlight' => true
+                    ]
+                ]);
+                ?>
+            </div>
+            <div class="col-md-4 col-lg-4">
+                <?php
+                // usage without model
+                echo '<label>สิ้นสุด</label>';
+                echo DatePicker::widget([
+                    'name' => 'check_issue_date',
+                    'value' => date('Y-m-d'),
+                    'language' => 'th',
+                    // 'value' => date('d-M-Y', strtotime('+2 days')),
+                    'options' => [
+                        'placeholder' => 'Select issue date ...',
+                        'id' => 'date_end',
+                    ],
+                    'pluginOptions' => [
+                        'format' => 'yyyy-mm-dd',
+                        'todayHighlight' => true
+                    ]
+                ]);
+                ?>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-9 col-lg-9">
+                <label>ประเภท</label>
+                <?php
+                // Multiple select without model
+                echo Select2::widget([
+                    'name' => 'type',
+                    'value' => '',
+                    'data' => ArrayHelper::map(Type::find()->all(), 'id', 'typename'),
+                    'theme' => Select2::THEME_BOOTSTRAP, // this is the default if theme is not set
+                    'options' => [
+                        'id' => 'type',
+                        'multiple' => true,
+                        'placeholder' => 'ทั้งหมด ...'
+                    ]
+                ]);
+                ?>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12 col-lg-12">
+                <label>เมนู</label>
+                <?php
+                // Multiple select without model
+                echo Select2::widget([
+                    'name' => 'menu',
+                    'value' => '',
+                    'data' => ArrayHelper::map(menus::find()->all(), 'id', 'menu'),
+                    'theme' => Select2::THEME_BOOTSTRAP, // this is the default if theme is not set
+                    'options' => [
+                        'id' => 'menu',
+                        'multiple' => true,
+                        'placeholder' => 'ทั้งหมด ...'
+                    ]
+                ]);
+                ?>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12 col-lg-12">
+                <label>โต๊ะ</label>
+                <?php
+                // Multiple select without model
+                echo Select2::widget([
+                    'name' => 'tables',
+                    'value' => '',
+                    'data' => ArrayHelper::map(Tables::find()->all(), 'tables', 'tables'),
+                    'theme' => Select2::THEME_BOOTSTRAP, // this is the default if theme is not set
+                    'options' => [
+                        'id' => 'tables',
+                        'multiple' => true,
+                        'placeholder' => 'ทั้งหมด ...'
+                    ]
+                ]);
+                ?>
+            </div>
+        </div>
+    </div>
+    <div class="panel-footer">
+        <div class="row">
+            <div class="col-md-3 col-lg-3">
+                <button type="button" class="btn btn-primary btn-flat"
+                        onclick="Getreport()"><i class="fa fa-eye"></i> ดูรายงาน</button>
+            </div>
+        </div>
     </div>
 </div>
-
-<div class="row">
-    <div class="col-md-4 col-lg-4">
-        <?php
-        // usage without model
-        echo '<label>เริ่มต้น</label>';
-        echo DatePicker::widget([
-            'name' => 'check_issue_date',
-            'value' => date('Y-m-d'),
-            'language' => 'th',
-            // 'value' => date('d-M-Y', strtotime('+2 days')),
-            'options' => [
-                'placeholder' => 'Select issue date ...',
-                'id' => 'date_start',
-            ],
-            'pluginOptions' => [
-                'format' => 'yyyy-mm-dd',
-                'todayHighlight' => true
-            ]
-        ]);
-        ?>
-    </div>
-    <div class="col-md-4 col-lg-4">
-        <?php
-        // usage without model
-        echo '<label>สิ้นสุด</label>';
-        echo DatePicker::widget([
-            'name' => 'check_issue_date',
-            'value' => date('Y-m-d'),
-            'language' => 'th',
-            // 'value' => date('d-M-Y', strtotime('+2 days')),
-            'options' => [
-                'placeholder' => 'Select issue date ...',
-                'id' => 'date_end',
-            ],
-            'pluginOptions' => [
-                'format' => 'yyyy-mm-dd',
-                'todayHighlight' => true
-            ]
-        ]);
-        ?>
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-md-9 col-lg-9">
-        <label>ประเภท</label>
-        <?php
-        // Multiple select without model
-        echo Select2::widget([
-            'name' => 'type',
-            'value' => '',
-            'data' => ArrayHelper::map(Type::find()->all(), 'id', 'typename'),
-            'theme' => Select2::THEME_BOOTSTRAP, // this is the default if theme is not set
-            'options' => [
-                'id' => 'type',
-                'multiple' => true,
-                'placeholder' => 'ทั้งหมด ...'
-            ]
-        ]);
-        ?>
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-md-12 col-lg-12">
-        <label>เมนู</label>
-        <?php
-        // Multiple select without model
-        echo Select2::widget([
-            'name' => 'menu',
-            'value' => '',
-            'data' => ArrayHelper::map(menus::find()->all(), 'id', 'menu'),
-            'theme' => Select2::THEME_BOOTSTRAP, // this is the default if theme is not set
-            'options' => [
-                'id' => 'menu',
-                'multiple' => true,
-                'placeholder' => 'ทั้งหมด ...'
-            ]
-        ]);
-        ?>
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-md-12 col-lg-12">
-        <label>โต๊ะ</label>
-        <?php
-        // Multiple select without model
-        echo Select2::widget([
-            'name' => 'tables',
-            'value' => '',
-            'data' => ArrayHelper::map(Tables::find()->all(), 'tables', 'tables'),
-            'theme' => Select2::THEME_BOOTSTRAP, // this is the default if theme is not set
-            'options' => [
-                'id' => 'tables',
-                'multiple' => true,
-                'placeholder' => 'ทั้งหมด ...'
-            ]
-        ]);
-        ?>
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-md-3 col-lg-3">
-        <br/>
-        <button type="button" class="btn btn-default btn-flat"
-                onclick="Getreport()"><i class="fa fa-eye"></i> ดูรายงาน</button>
-    </div>
-</div>
-
 <div class="orderlist-index">
-    <h2><i class="fa fa-file-text-o"></i> <?= Html::encode($this->title) ?></h2>
-    <div class="box box-default">
+    <h2 class="text-primary"><i class="fa fa-file-text-o"></i> <?= Html::encode($this->title) ?></h2>
+    <div class="box box-primary">
         <div class="box-body" id="showreport">
 
         </div>

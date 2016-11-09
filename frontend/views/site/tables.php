@@ -1,26 +1,29 @@
 <?php
 
 use yii\helpers\Url;
-
 ?>
 <div class="row">
     <center>
         <?php
         foreach ($tables as $table):
             ?>
-        <div class="col-sm-4 col-md-4 col-lg-2" style=" margin-bottom: 20px;">
-            <div class="thumbnail btn btn-default btn-flat" onclick="Openorders('<?php echo $table['tables'] ?>')" style=" margin-bottom: 0px;">
+            <div class="col-sm-4 col-md-4 col-lg-2" style=" margin-bottom: 20px;">
+                <div class="thumbnail btn btn-default btn-flat" onclick="Openorders('<?php echo $table['tables'] ?>')" style=" margin-bottom: 0px;">
                     <img src="<?php echo Url::to('@web/web/images/table-icon.png') ?>" alt="..." style=" max-width: 100px;">
                     <div class="caption" style=" text-align: center;">
                         <h3>โต๊ะที่ <?php echo $table['tables'] ?></h3>
-                        <?php if ($table['active'] == '0') { ?>
-                            <h4 style="color: green;">ว่าง</h4>
+                        <?php if ($table['tables'] != "0") { ?>
+                            <?php if ($table['active'] == '0') { ?>
+                                <h4 style="color: green;">ว่าง</h4>
+                            <?php } else { ?>
+                                <h4 style="color: red;">ไม่ว่าง</h4>
+                            <?php } ?>
                         <?php } else { ?>
-                            <h4 style="color: red;">ไม่ว่าง</h4>
+                                <h4 style="color: blue;">Default</h4>
                         <?php } ?>
                     </div>
                 </div>
-            <button type="button" class="btn btn-default btn-block btn-flat" onclick="Getdeatil('<?php echo $table['comment']?>')">Detail</button>
+                <button type="button" class="btn btn-default btn-block btn-flat" onclick="Getdeatil('<?php echo $table['comment'] ?>')">Detail</button>
             </div>
         <?php endforeach; ?>
     </center>
@@ -69,8 +72,8 @@ $this->registerJs(' $(document).ready(function () {
             window.location = "<?php echo Url::to(['site/tables']) ?>" + '&tables=' + tables + '&order=' + orderID;
         });
     }
-    
-    function Getdeatil(detail){
+
+    function Getdeatil(detail) {
         $("#popupdetail").modal();
         $("#deatilfull").html(detail);
     }

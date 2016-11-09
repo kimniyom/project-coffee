@@ -10,9 +10,16 @@ use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use common\widgets\Alert;
 use yii\helpers\Url;
+use common\models\System;
 
 AppAsset::register($this);
 AdminLteAsset::register($this);
+
+$system = new System();
+
+$user_id = Yii::$app->user->identity->id;
+$Profile = new \dektrium\user\models\Profile();
+$status = $Profile->findOne(['user_id' => $user_id])['status'];
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -96,7 +103,7 @@ AdminLteAsset::register($this);
                                 echo "class='Mactive'";
                             }
                             ?>>
-                                <a href="<?php echo Url::to(['cutstock/index']) ?>"
+                                <a href="<?php echo Yii::$app->urlManager->createUrl('cutstock/index') ?>"
                                    onclick="Activemenu('m0')" id="menunav">
                                     <img src="<?php echo Url::to('@web/images/shop-icon.png') ?>" height="18"/> <i class="fa fa-cut"></i> ตัดสต๊อก</a>
                             </li>
@@ -105,17 +112,17 @@ AdminLteAsset::register($this);
                                 echo "class='Mactive'";
                             }
                             ?>>
-                                <a href="<?php echo Url::to(['stock/index']) ?>"
+                                <a href="<?php echo Yii::$app->urlManager->createUrl('stock/index') ?>"
                                    onclick="Activemenu('m1')" id="menunav">
-    
-                                <img src="<?php echo Url::to('@web/images/shop-icon.png') ?>" height="18"/> เช็ค / เพิ่ม สต๊อกสินค้า</a>
+
+                                    <img src="<?php echo Url::to('@web/images/shop-icon.png') ?>" height="18"/> เช็ค / เพิ่ม สต๊อกสินค้า</a>
                             </li>
                             <li <?php
                             if (Yii::$app->session['menu'] == 'm2') {
                                 echo "class='Mactive'";
                             }
                             ?>>
-                                <a href="<?php echo Url::to(['menu/index']) ?>"
+                                <a href="<?php echo Yii::$app->urlManager->createUrl('menu') ?>"
                                    onclick="Activemenu('m2')" id="menunav">
                                     <img src="<?php echo Url::to('@web/images/food-icon.png') ?>" height="18"/> เมนูอาหาร / เครื่องดื่ม</a>
                             </li>
@@ -124,7 +131,7 @@ AdminLteAsset::register($this);
                                 echo "class='Mactive'";
                             }
                             ?>>
-                                <a href="<?php echo Url::to(['employee/index']) ?>"
+                                <a href="<?php echo Yii::$app->urlManager->createUrl('user/admin') ?>"
                                    onclick="Activemenu('m3')" id="menunav">
                                     <img src="<?php echo Url::to('@web/images/users-icon.png') ?>" height="18"/> ข้อมูลพนักงาน</a>
                             </li>
@@ -257,14 +264,20 @@ AdminLteAsset::register($this);
                                 echo $style;
                             }
                             ?>><a href="<?php echo Url::to(['report/reportall']); ?>" id="menuleft" onclick="Activemenu('8')"><i class="fa fa-file text-yellow"></i> รายงานการขาย</a></li>
-                                </ul>
+                        <li <?php
+                            if (Yii::$app->session['menu'] == '9') {
+                                echo $style;
+                            }
+                            ?>><a href="<?php echo Url::to(['report/reportorder']); ?>" id="menuleft" onclick="Activemenu('9')"><i class="fa fa-file text-yellow"></i> การขายแยก Order</a></li>
+                        
+                        </ul>
                     <?php } ?>
                 </section>
                 <!-- /.sidebar -->
             </aside><!--
               ##### content #####
             -->
-            <div class="content-wrapper" style=" background: #FFFFFF;">
+            <div class="content-wrapper">
                 <!-- Content Header (Page header) -->
                 <!--
             <section class="content-header">
@@ -293,10 +306,9 @@ AdminLteAsset::register($this);
             </div>
             <footer class="main-footer">
                 <div class="pull-right hidden-xs">
-                    <b>Version</b> 2.3.3
+                    <b>Version</b> 1
                 </div>
-                <strong>Copyright &copy; 2014-2015 <a href="http://almsaeedstudio.com">Almsaeed Studio</a>.</strong> All rights
-                reserved.
+                <strong>Copyright &copy; CoffeeShop 2016
             </footer>
         </div>
 
@@ -307,6 +319,7 @@ AdminLteAsset::register($this);
 <?php $this->endPage() ?>
 
 <script type="text/javascript">
+    checkstatus();
     function Activemenu(id) {
         var url = "<?php echo Url::to(['site/activemenu']) ?>";
 
@@ -314,5 +327,12 @@ AdminLteAsset::register($this);
         $.post(url, data, function (result) {
             //alert(result);
         });
+    }
+
+    function checkstatus() {
+        var status = "<?php echo $status ?>";
+        if (status == "M") {
+            window.location = "<?php echo $system->LinktoFrontend(Yii::$app->urlManager->createUrl('site')) ?>";
+        }
     }
 </script>

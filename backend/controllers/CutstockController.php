@@ -82,17 +82,23 @@ class CutstockController extends Controller {
         $i=0;
         foreach ($mixser as $m):
             $i++;
-        if($m['total'] < $m['number']){
+        if($m['total'] < $m['number'] || $m['total'] == ''){
             $color = "style='color:red;'";
             $icon = "<i class='fa fa-remove text-red'></i>";
         } else {
             $color = "";
             $icon = "<i class='fa fa-check text-green'></i>";
         }
+        
+        if(!empty($m['total'])){
+            $total = $m['total'];
+        } else {
+            $total = "ไม่มีสินค้าในสต๊อก ...!";
+        }
             $str .="<tr>";
             $str .="<td>".$i."</td>";
             $str .="<td $color>".$m['productname']."</td>";
-            $str .="<td id='textright' $color>".$m['total']."</td>";
+            $str .="<td id='textright' $color>".$total."</td>";
             $str .="<td id='textright'>".$m['number']."</td>";
             $str .="<td id='textcenter'>".$icon."</td>";
             $str .="<tr/>";

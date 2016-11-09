@@ -29,8 +29,8 @@ class Menu extends \yii\db\ActiveRecord {
      */
     public function rules() {
         return [
-            [['type', 'menu', 'price','unit'], 'required'],
-            [['type','unit','mix'], 'integer'],
+            [['type', 'menu', 'price', 'unit'], 'required'],
+            [['type', 'unit', 'mix'], 'integer'],
             [['price'], 'number', 'numberPattern' => '/^\s*[+]?[0-9]*[.,]?[0-9]+([eE][+]?[0-9]+)?\s*$/'],
             [['create_date'], 'safe'],
             [['menu'], 'string', 'max' => 255],
@@ -88,8 +88,8 @@ class Menu extends \yii\db\ActiveRecord {
             unlink("./uploads/" . $images);
         }
     }
-    
-    public function CheckCub($menuid = null){
+
+    public function CheckCub($menuid = null) {
         $sql = "SELECT IFNULL((ROUND(Q1.total/x.number,0)),0) AS CUB
             FROM menu m INNER JOIN mix x ON m.id = x.menu
 
@@ -108,7 +108,7 @@ class Menu extends \yii\db\ActiveRecord {
             WHERE m.id = '$menuid'
             ORDER BY CUB ASC 
             LIMIT 1 ";
-        
+
         $rs = \Yii::$app->db->createCommand($sql)->queryOne();
         return $rs['CUB'];
     }

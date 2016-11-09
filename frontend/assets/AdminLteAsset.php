@@ -21,9 +21,11 @@ class AdminLteAsset extends AssetBundle {
     public $css = [
         'themes/AdminLTE/dist/css/AdminLTE.css',
         'themes/AdminLTE/dist/css/skins/_all-skins.css',
-        /* 'themes/AdminLTE/bootstrap/css/bootstrap-paper.css', */
+        'themes/AdminLTE/bootstrap/css/bootstrap-theme.css',
         'themes/AdminLTE/plugins/datatables/dataTables.bootstrap.css',
-        'web/lib/font-awesome-4.5.0/css/font-awesome.css'
+        'web/lib/font-awesome/css/font-awesome.css',
+        'web/css/animate.css',
+        'web/lib/sweet-alert/sweetalert.css',
     ];
     public $js = [
         'themes/AdminLTE/bootstrap/js/bootstrap.js',
@@ -32,6 +34,8 @@ class AdminLteAsset extends AssetBundle {
         'themes/AdminLTE/plugins/datatables/jquery.dataTables.js',
         'themes/AdminLTE/plugins/datatables/dataTables.bootstrap.js',
         'themes/AdminLTE/plugins/slimScroll/jquery.slimscroll.min.js',
+        'web/lib/bootstrap-notify/bootstrap-notify.js',
+        'web/lib/sweet-alert/sweetalert.min.js',
     ];
     public $depends = [
         'yii\web\YiiAsset',

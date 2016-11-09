@@ -142,7 +142,8 @@ $this->registerJs(
                 });
                 return false;
             } else {
-                alert("ตัดสต๊อกสำเร็จ ...");
+                //alert("ตัดสต๊อกสำเร็จ ...");
+                swal("", "ตัดสต๊อกสำเร็จ", "success");
                 window.location.reload();
             }
 

@@ -13,13 +13,13 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="type-index">
     <p>
-<?= Html::a('เพิ่มประเภท', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('เพิ่มประเภท', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
     <div class="panel panel-default">
         <div class="panel-heading">
             <h4><?= Html::encode($this->title) ?></h4>
         </div>
-<?php // echo $this->render('_search', ['model' => $searchModel]);  ?>
+        <?php // echo $this->render('_search', ['model' => $searchModel]);  ?>
 
         <div class="panel-body">
             <?=
@@ -36,11 +36,23 @@ $this->params['breadcrumbs'][] = $this->title;
                             return $model['typename'];
                         }
                     ],
-                    //'typename',
+                    [
+                        'attribute' => 'active',
+                        'format' => 'raw',
+                        'contentOptions' => ['class' => 'text-center'],
+                        'headerOptions' => ['class' => 'text-center'],
+                        'value' => function($model) {
+                    if ($model->active == '1')
+                        $active = "<i class='fa fa-check text-green'></i> Active";
+                    else
+                        $active = "<i class='fa fa-remove text-red'></i> Unactive";
+                    return $active;
+                }
+                    ],
                     [
                         'class' => 'yii\grid\ActionColumn',
                         'contentOptions' => ['style' => 'text-align:center;'],
-                        'template' => '{update}{delete}'
+                        'template' => '{view}{update}{delete}'
                     ],
                 ],
             ]);

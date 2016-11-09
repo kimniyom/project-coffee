@@ -13,7 +13,7 @@ $this->params['breadcrumbs'][] = 'แก้ไข';
 ?>
 <div class="stock-update">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h1 class="text-orange"><i class="fa fa-pencil"></i> <?= Html::encode($this->title) ?></h1>
 
     <?=
     $this->render('_form', [

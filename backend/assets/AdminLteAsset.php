@@ -31,6 +31,8 @@ class AdminLteAsset extends AssetBundle
         'themes/AdminLTE/plugins/datatables/jquery.dataTables.js',
         'themes/AdminLTE/plugins/datatables/dataTables.bootstrap.js',
         'themes/AdminLTE/plugins/slimScroll/jquery.slimscroll.min.js',
+        'lib/highcharts/highcharts.js',
+        'lib/highcharts/themes/grid-light.js',
     ];
     public $depends = [
         'yii\web\YiiAsset',

@@ -11,8 +11,16 @@ return [
     'bootstrap' => ['log'],
     'modules' => [],
     'components' => [
+        /*
+          'user' => [
+          'identityClass' => 'common\models\User',
+          'enableAutoLogin' => true,
+          ],
+         * 
+         */
         'user' => [
-            'identityClass' => 'common\models\User',
+            //'identityClass' => 'app\models\User',
+            'identityClass' => 'dektrium\user\models\User',
             'enableAutoLogin' => true,
         ],
         'log' => [
@@ -27,14 +35,24 @@ return [
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
-        /*
-          'urlManager' => [
-          'enablePrettyUrl' => true,
-          'showScriptName' => false,
-          'rules' => [
-          ],
-          ],
-         */
+    /*
+      'urlManager' => [
+      'enablePrettyUrl' => true,
+      'showScriptName' => false,
+      'rules' => [
+      ],
+      ],
+     */
+    ],
+    'modules' => [
+        'user' => [
+            'class' => 'dektrium\user\Module',
+            'enableUnconfirmedLogin' => false,
+            'confirmWithin' => 21600,
+            'cost' => 12,
+            'admins' => ['admin']
+        ],
+    //...
     ],
     'params' => $params,
 ];

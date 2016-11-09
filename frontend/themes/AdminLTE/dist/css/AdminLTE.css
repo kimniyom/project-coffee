@@ -4915,12 +4915,14 @@ table.text-center th {
 }
 
 .activemenu{
-    background: #FFFFFF;
+    background:#2b9cf9;
     color:#999;
 }
 .activemenu #menuleft{
-    color: #ff0000;
+    background: #2b9cf9;
+    color: #ffffff;
 }
+
 
 #textleft{
     text-align: left;
@@ -4933,3 +4935,4 @@ table.text-center th {
 #textcenter{
     text-align: center;
 }
+
